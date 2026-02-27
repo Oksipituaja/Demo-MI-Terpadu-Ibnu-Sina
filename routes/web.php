@@ -11,29 +11,29 @@
 |
 */
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Livewire\Pages\Home;
+use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\AgendaController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FacilityController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\RegistrationController;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Livewire\Pages\About;
-use App\Livewire\Pages\News;
-use App\Livewire\Pages\NewsDetail;
-use App\Livewire\Pages\Gallery;
-use App\Livewire\Pages\GalleryDetail;
-use App\Livewire\Pages\Teachers;
 use App\Livewire\Pages\Agenda;
 use App\Livewire\Pages\Facilities;
 use App\Livewire\Pages\FacilityDetail;
+use App\Livewire\Pages\Gallery;
+use App\Livewire\Pages\GalleryDetail;
+use App\Livewire\Pages\Home;
+use App\Livewire\Pages\News;
+use App\Livewire\Pages\NewsDetail;
 use App\Livewire\Pages\PPDB;
 use App\Livewire\Pages\Privacy;
+use App\Livewire\Pages\Teachers;
 use App\Livewire\Pages\Terms;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\NewsController;
-use App\Http\Controllers\Admin\TeacherController;
-use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\AgendaController;
-use App\Http\Controllers\Admin\FacilityController;
-use App\Http\Controllers\Admin\AboutController;
-use App\Http\Controllers\Admin\RegistrationController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
 Route::get('/about', About::class)->name('about');
@@ -66,6 +66,7 @@ Route::middleware('guest')->group(function () {
 
         if (Auth::attempt($credentials, request()->boolean('remember'))) {
             request()->session()->regenerate();
+
             return redirect()->intended('/dashboard');
         }
 
@@ -90,6 +91,7 @@ Route::middleware('guest')->group(function () {
         ]);
 
         Auth::login($user);
+
         return redirect('/dashboard');
     });
 });
@@ -98,6 +100,7 @@ Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
+
     return redirect('/');
 })->name('logout')->middleware('auth');
 

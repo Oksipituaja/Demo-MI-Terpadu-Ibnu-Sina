@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Pages;
 
-use App\Models\News;
-use App\Models\Gallery;
-use App\Models\Facility;
-use App\Models\Teacher;
-use App\Models\Agenda;
 use App\Models\About;
-use Livewire\Component;
+use App\Models\Agenda;
+use App\Models\Facility;
+use App\Models\Gallery;
+use App\Models\News;
+use App\Models\Teacher;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 class Home extends Component
@@ -24,10 +24,10 @@ class Home extends Component
 
         // Mengambil galeri secara acak untuk variasi visual di homepage
         $galleries = Gallery::inRandomOrder()->limit(6)->get();
-        
+
         // Mengambil semua fasilitas
         $facilities = Facility::all();
-        
+
         // Mengambil data guru (limit 3)
         $teachers = Teacher::limit(3)->get();
 
@@ -41,16 +41,16 @@ class Home extends Component
             ->orderBy('event_time', 'asc')
             ->limit(4)
             ->get();
-        
+
         // Mengambil sambutan kepala sekolah dari tabel settings/about
         $principalGreeting = About::where('key', 'principal_greeting')->first();
 
         return view('livewire.pages.home', [
             'latestNews' => $latestNews,
-            'galleries'  => $galleries,
+            'galleries' => $galleries,
             'facilities' => $facilities,
-            'teachers'   => $teachers,
-            'agendas'    => $agendas,
+            'teachers' => $teachers,
+            'agendas' => $agendas,
             'principalGreeting' => $principalGreeting,
         ]);
     }

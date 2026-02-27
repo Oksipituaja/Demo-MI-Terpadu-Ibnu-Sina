@@ -12,6 +12,7 @@ class AboutController extends Controller
     public function index(): View
     {
         $abouts = About::paginate(15);
+
         return view('admin.about.index', compact('abouts'));
     }
 
@@ -36,6 +37,7 @@ class AboutController extends Controller
         }
 
         About::create($validated);
+
         return redirect()->route('admin.about.index')->with('success', 'About section created successfully!');
     }
 
@@ -49,7 +51,7 @@ class AboutController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'principal_name' => 'nullable|string|max:255',
-            'key' => 'required|string|unique:abouts,key,' . $about->id,
+            'key' => 'required|string|unique:abouts,key,'.$about->id,
             'content' => 'required|string',
             'image' => 'nullable|image|max:5120',
         ]);
@@ -63,6 +65,7 @@ class AboutController extends Controller
         }
 
         $about->update($validated);
+
         return redirect()->route('admin.about.index')->with('success', 'About section updated successfully!');
     }
 
@@ -72,6 +75,7 @@ class AboutController extends Controller
             \Storage::disk('public')->delete($about->image);
         }
         $about->delete();
+
         return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully!');
     }
 }
