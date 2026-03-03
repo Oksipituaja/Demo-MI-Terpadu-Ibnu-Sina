@@ -58,7 +58,8 @@ class FacilityController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($facility->image) {
+            // Check if old image exists before deleting
+            if ($facility->image && \Storage::disk('public')->exists($facility->image)) {
                 \Storage::disk('public')->delete($facility->image);
             }
             $validated['image'] = $request->file('image')->store('facilities', 'public');
@@ -71,7 +72,7 @@ class FacilityController extends Controller
 
     public function destroy(Facility $facility)
     {
-        if ($facility->image) {
+        if ($facility->image && \Storage::disk('public')->exists($facility->image)) {
             \Storage::disk('public')->delete($facility->image);
         }
         $facility->delete();

@@ -60,7 +60,8 @@ class TeacherController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($teacher->image) {
+            // Check if old image exists before deleting
+            if ($teacher->image && \Storage::disk('public')->exists($teacher->image)) {
                 \Storage::disk('public')->delete($teacher->image);
             }
             $validated['image'] = $request->file('image')->store('teachers', 'public');
@@ -73,7 +74,7 @@ class TeacherController extends Controller
 
     public function destroy(Teacher $teacher)
     {
-        if ($teacher->image) {
+        if ($teacher->image && \Storage::disk('public')->exists($teacher->image)) {
             \Storage::disk('public')->delete($teacher->image);
         }
         $teacher->delete();

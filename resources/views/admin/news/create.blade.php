@@ -50,7 +50,7 @@
                 </div>
 
                 <div>
-                    <label for="published_at" class="block text-sm font-medium text-gray-700 mb-1">Publish Date</label>
+                    <label for="published_at" class="block text-sm font-medium text-gray-700 mb-1">Publish Date & Time</label>
                     <div class="flex gap-2">
                         <input type="text" id="publishDate" placeholder="Click to select date & time" readonly class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-white cursor-pointer">
                         <input type="hidden" name="published_at" id="published_at_input" value="{{ old('published_at') }}">
@@ -60,29 +60,6 @@
                     </div>
                     @error('published_at') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
-
-                <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    flatpickr('#publishDate', {
-                        enableTime: true,
-                        dateFormat: 'Y-m-d H:i',
-                        time_24hr: true,
-                        onOpen: function(selectedDates, dateStr, instance) {
-                            const timeInputs = instance.timeContainer.querySelectorAll('input');
-                            timeInputs.forEach((input, index) => {
-                                input.maxLength = '2';
-                                input.addEventListener('input', function() {
-                                    if (index === 0 && this.value > 23) this.value = '23';
-                                    if (index === 1 && this.value > 59) this.value = '59';
-                                });
-                            });
-                        },
-                        onChange: function(selectedDates, dateStr) {
-                            document.getElementById('published_at_input').value = dateStr;
-                        }
-                    });
-                });
-                </script>
             </div>
 
             <div>
@@ -154,14 +131,25 @@
             </script>
 
             <div class="flex gap-3 pt-4 border-t">
-                <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium">
-                    <i class="fas fa-save mr-2"></i> Create Article
-                </button>
+                @include('components.admin-submit-btn', ['label' => 'Create Article', 'loading' => 'Creating...'])
                 <a href="{{ route('admin.news.index') }}" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium">
                     <i class="fas fa-times mr-2"></i> Cancel
                 </a>
             </div>
         </form>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#publishDate', {
+                enableTime: true,
+                dateFormat: 'Y-m-d H:i',
+                time_24hr: true,
+                onChange: function(selectedDates, dateStr) {
+                    document.getElementById('published_at_input').value = dateStr;
+                }
+            });
+        });
+        </script>
     </div>
 </div>
 @endsection

@@ -33,8 +33,10 @@
                     <td class="px-6 py-4 text-sm text-gray-600">
                         @if($prestasi->category)
                             <div class="flex items-center gap-2">
-                                <span class="text-xl">{{ $award['emoji'] }}</span>
-                                <span class="px-2 py-1 rounded text-xs font-medium" style="background-color: rgba(59, 130, 246, 0.1); color: #1e40af;">
+                                <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-lg {{ $award['bgColor'] }}">
+                                    <i class="{{ $award['icon'] }} {{ $award['textColor'] }}"></i>
+                                </span>
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $award['bgColor'] }} {{ $award['textColor'] }}">
                                     {{ $prestasi->category }}
                                 </span>
                             </div>

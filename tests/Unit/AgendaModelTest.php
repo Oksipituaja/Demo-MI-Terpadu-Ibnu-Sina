@@ -54,8 +54,9 @@ class AgendaModelTest extends TestCase
         $agenda->status = 'upcoming';
         $agenda->save();
 
+        // Model stores time as H:i:00 format (no seconds)
         $this->assertDatabaseHas('agendas', [
-            'event_time' => '08:15:30',
+            'event_time' => '08:15:00',
         ]);
     }
 

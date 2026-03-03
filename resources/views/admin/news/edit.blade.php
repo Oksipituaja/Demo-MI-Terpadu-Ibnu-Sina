@@ -60,30 +60,6 @@
                     </div>
                     @error('published_at') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
-
-                <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    flatpickr('#publishDate', {
-                        enableTime: true,
-                        dateFormat: 'Y-m-d H:i',
-                        time_24hr: true,
-                        defaultDate: '{{ old('published_at', $news->published_at?->format('Y-m-d H:i')) }}',
-                        onOpen: function(selectedDates, dateStr, instance) {
-                            const timeInputs = instance.timeContainer.querySelectorAll('input');
-                            timeInputs.forEach((input, index) => {
-                                input.maxLength = '2';
-                                input.addEventListener('input', function() {
-                                    if (index === 0 && this.value > 23) this.value = '23';
-                                    if (index === 1 && this.value > 59) this.value = '59';
-                                });
-                            });
-                        },
-                        onChange: function(selectedDates, dateStr) {
-                            document.getElementById('published_at_input').value = dateStr;
-                        }
-                    });
-                });
-                </script>
             </div>
 
             <div>
@@ -162,14 +138,26 @@
             </script>
 
             <div class="flex gap-3 pt-4 border-t">
-                <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium">
-                    <i class="fas fa-save mr-2"></i> Update Article
-                </button>
+                @include('components.admin-submit-btn', ['label' => 'Update Article', 'loading' => 'Updating...'])
                 <a href="{{ route('admin.news.index') }}" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium">
                     <i class="fas fa-times mr-2"></i> Cancel
                 </a>
             </div>
         </form>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            flatpickr('#publishDate', {
+                enableTime: true,
+                dateFormat: 'Y-m-d H:i',
+                time_24hr: true,
+                defaultDate: '{{ old('published_at', $news->published_at?->format('Y-m-d H:i')) }}',
+                onChange: function(selectedDates, dateStr) {
+                    document.getElementById('published_at_input').value = dateStr;
+                }
+            });
+        });
+        </script>
     </div>
 </div>
 @endsection

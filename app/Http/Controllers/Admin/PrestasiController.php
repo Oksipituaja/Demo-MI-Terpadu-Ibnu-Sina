@@ -12,7 +12,19 @@ class PrestasiController extends Controller
 {
     public function index(): View
     {
-        $prestasis = Prestasi::orderBy('created_at', 'desc')->paginate(15);
+        $prestasis = Prestasi::orderByRaw("
+            CASE 
+                WHEN category LIKE '%Juara 1%' THEN 1
+                WHEN category LIKE '%Juara 2%' THEN 2
+                WHEN category LIKE '%Juara 3%' THEN 3
+                WHEN category LIKE '%Harapan 1%' THEN 4
+                WHEN category LIKE '%Harapan 2%' THEN 5
+                WHEN category LIKE '%Harapan 3%' THEN 6
+                WHEN category LIKE '%Harapan%' THEN 7
+                ELSE 99
+            END,
+            achievement_date DESC
+        ")->paginate(15);
 
         return view('admin.prestasi.index', compact('prestasis'));
     }
@@ -33,7 +45,7 @@ class PrestasiController extends Controller
             'status' => 'required|in:draft,published',
         ]);
 
-        $validated['slug'] = Str::slug($validated['title']);
+        $validated['slug'] = $this->generateUniqueSlug($validated['title']);
 
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('prestasi', 'public');
@@ -60,7 +72,7 @@ class PrestasiController extends Controller
             'status' => 'required|in:draft,published',
         ]);
 
-        $validated['slug'] = Str::slug($validated['title']);
+        $validated['slug'] = $this->generateUniqueSlug($validated['title'], $prestasi->id);
 
         if ($request->hasFile('image')) {
             if ($prestasi->image) {
@@ -82,5 +94,28 @@ class PrestasiController extends Controller
         $prestasi->delete();
 
         return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi deleted successfully!');
+    }
+
+    /**
+     * Generate unique slug with collision detection
+     *
+     * @param  ?int  $excludeId  - Exclude this ID from check (for updates)
+     */
+    private function generateUniqueSlug(string $title, ?int $excludeId = null): string
+    {
+        $slug = Str::slug($title);
+        $baseSlug = $slug;
+        $counter = 1;
+
+        while (Prestasi::where('slug', $slug)
+            ->when($excludeId, function ($query) use ($excludeId) {
+                return $query->where('id', '!=', $excludeId);
+            })
+            ->exists()) {
+            $slug = $baseSlug.'-'.$counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 }

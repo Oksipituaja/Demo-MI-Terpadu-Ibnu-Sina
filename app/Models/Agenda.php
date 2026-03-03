@@ -72,6 +72,12 @@ class Agenda extends Model
         return Carbon::parse($this->attributes['event_time'])->format('H:i');
     }
 
+    // Alias for compatibility with tests
+    public function getEventTimeFormattedAttribute(): ?string
+    {
+        return $this->formatted_time;
+    }
+
     public function getEventDateTimeAttribute(): ?string
     {
         if (! $this->event_date) {

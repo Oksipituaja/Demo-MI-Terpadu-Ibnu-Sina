@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'flatpickr/dist/flatpickr.min.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -20,76 +22,86 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+/* Default font assignments */
+html {
+    font-family: var(--font-family-body);
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family-body);
+}
+
 /* Custom Typography */
 .font-display {
-    @apply font-family-display;
+    font-family: var(--font-family-display);
 }
 
 .font-body {
-    @apply font-family-body;
+    font-family: var(--font-family-body);
 }
 
 /* Navigation Links */
 .nav-link {
-    @apply text-gray-600 font-semibold hover:text-eduBlue-main transition-colors relative;
-    @apply after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px];
+    @apply relative font-semibold text-gray-600 transition-colors hover:text-eduBlue-main;
+    @apply after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5;
     @apply after:bg-sunJoy after:transition-all hover:after:w-full;
 }
 
 .mobile-nav-link {
-    @apply block py-3 px-4 text-gray-700 font-semibold rounded-xl;
-    @apply hover:bg-eduBlue-light/10 hover:text-eduBlue-main transition-colors;
+    @apply block px-4 py-3 font-semibold text-gray-700 rounded-xl;
+    @apply transition-colors hover:bg-eduBlue-light/10 hover:text-eduBlue-main;
 }
 
 /* Buttons */
 .btn-primary {
-    @apply inline-flex items-center bg-gradient-to-r from-eduBlue-main to-eduBlue-light;
+    @apply inline-flex items-center bg-linear-to-r from-eduBlue-main to-eduBlue-light;
     @apply hover:from-eduBlue-light hover:to-eduBlue-main;
-    @apply text-white font-bold py-4 px-8 rounded-xl shadow-xl;
+    @apply px-8 py-4 font-bold text-white shadow-xl rounded-xl;
     @apply transition-all duration-300 hover:-translate-y-1 active:scale-95;
 }
 
 .btn-secondary {
     @apply inline-flex items-center bg-white border-2 border-eduBlue-main;
-    @apply text-eduBlue-main font-bold py-4 px-8 rounded-xl;
-    @apply hover:bg-eduBlue-main hover:text-white transition-all duration-300;
+    @apply px-8 py-4 font-bold text-eduBlue-main rounded-xl;
+    @apply transition-all duration-300 hover:bg-eduBlue-main hover:text-white;
 }
 
 /* Cards */
 .card {
-    @apply bg-white rounded-2xl p-6 shadow-md;
-    @apply hover:shadow-xl transition-all duration-300;
+    @apply p-6 bg-white shadow-md rounded-2xl;
+    @apply transition-all duration-300 hover:shadow-xl;
     @apply border border-gray-100;
 }
 
 .facility-card {
-    @apply bg-white rounded-2xl overflow-hidden shadow-lg;
-    @apply hover:shadow-2xl transition-all duration-500;
+    @apply overflow-hidden bg-white shadow-lg rounded-2xl;
+    @apply transition-all duration-500 hover:shadow-2xl;
     @apply transform hover:-translate-y-2;
 }
 
 .facility-image {
-    @apply w-full h-64 object-cover;
+    @apply object-cover w-full h-64;
     @apply transition-transform duration-700 group-hover:scale-110;
 }
 
 .facility-overlay {
-    @apply absolute inset-0 bg-eduBlue-main/80 opacity-0;
-    @apply group-hover:opacity-100 transition-opacity duration-300;
+    @apply absolute inset-0 opacity-0 bg-eduBlue-main/80;
+    @apply transition-opacity duration-300 group-hover:opacity-100;
     @apply flex items-center justify-center;
 }
 
 /* News & Content Cards */
 .news-card {
-    @apply bg-white rounded-2xl p-6 shadow-md;
-    @apply hover:shadow-xl transition-all duration-300;
+    @apply p-6 bg-white shadow-md rounded-2xl;
+    @apply transition-all duration-300 hover:shadow-xl;
     @apply border border-gray-100;
     @apply transform hover:-translate-y-1;
 }
 
 .agenda-item {
-    @apply bg-white rounded-xl p-6 shadow-md;
-    @apply hover:shadow-lg transition-all duration-300;
+    @apply p-6 bg-white shadow-md rounded-xl;
+    @apply transition-all duration-300 hover:shadow-lg;
     @apply flex items-start gap-6;
     @apply border-l-4 border-eduBlue-main;
     @apply hover:border-sunJoy;
@@ -98,17 +110,17 @@
 .agenda-date {
     @apply flex flex-col items-center justify-center;
     @apply w-16 h-16 bg-eduBlue-light/10 rounded-xl;
-    @apply flex-shrink-0;
+    @apply shrink-0;
 }
 
 .badge-agenda {
-    @apply px-3 py-1 rounded-full text-xs font-semibold;
-    @apply flex-shrink-0 self-start;
+    @apply px-3 py-1 text-xs font-semibold rounded-full;
+    @apply self-start shrink-0;
 }
 
 .teacher-card {
-    @apply bg-white rounded-2xl p-8 shadow-md;
-    @apply hover:shadow-xl transition-all duration-300;
+    @apply p-8 bg-white shadow-md rounded-2xl;
+    @apply transition-all duration-300 hover:shadow-xl;
     @apply border border-gray-100;
     @apply transform hover:-translate-y-2;
 }
@@ -147,6 +159,7 @@ html {
 .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }

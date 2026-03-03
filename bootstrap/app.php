@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\CachePageResponse;
+use App\Http\Middleware\OptimizeCaching;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,7 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->append(CachePageResponse::class);
+        $middleware->append(OptimizeCaching::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

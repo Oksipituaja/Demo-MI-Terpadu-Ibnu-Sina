@@ -53,7 +53,10 @@ class GalleryController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            \Storage::disk('public')->delete($gallery->image);
+            // Check if old image exists before deleting
+            if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
+                \Storage::disk('public')->delete($gallery->image);
+            }
             $validated['image'] = $request->file('image')->store('gallery', 'public');
         }
 
@@ -64,7 +67,9 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        \Storage::disk('public')->delete($gallery->image);
+        if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
+            \Storage::disk('public')->delete($gallery->image);
+        }
         $gallery->delete();
 
         return redirect()->route('admin.galleries.index')->with('success', 'Gallery item deleted successfully!');

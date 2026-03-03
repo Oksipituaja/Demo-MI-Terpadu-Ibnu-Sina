@@ -7,21 +7,22 @@
 
     <title>{{ config('app.name', 'SD Bangsri School') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Asset Compilation via Vite -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- Styles / Scripts -->
-    <link rel="stylesheet" href="{{ asset('build/assets/app-bxu3zjQQ.css') }}">
-    <script type="module" src="{{ asset('build/assets/app-CKl8NZMC.js') }}" defer></script>
+    <!-- Google Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    </noscript>
+
     <style>
-        .font-display {
-            font-family: 'Inter', sans-serif;
-        }
-        .font-body {
-            font-family: 'Roboto', sans-serif;
-        }
+        .font-display { font-family: 'Inter', sans-serif; }
+        .font-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     </style>
 </head>
 <body class="font-body antialiased bg-white">
@@ -61,6 +62,7 @@
                     <li><a href="{{ route('home') }}" class="nav-link">Beranda</a></li>
                     <li><a href="{{ route('about') }}" class="nav-link">Tentang</a></li>
                     <li><a href="{{ route('teachers') }}" class="nav-link">Guru</a></li>
+                    <li><a href="{{ route('prestasi.index') }}" class="nav-link">Prestasi</a></li>
                     <li><a href="{{ route('facilities') }}" class="nav-link">Fasilitas</a></li>
                     <li><a href="{{ route('news') }}" class="nav-link">Berita</a></li>
                     <li><a href="{{ route('gallery') }}" class="nav-link">Galeri</a></li>
@@ -91,6 +93,7 @@
                         <a href="{{ route('about') }}" class="mobile-nav-link">Tentang</a>
                         <a href="{{ route('teachers') }}" class="mobile-nav-link">Guru</a>
                         <a href="{{ route('facilities') }}" class="mobile-nav-link">Fasilitas</a>
+                        <a href="{{ route('prestasi.index') }}" class="mobile-nav-link">Prestasi</a>
                         <a href="{{ route('news') }}" class="mobile-nav-link">Berita</a>
                         <a href="{{ route('gallery') }}" class="mobile-nav-link">Galeri</a>
                         <a href="{{ route('home') }}#agenda" class="mobile-nav-link">Agenda</a>

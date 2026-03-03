@@ -28,6 +28,9 @@
                         @if($agenda->formatted_time)
                             | ⏰ {{ $agenda->formatted_time }}
                         @endif
+                        @if($agenda->location)
+                            | 📍 {{ $agenda->location }}
+                        @endif
                     </p>
                     <p class="text-gray-700">{{ $agenda->description }}</p>
                     <span class="inline-block mt-4 px-3 py-1 text-sm rounded-full 

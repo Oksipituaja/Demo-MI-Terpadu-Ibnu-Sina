@@ -31,6 +31,15 @@ class AboutController extends Controller
             'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
+        // Check if key already exists before insert
+        if (About::where('key', $validated['key'])->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'key' => "Section '{$validated['key']}' already exists. Please use a different key or edit the existing section.",
+                ]);
+        }
+
         if ($request->hasFile('image')) {
             $folder = $validated['key'] === 'hero_image' ? 'hero' : 'about';
             $validated['image'] = $request->file('image')->store($folder, 'public');

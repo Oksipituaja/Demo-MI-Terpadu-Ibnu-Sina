@@ -52,9 +52,7 @@
         </div>
 
         <div class="flex gap-3 pt-4 border-t">
-            <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium">
-                <i class="fas fa-save mr-2"></i> Simpan
-            </button>
+            @include('components.admin-submit-btn', ['label' => 'Simpan', 'loading' => 'Menyimpan...'])
             <a href="{{ route('admin.management-account.index') }}" class="px-6 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg font-medium">
                 <i class="fas fa-times mr-2"></i> Batal
             </a>

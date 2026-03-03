@@ -12,7 +12,9 @@ class NewsController extends Controller
 {
     public function index(): View
     {
-        $news = News::latest('created_at')->paginate(15);
+        $news = News::with('user')
+            ->latest('created_at')
+            ->paginate(15);
 
         return view('admin.news.index', compact('news'));
     }
@@ -67,7 +69,8 @@ class NewsController extends Controller
         ]);
 
         if ($request->hasFile('featured_image')) {
-            if ($news->featured_image) {
+            // Check if old image exists before deleting
+            if ($news->featured_image && \Storage::disk('public')->exists($news->featured_image)) {
                 \Storage::disk('public')->delete($news->featured_image);
             }
             $validated['featured_image'] = $request->file('featured_image')->store('news', 'public');
@@ -80,7 +83,7 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
-        if ($news->featured_image) {
+        if ($news->featured_image && \Storage::disk('public')->exists($news->featured_image)) {
             \Storage::disk('public')->delete($news->featured_image);
         }
         $news->delete();

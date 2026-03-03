@@ -103,7 +103,7 @@
         </script>
 
         <div class="flex gap-3 pt-4 border-t">
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg"><i class="fas fa-save mr-2"></i> Save</button>
+            @include('components.admin-submit-btn', ['label' => 'Save', 'loading' => 'Saving...'])
             <a href="{{ route('admin.teachers.index') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg">Cancel</a>
         </div>
     </form>

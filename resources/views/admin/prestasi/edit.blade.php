@@ -22,20 +22,46 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
-                <input 
-                    type="text" 
+                <select 
                     id="category" 
                     name="category" 
-                    value="{{ old('category', $prestasi->category) }}" 
-                    placeholder="e.g., Juara 1 IT Software" 
-                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    onchange="updateCategoryField()"
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-2"
                 >
-                <p class="text-xs text-gray-500 mt-2">
-                    Format: <strong>Juara 1</strong>, <strong>Juara 2</strong>, <strong>Juara 3</strong>, <strong>Juara Harapan</strong>, or custom text
-                </p>
-                <div id="awardPreview" class="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200 flex items-center gap-3">
-                    <span id="previewEmoji" class="text-3xl">🏆</span>
-                    <span id="previewLabel" class="text-sm text-gray-600">Award Preview</span>
+                    <option value="">-- Select Category --</option>
+                    <optgroup label="Rankings">
+                        <option value="Juara 1" {{ old('category', $prestasi->category) === 'Juara 1' ? 'selected' : '' }}>🥇 Juara 1 (Gold)</option>
+                        <option value="Juara 2" {{ old('category', $prestasi->category) === 'Juara 2' ? 'selected' : '' }}>🥈 Juara 2 (Silver)</option>
+                        <option value="Juara 3" {{ old('category', $prestasi->category) === 'Juara 3' ? 'selected' : '' }}>🥉 Juara 3 (Bronze)</option>
+                    </optgroup>
+                    <optgroup label="Harapan">
+                        <option value="Harapan 1" {{ old('category', $prestasi->category) === 'Harapan 1' ? 'selected' : '' }}>⭐ Harapan 1 (Gold)</option>
+                        <option value="Harapan 2" {{ old('category', $prestasi->category) === 'Harapan 2' ? 'selected' : '' }}>⭐ Harapan 2 (Silver)</option>
+                        <option value="Harapan 3" {{ old('category', $prestasi->category) === 'Harapan 3' ? 'selected' : '' }}>⭐ Harapan 3 (Bronze)</option>
+                    </optgroup>
+                </select>
+
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Or add custom category:</label>
+                    <input 
+                        type="text" 
+                        id="customCategory" 
+                        placeholder="e.g., Juara 1 IT Software" 
+                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                        onkeyup="updatePreviewFromCustom()"
+                    >
+                </div>
+
+                <div id="awardPreview" class="mt-3 p-4 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg border border-gray-200 flex items-center gap-4">
+                    <div>
+                        <span id="previewIcon" class="text-4xl inline-flex items-center justify-center w-16 h-16 rounded-full" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                            👑
+                        </span>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500">Award Preview</p>
+                        <p id="previewLabel" class="text-lg font-bold text-gray-900">Juara 1</p>
+                    </div>
                 </div>
                 @error('category') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
@@ -80,6 +106,53 @@
         </div>
 
         <script>
+        // Category award preview system - GLOBAL SCOPE
+        const categoryPreviewData = {
+            'Juara 1': { icon: '👑', label: 'Juara 1 (Gold)', bgGradient: 'from-yellow-300 to-yellow-500' },
+            'Juara 2': { icon: '🥈', label: 'Juara 2 (Silver)', bgGradient: 'from-gray-400 to-gray-500' },
+            'Juara 3': { icon: '🥉', label: 'Juara 3 (Bronze)', bgGradient: 'from-orange-400 to-amber-500' },
+            'Harapan 1': { icon: '⭐', label: 'Harapan 1 (Gold)', bgGradient: 'from-yellow-300 to-yellow-500' },
+            'Harapan 2': { icon: '⭐', label: 'Harapan 2 (Silver)', bgGradient: 'from-gray-400 to-gray-500' },
+            'Harapan 3': { icon: '⭐', label: 'Harapan 3 (Bronze)', bgGradient: 'from-orange-400 to-amber-500' },
+            'Harapan': { icon: '⭐', label: 'Harapan', bgGradient: 'from-blue-400 to-blue-500' },
+        };
+
+        function updatePreview(category) {
+            const propertyData = categoryPreviewData[category];
+            const previewIcon = document.getElementById('previewIcon');
+            const previewLabel = document.getElementById('previewLabel');
+            const awardPreview = document.getElementById('awardPreview');
+
+            if (propertyData) {
+                previewIcon.textContent = propertyData.icon;
+                previewLabel.textContent = propertyData.label;
+                const [from, to] = propertyData.bgGradient.split(' to-');
+                const fromColor = from.replace('from-', '');
+                const toColor = to;
+                awardPreview.className = `mt-3 p-4 bg-gradient-to-r ${from} to-${toColor} rounded-lg border border-gray-200 flex items-center gap-4`;
+            } else {
+                previewIcon.textContent = '🏆';
+                previewLabel.textContent = category || 'Prestasi';
+                awardPreview.className = 'mt-3 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-gray-200 flex items-center gap-4';
+            }
+        }
+
+        function updateCategoryField() {
+            document.getElementById('customCategory').value = '';
+            updatePreview(document.getElementById('category').value);
+        }
+
+        function updatePreviewFromCustom() {
+            const customCategoryInput = document.getElementById('customCategory');
+            const categoryInput = document.getElementById('category');
+            if (customCategoryInput.value) {
+                updatePreview(customCategoryInput.value);
+                categoryInput.value = '';
+            } else if (categoryInput.value) {
+                updatePreview(categoryInput.value);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const dropZone = document.getElementById('dropZone');
             const fileInput = document.getElementById('image');
@@ -128,45 +201,19 @@
                 }
             });
 
-            // Category award preview
             const categoryInput = document.getElementById('category');
-            const previewEmoji = document.getElementById('previewEmoji');
-            const previewLabel = document.getElementById('previewLabel');
+            const customCategoryInput = document.getElementById('customCategory');
 
-            function updateAwardPreview(category) {
-                const categoryUpper = category.toUpperCase();
-                let emoji = '🏆';
-                let label = 'Prestasi';
-
-                if (categoryUpper.includes('JUARA 1')) {
-                    emoji = '🥇';
-                    label = 'Juara 1 (Gold)';
-                } else if (categoryUpper.includes('JUARA 2')) {
-                    emoji = '🥈';
-                    label = 'Juara 2 (Silver)';
-                } else if (categoryUpper.includes('JUARA 3')) {
-                    emoji = '🥉';
-                    label = 'Juara 3 (Bronze)';
-                } else if (categoryUpper.includes('HARAPAN')) {
-                    emoji = '⭐';
-                    label = 'Harapan (Star)';
-                }
-
-                previewEmoji.textContent = emoji;
-                previewLabel.textContent = label;
-            }
-
-            categoryInput.addEventListener('input', function(e) {
-                updateAwardPreview(e.target.value);
-            });
+            categoryInput.addEventListener('change', updateCategoryField);
+            customCategoryInput.addEventListener('keyup', updatePreviewFromCustom);
 
             // Initialize preview on page load
-            updateAwardPreview(categoryInput.value);
+            updatePreview(categoryInput.value);
         });
         </script>
 
         <div class="flex gap-3 pt-4 border-t">
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg"><i class="fas fa-save mr-2"></i> Update</button>
+            @include('components.admin-submit-btn', ['label' => 'Update', 'loading' => 'Updating...'])
             <a href="{{ route('admin.prestasis.index') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg">Cancel</a>
         </div>
     </form>

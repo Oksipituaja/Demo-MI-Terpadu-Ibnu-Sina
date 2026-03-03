@@ -17,6 +17,7 @@
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Title</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Time</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Location</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Status</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Actions</th>
@@ -27,6 +28,13 @@
                 <tr class="hover:bg-gray-50">
                     <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $agenda->title }}</td>
                     <td class="px-6 py-4 text-sm text-gray-600">{{ $agenda->event_date->format('M d, Y') }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-600">
+                        @if($agenda->event_time)
+                            {{ \Carbon\Carbon::parse($agenda->event_time)->format('H:i') }} WIB
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td class="px-6 py-4 text-sm text-gray-600">{{ $agenda->location ?? '-' }}</td>
                     <td class="px-6 py-4 text-sm">
                         <span class="px-2 py-1 rounded text-xs font-semibold {{ $agenda->status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
@@ -42,7 +50,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">No events found.</td></tr>
+                <tr><td colspan="6" class="px-6 py-8 text-center text-gray-500">No events found.</td></tr>
             @endforelse
         </tbody>
     </table>

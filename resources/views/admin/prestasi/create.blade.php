@@ -22,20 +22,46 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Category <span class="text-red-500">*</span></label>
-                <input 
-                    type="text" 
+                <select 
                     id="category" 
                     name="category" 
-                    value="{{ old('category') }}" 
-                    placeholder="e.g., Juara 1 IT Software" 
-                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    onchange="updateCategoryField()"
+                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 mb-2"
                 >
-                <p class="text-xs text-gray-500 mt-2">
-                    Format: <strong>Juara 1</strong>, <strong>Juara 2</strong>, <strong>Juara 3</strong>, <strong>Juara Harapan</strong>, or custom text
-                </p>
-                <div id="awardPreview" class="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200 flex items-center gap-3">
-                    <span id="previewEmoji" class="text-3xl">🏆</span>
-                    <span id="previewLabel" class="text-sm text-gray-600">Award Preview</span>
+                    <option value="">-- Select Category --</option>
+                    <optgroup label="Rankings">
+                        <option value="Juara 1" {{ old('category') === 'Juara 1' ? 'selected' : '' }}>🥇 Juara 1 (Gold)</option>
+                        <option value="Juara 2" {{ old('category') === 'Juara 2' ? 'selected' : '' }}>🥈 Juara 2 (Silver)</option>
+                        <option value="Juara 3" {{ old('category') === 'Juara 3' ? 'selected' : '' }}>🥉 Juara 3 (Bronze)</option>
+                    </optgroup>
+                    <optgroup label="Harapan">
+                        <option value="Harapan 1" {{ old('category') === 'Harapan 1' ? 'selected' : '' }}>⭐ Harapan 1 (Gold)</option>
+                        <option value="Harapan 2" {{ old('category') === 'Harapan 2' ? 'selected' : '' }}>⭐ Harapan 2 (Silver)</option>
+                        <option value="Harapan 3" {{ old('category') === 'Harapan 3' ? 'selected' : '' }}>⭐ Harapan 3 (Bronze)</option>
+                    </optgroup>
+                </select>
+
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Or add custom category:</label>
+                    <input 
+                        type="text" 
+                        id="customCategory" 
+                        placeholder="e.g., Juara 1 IT Software" 
+                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                        onkeyup="updatePreviewFromCustom()"
+                    >
+                </div>
+
+                <div id="awardPreview" class="mt-3 p-4 bg-linear-to-r from-gray-50 to-gray-100 rounded-lg border border-gray-200 flex items-center gap-4">
+                    <div>
+                        <span id="previewIcon" class="text-4xl inline-flex items-center justify-center w-16 h-16 rounded-full" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                            👑
+                        </span>
+                    </div>
+                    <div>
+                        <p class="text-xs text-gray-500">Award Preview</p>
+                        <p id="previewLabel" class="text-lg font-bold text-gray-900">Juara 1</p>
+                    </div>
                 </div>
                 @error('category') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
@@ -74,6 +100,54 @@
         </div>
 
         <script>
+        const categoryPreviewData = {
+            'JUARA 1': { icon: '👑', label: 'Juara 1', color: 'from-yellow-300 to-yellow-500' },
+            'JUARA 2': { icon: '🥈', label: 'Juara 2', color: 'from-gray-400 to-gray-500' },
+            'JUARA 3': { icon: '🥉', label: 'Juara 3', color: 'from-orange-400 to-amber-500' },
+            'HARAPAN 1': { icon: '⭐', label: 'Harapan 1', color: 'from-yellow-300 to-yellow-500' },
+            'HARAPAN 2': { icon: '⭐', label: 'Harapan 2', color: 'from-gray-400 to-gray-500' },
+            'HARAPAN 3': { icon: '⭐', label: 'Harapan 3', color: 'from-orange-400 to-amber-500' },
+            'HARAPAN': { icon: '⭐', label: 'Harapan', color: 'from-blue-400 to-blue-500' },
+        };
+
+        function updatePreview(category) {
+            const categoryUpper = category.toUpperCase();
+            let preview = categoryPreviewData['JUARA 1'];
+
+            for (const key in categoryPreviewData) {
+                if (categoryUpper.includes(key)) {
+                    preview = categoryPreviewData[key];
+                    break;
+                }
+            }
+
+            document.getElementById('previewIcon').textContent = preview.icon;
+            document.getElementById('previewIcon').style.background = `linear-gradient(135deg, var(--tw-gradient-stops))`;
+            document.getElementById('previewLabel').textContent = preview.label;
+        }
+
+        function updateCategoryField() {
+            const select = document.getElementById('category');
+            const customInput = document.getElementById('customCategory');
+            const hiddenField = document.querySelector('input[name="category"]');
+
+            if (select.value) {
+                customInput.value = '';
+                hiddenField.value = select.value;
+                updatePreview(select.value);
+            }
+        }
+
+        function updatePreviewFromCustom() {
+            const customInput = document.getElementById('customCategory');
+            const select = document.getElementById('category');
+            const hiddenField = document.querySelector('input[name="category"]');
+
+            select.value = '';
+            hiddenField.value = customInput.value;
+            updatePreview(customInput.value);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const dropZone = document.getElementById('dropZone');
             const fileInput = document.getElementById('image');
@@ -122,45 +196,16 @@
                 }
             });
 
-            // Category award preview
-            const categoryInput = document.getElementById('category');
-            const previewEmoji = document.getElementById('previewEmoji');
-            const previewLabel = document.getElementById('previewLabel');
-
-            function updateAwardPreview(category) {
-                const categoryUpper = category.toUpperCase();
-                let emoji = '🏆';
-                let label = 'Prestasi';
-
-                if (categoryUpper.includes('JUARA 1')) {
-                    emoji = '🥇';
-                    label = 'Juara 1 (Gold)';
-                } else if (categoryUpper.includes('JUARA 2')) {
-                    emoji = '🥈';
-                    label = 'Juara 2 (Silver)';
-                } else if (categoryUpper.includes('JUARA 3')) {
-                    emoji = '🥉';
-                    label = 'Juara 3 (Bronze)';
-                } else if (categoryUpper.includes('HARAPAN')) {
-                    emoji = '⭐';
-                    label = 'Harapan (Star)';
-                }
-
-                previewEmoji.textContent = emoji;
-                previewLabel.textContent = label;
+            // Initialize preview on load
+            const currentCategory = document.querySelector('input[name="category"]').value;
+            if (currentCategory) {
+                updatePreview(currentCategory);
             }
-
-            categoryInput.addEventListener('input', function(e) {
-                updateAwardPreview(e.target.value);
-            });
-
-            // Initialize preview on page load
-            updateAwardPreview(categoryInput.value);
         });
         </script>
 
         <div class="flex gap-3 pt-4 border-t">
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg"><i class="fas fa-save mr-2"></i> Save</button>
+                @include('components.admin-submit-btn', ['label' => 'Save', 'loading' => 'Saving...'])
             <a href="{{ route('admin.prestasis.index') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg">Cancel</a>
         </div>
     </form>
