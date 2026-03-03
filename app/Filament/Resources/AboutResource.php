@@ -19,21 +19,37 @@ class AboutResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('key')
+                Forms\Components\Select::make('key')
+                    ->options([
+                        'hero_image' => 'Hero Image (Gambar Beranda)',
+                        'principal_greeting' => 'Sambutan Kepala Sekolah',
+                        'vision' => 'Visi',
+                        'mission' => 'Misi',
+                    ])
                     ->required()
                     ->unique(About::class, 'key', ignoreRecord: true)
-                    ->maxLength(255)
-                    ->helperText('Unique identifier. Gunakan salah satu: principal_greeting, school_profile, vision, mission, hero_image'),
+                    ->helperText('Pilih jenis konten yang ingin diperbarui'),
+
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->helperText('Judul atau nama konten'),
+
                 Forms\Components\RichEditor::make('content')
                     ->columnSpanFull()
-                    ->required(),
+                    ->helperText('Isi konten dengan formatting. Gunakan tombol untuk format teks.'),
+
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->disk('public')
-                    ->directory('about'),
+                    ->directory('about')
+                    ->shouldPreserveFilesNamed()
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16 / 9')
+                    ->imageResizeTargetWidth(1600)
+                    ->imageResizeTargetHeight(900)
+                    ->maxSize(5120)
+                    ->helperText('Gambar akan dioptimasi ke 1600x900px, max 5MB'),
             ]);
     }
 

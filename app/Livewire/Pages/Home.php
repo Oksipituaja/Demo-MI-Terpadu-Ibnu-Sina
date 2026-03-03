@@ -8,6 +8,7 @@ use App\Models\Facility;
 use App\Models\Gallery;
 use App\Models\News;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -34,16 +35,24 @@ class Home extends Component
         /**
          * PERBAIKAN AGENDA:
          * 1. Filter status sesuai ENUM baru (upcoming & ongoing).
-         * 2. Urutkan berdasarkan tanggal terdekat (asc).
+         * 2. Prioritaskan agenda terdepan (tanggal >= hari ini).
+         * 3. Urutkan berdasarkan tanggal terdekat.
          */
+        $today = Carbon::today();
         $agendas = Agenda::whereIn('status', ['upcoming', 'ongoing'])
-            ->orderBy('event_date', 'asc')
-            ->orderBy('event_time', 'asc')
+            ->orderByRaw('
+                CASE WHEN event_date >= ? THEN 0 ELSE 1 END,
+                CASE WHEN event_date >= ? THEN event_date ELSE NULL END ASC,
+                event_date DESC
+            ', [$today, $today])
             ->limit(4)
             ->get();
 
         // Mengambil sambutan kepala sekolah dari tabel settings/about
         $principalGreeting = About::where('key', 'principal_greeting')->first();
+
+        // Mengambil hero image dari database
+        $heroImage = About::where('key', 'hero_image')->first();
 
         return view('livewire.pages.home', [
             'latestNews' => $latestNews,
@@ -52,6 +61,7 @@ class Home extends Component
             'teachers' => $teachers,
             'agendas' => $agendas,
             'principalGreeting' => $principalGreeting,
+            'heroImage' => $heroImage,
         ]);
     }
 }

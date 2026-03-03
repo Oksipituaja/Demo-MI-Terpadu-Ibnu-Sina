@@ -13,12 +13,14 @@ class NewsController extends Controller
     public function index(): View
     {
         $news = News::latest('created_at')->paginate(15);
+
         return view('admin.news.index', compact('news'));
     }
 
     public function create(): View
     {
         $users = User::all();
+
         return view('admin.news.create', compact('users'));
     }
 
@@ -31,7 +33,7 @@ class NewsController extends Controller
             'content' => 'required|string',
             'status' => 'required|in:draft,published',
             'published_at' => 'nullable|date',
-            'featured_image' => 'nullable|image|max:2048',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
         if ($request->hasFile('featured_image')) {
@@ -39,7 +41,7 @@ class NewsController extends Controller
         }
 
         $validated['user_id'] = auth()->id();
-        
+
         News::create($validated);
 
         return redirect()->route('admin.news.index')->with('success', 'News article created successfully!');
@@ -48,6 +50,7 @@ class NewsController extends Controller
     public function edit(News $news): View
     {
         $users = User::all();
+
         return view('admin.news.edit', compact('news', 'users'));
     }
 
@@ -55,12 +58,12 @@ class NewsController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:news,slug,' . $news->id,
+            'slug' => 'required|string|unique:news,slug,'.$news->id,
             'excerpt' => 'required|string',
             'content' => 'required|string',
             'status' => 'required|in:draft,published',
             'published_at' => 'nullable|date',
-            'featured_image' => 'nullable|image|max:2048',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
         if ($request->hasFile('featured_image')) {
@@ -81,6 +84,7 @@ class NewsController extends Controller
             \Storage::disk('public')->delete($news->featured_image);
         }
         $news->delete();
+
         return redirect()->route('admin.news.index')->with('success', 'News article deleted successfully!');
     }
 }

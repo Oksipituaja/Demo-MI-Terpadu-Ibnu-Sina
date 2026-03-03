@@ -5,18 +5,18 @@
     @endphp
     
     @if($heroImagePath)
-        <div class="relative h-96 overflow-hidden bg-gradient-to-br from-blue-600 to-blue-800">
+        <div class="relative h-96 overflow-hidden bg-linear-to-br from-blue-600 to-blue-800">
             <img src="{{ $heroImagePath }}" 
                  alt="{{ config('app.name') }}"
                  class="w-full h-full object-cover"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-            <div class="absolute inset-0 bg-gradient-to-t from-blue-900 via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-blue-900 via-transparent to-transparent"></div>
             <div class="absolute inset-0 flex items-end" style="display:none;">
-                <div class="w-full h-full bg-gradient-to-br from-blue-600 to-blue-800"></div>
+                <div class="w-full h-full bg-linear-to-br from-blue-600 to-blue-800"></div>
             </div>
         </div>
     @else
-        <div class="bg-gradient-to-br from-blue-600 to-blue-800 h-96 flex items-center justify-center">
+        <div class="bg-linear-to-br from-blue-600 to-blue-800 h-96 flex items-center justify-center">
             <div class="text-center text-white">
                 <i class="fas fa-school text-6xl opacity-40 mb-4"></i>
             </div>
@@ -29,7 +29,7 @@
 
         <!-- Sambutan Kepala Sekolah (Always Visible) -->
         @if($principalGreeting)
-            <div class="relative py-16 my-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-xl overflow-hidden">
+            <div class="relative py-16 my-12 bg-linear-to-br from-blue-50 via-white to-indigo-50 rounded-xl overflow-hidden">
                 <!-- Decorative Elements -->
                 <div class="absolute inset-0 opacity-5">
                     <div class="absolute top-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
@@ -118,7 +118,7 @@
             @if($vision || $mission)
                 <div class="grid md:grid-cols-2 gap-12 my-16 pt-12 border-t">
                     @if($vision)
-                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-lg">
+                        <div class="bg-linear-to-br from-blue-50 to-blue-100 p-8 rounded-lg">
                             <h3 class="text-2xl font-bold text-blue-900 mb-4 flex items-center">
                                 <i class="fas fa-eye mr-3 text-blue-600"></i>
                                 {{ $vision->title }}
@@ -130,7 +130,7 @@
                     @endif
                     
                     @if($mission)
-                        <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-lg">
+                        <div class="bg-linear-to-br from-green-50 to-green-100 p-8 rounded-lg">
                             <h3 class="text-2xl font-bold text-green-900 mb-4 flex items-center">
                                 <i class="fas fa-bullseye mr-3 text-green-600"></i>
                                 {{ $mission->title }}

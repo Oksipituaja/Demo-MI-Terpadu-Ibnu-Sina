@@ -54,8 +54,20 @@
                         <i class="fas fa-info-circle mr-2"></i> About
                     </a>
 
+                    <a href="{{ route('admin.prestasis.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.prestasis.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
+                        <i class="fas fa-trophy mr-2"></i> Prestasi
+                    </a>
+
                     <a href="{{ route('admin.registrations.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
                         <i class="fas fa-user-check mr-2"></i> Registrations
+                    </a>
+                </div>
+
+                <div class="pt-4 border-t border-gray-800">
+                    <p class="px-4 text-xs uppercase text-gray-500 font-semibold mb-3">System Management</p>
+
+                    <a href="{{ route('admin.management-account.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.management-account.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
+                        <i class="fas fa-users-cog mr-2"></i> Account Management
                     </a>
                 </div>
             </nav>

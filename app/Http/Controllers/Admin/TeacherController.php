@@ -12,6 +12,7 @@ class TeacherController extends Controller
     public function index(): View
     {
         $teachers = Teacher::latest()->paginate(15);
+
         return view('admin.teachers.index', compact('teachers'));
     }
 
@@ -29,7 +30,7 @@ class TeacherController extends Controller
             'phone' => 'nullable|string',
             'subject' => 'nullable|string',
             'bio' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
@@ -37,6 +38,7 @@ class TeacherController extends Controller
         }
 
         Teacher::create($validated);
+
         return redirect()->route('admin.teachers.index')->with('success', 'Teacher added successfully!');
     }
 
@@ -49,12 +51,12 @@ class TeacherController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:teachers,slug,' . $teacher->id,
-            'email' => 'required|email|unique:teachers,email,' . $teacher->id,
+            'slug' => 'required|string|unique:teachers,slug,'.$teacher->id,
+            'email' => 'required|email|unique:teachers,email,'.$teacher->id,
             'phone' => 'nullable|string',
             'subject' => 'nullable|string',
             'bio' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
@@ -65,6 +67,7 @@ class TeacherController extends Controller
         }
 
         $teacher->update($validated);
+
         return redirect()->route('admin.teachers.index')->with('success', 'Teacher updated successfully!');
     }
 
@@ -74,6 +77,7 @@ class TeacherController extends Controller
             \Storage::disk('public')->delete($teacher->image);
         }
         $teacher->delete();
+
         return redirect()->route('admin.teachers.index')->with('success', 'Teacher deleted successfully!');
     }
 }

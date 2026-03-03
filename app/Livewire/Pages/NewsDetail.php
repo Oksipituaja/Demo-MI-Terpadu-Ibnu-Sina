@@ -3,8 +3,8 @@
 namespace App\Livewire\Pages;
 
 use App\Models\News as NewsModel;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 class NewsDetail extends Component

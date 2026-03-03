@@ -3,8 +3,8 @@
 namespace App\Livewire\Pages;
 
 use App\Models\Gallery as GalleryModel;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
@@ -24,8 +24,8 @@ class Gallery extends Component
         $galleries = GalleryModel::when($this->category, function ($query) {
             $query->where('category', $this->category);
         })
-        ->orderBy('created_at', 'desc')
-        ->paginate(12);
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
 
         $categories = GalleryModel::distinct('category')
             ->pluck('category')

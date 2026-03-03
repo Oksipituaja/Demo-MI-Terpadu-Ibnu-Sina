@@ -28,7 +28,7 @@ class AboutController extends Controller
             'principal_name' => 'nullable|string|max:255',
             'key' => 'required|string|unique:abouts',
             'content' => 'required|string',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
         if ($request->hasFile('image')) {
@@ -53,7 +53,7 @@ class AboutController extends Controller
             'principal_name' => 'nullable|string|max:255',
             'key' => 'required|string|unique:abouts,key,'.$about->id,
             'content' => 'required|string',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
         if ($request->hasFile('image')) {

@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Agenda;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 
 class AgendaSeeder extends Seeder
 {

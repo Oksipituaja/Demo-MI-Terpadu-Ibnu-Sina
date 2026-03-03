@@ -3,9 +3,9 @@
 namespace App\Livewire\Pages;
 
 use App\Models\News as NewsModel;
-use Livewire\Component;
-use Livewire\Attributes\Url;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
+use Livewire\Component;
 use Livewire\Withpagination;
 
 #[Layout('components.layouts.app')]

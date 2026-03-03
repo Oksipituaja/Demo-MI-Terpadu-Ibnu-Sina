@@ -12,5 +12,6 @@ class Facility extends Model
         'description',
         'icon',
         'image',
+        'kondisi',
     ];
 }

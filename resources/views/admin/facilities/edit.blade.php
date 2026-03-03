@@ -26,6 +26,18 @@
         </div>
 
         <div>
+            <label class="block text-sm font-medium mb-1">Kondisi Fasilitas</label>
+            <select name="kondisi" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                <option value="">-- Pilih Kondisi --</option>
+                <option value="tersedia" {{ old('kondisi', $facility->kondisi) === 'tersedia' ? 'selected' : '' }}>✅ Tersedia</option>
+                <option value="perbaikan" {{ old('kondisi', $facility->kondisi) === 'perbaikan' ? 'selected' : '' }}>🔧 Perbaikan</option>
+                <option value="belum_ada" {{ old('kondisi', $facility->kondisi) === 'belum_ada' ? 'selected' : '' }}>❌ Belum Ada</option>
+                <option value="akan_ada" {{ old('kondisi', $facility->kondisi) === 'akan_ada' ? 'selected' : '' }}>🔜 Akan Ada</option>
+            </select>
+            @error('kondisi') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
             <label class="block text-sm font-medium mb-1">Image</label>
             @if($facility->image)
                 <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">

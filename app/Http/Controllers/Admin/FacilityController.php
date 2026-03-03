@@ -12,6 +12,7 @@ class FacilityController extends Controller
     public function index(): View
     {
         $facilities = Facility::latest()->paginate(15);
+
         return view('admin.facilities.index', compact('facilities'));
     }
 
@@ -27,7 +28,8 @@ class FacilityController extends Controller
             'slug' => 'required|string|unique:facilities',
             'description' => 'nullable|string',
             'icon' => 'nullable|string',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'kondisi' => 'required|in:tersedia,perbaikan,belum_ada,akan_ada',
         ]);
 
         if ($request->hasFile('image')) {
@@ -35,6 +37,7 @@ class FacilityController extends Controller
         }
 
         Facility::create($validated);
+
         return redirect()->route('admin.facilities.index')->with('success', 'Facility added successfully!');
     }
 
@@ -47,10 +50,11 @@ class FacilityController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:facilities,slug,' . $facility->id,
+            'slug' => 'required|string|unique:facilities,slug,'.$facility->id,
             'description' => 'nullable|string',
             'icon' => 'nullable|string',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'kondisi' => 'required|in:tersedia,perbaikan,belum_ada,akan_ada',
         ]);
 
         if ($request->hasFile('image')) {
@@ -61,6 +65,7 @@ class FacilityController extends Controller
         }
 
         $facility->update($validated);
+
         return redirect()->route('admin.facilities.index')->with('success', 'Facility updated successfully!');
     }
 
@@ -70,6 +75,7 @@ class FacilityController extends Controller
             \Storage::disk('public')->delete($facility->image);
         }
         $facility->delete();
+
         return redirect()->route('admin.facilities.index')->with('success', 'Facility deleted successfully!');
     }
 }

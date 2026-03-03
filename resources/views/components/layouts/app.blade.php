@@ -13,7 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <!-- Styles / Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('build/assets/app-bxu3zjQQ.css') }}">
+    <script type="module" src="{{ asset('build/assets/app-CKl8NZMC.js') }}" defer></script>
     <style>
         .font-display {
             font-family: 'Inter', sans-serif;
@@ -47,7 +48,7 @@
         <nav class="bg-white/90 backdrop-blur-md border-b border-gray-100/50">
             <div class="container mx-auto px-6 h-20 flex justify-between items-center">
                 <a href="{{ route('home') }}" class="flex items-center group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                    <div class="w-12 h-12 bg-linear-to-br from-blue-700 to-blue-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
                         <span class="text-white font-bold text-xl">SD</span>
                     </div>
                     <div class="flex flex-col">
@@ -68,7 +69,7 @@
                 </ul>
 
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('ppdb') }}" class="hidden sm:flex items-center bg-gradient-to-r from-yellow-400 to-yellow-300 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg shadow-yellow-400/30 transition-all hover:-translate-y-1 active:scale-95">
+                    <a href="{{ route('ppdb') }}" class="hidden sm:flex items-center bg-linear-to-r from-yellow-400 to-yellow-300 hover:from-yellow-300 hover:to-yellow-400 text-gray-900 font-bold py-3 px-6 rounded-xl shadow-lg shadow-yellow-400/30 transition-all hover:-translate-y-1 active:scale-95">
                         Daftar PPDB
                         <span class="ml-2">→</span>
                     </a>
@@ -79,7 +80,7 @@
 
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="lg:hidden fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300">
-            <div id="mobileMenuPanel" class="fixed right-0 top-0 h-full w-80 bg-white/100 shadow-2xl transform translate-x-full transition-transform duration-300">
+            <div id="mobileMenuPanel" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-8">
                         <h3 class="font-display font-bold text-blue-700 text-xl">Menu</h3>
@@ -95,7 +96,7 @@
                         <a href="{{ route('home') }}#agenda" class="mobile-nav-link">Agenda</a>
                         <a href="{{ route('home') }}#kontak" class="mobile-nav-link">Kontak</a>
                         <div class="pt-4 border-t border-gray-200">
-                            <a href="{{ route('ppdb') }}" class="block bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 font-bold py-3 px-6 rounded-xl text-center shadow-lg">
+                            <a href="{{ route('ppdb') }}" class="block bg-linear-to-r from-yellow-400 to-yellow-300 text-gray-900 font-bold py-3 px-6 rounded-xl text-center shadow-lg">
                                 Daftar PPDB →
                             </a>
                         </div>
@@ -126,7 +127,7 @@
                 <!-- School Info -->
                 <div>
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-400 rounded-full flex items-center justify-center mr-3">
+                        <div class="w-12 h-12 bg-linear-to-br from-blue-500 to-blue-400 rounded-full flex items-center justify-center mr-3">
                             <span class="text-white font-bold">SD</span>
                         </div>
                         <div>

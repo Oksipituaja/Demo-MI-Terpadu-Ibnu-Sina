@@ -3,8 +3,8 @@
 namespace App\Livewire\Pages;
 
 use App\Models\Gallery as GalleryModel;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 class GalleryDetail extends Component

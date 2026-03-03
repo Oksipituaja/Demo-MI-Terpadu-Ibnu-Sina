@@ -3,9 +3,9 @@
 namespace App\Livewire\Pages;
 
 use App\Models\About as AboutModel;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 class About extends Component
@@ -22,13 +22,13 @@ class About extends Component
     {
         // Get hero image
         $heroImage = AboutModel::where('key', 'hero_image')->first();
-        
+
         // Get principal greeting (sambutan kepala sekolah)
         $principalGreeting = AboutModel::where('key', 'principal_greeting')->first();
-        
+
         // Get all about sections except hero_image
         $aboutSections = AboutModel::where('key', '!=', 'hero_image')->get();
-        
+
         // Get specific sections for expanded display
         $schoolProfile = AboutModel::where('key', 'school_profile')->first();
         $vision = AboutModel::where('key', 'vision')->first();

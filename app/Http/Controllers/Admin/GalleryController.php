@@ -12,6 +12,7 @@ class GalleryController extends Controller
     public function index(): View
     {
         $galleries = Gallery::latest()->paginate(15);
+
         return view('admin.galleries.index', compact('galleries'));
     }
 
@@ -27,11 +28,12 @@ class GalleryController extends Controller
             'slug' => 'required|string|unique:galleries',
             'description' => 'nullable|string',
             'category' => 'required|string',
-            'image' => 'required|image|max:5120',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
         $validated['image'] = $request->file('image')->store('gallery', 'public');
         Gallery::create($validated);
+
         return redirect()->route('admin.galleries.index')->with('success', 'Gallery item added successfully!');
     }
 
@@ -44,10 +46,10 @@ class GalleryController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:galleries,slug,' . $gallery->id,
+            'slug' => 'required|string|unique:galleries,slug,'.$gallery->id,
             'description' => 'nullable|string',
             'category' => 'required|string',
-            'image' => 'nullable|image|max:5120',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
         if ($request->hasFile('image')) {
@@ -56,6 +58,7 @@ class GalleryController extends Controller
         }
 
         $gallery->update($validated);
+
         return redirect()->route('admin.galleries.index')->with('success', 'Gallery item updated successfully!');
     }
 
@@ -63,6 +66,7 @@ class GalleryController extends Controller
     {
         \Storage::disk('public')->delete($gallery->image);
         $gallery->delete();
+
         return redirect()->route('admin.galleries.index')->with('success', 'Gallery item deleted successfully!');
     }
 }

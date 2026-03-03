@@ -23,7 +23,7 @@ class GalleryResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn(Forms\Set $set, ?string $state) => $set('slug', str()->slug($state))),
+                    ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', str()->slug($state))),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255)
@@ -47,7 +47,14 @@ class GalleryResource extends Resource
                     ->image()
                     ->disk('public')
                     ->required()
-                    ->directory('gallery'),
+                    ->directory('gallery')
+                    ->shouldPreserveFilesNamed()
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16 / 9')
+                    ->imageResizeTargetWidth(1200)
+                    ->imageResizeTargetHeight(675)
+                    ->maxSize(5120)
+                    ->helperText('Gambar akan dioptimasi ke 1200x675px, max 5MB'),
             ]);
     }
 

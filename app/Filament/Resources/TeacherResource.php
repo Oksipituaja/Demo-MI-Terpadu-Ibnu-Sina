@@ -41,7 +41,14 @@ class TeacherResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->disk('public')
-                    ->directory('teachers'),
+                    ->directory('teachers')
+                    ->shouldPreserveFilesNamed()
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('1 / 1')
+                    ->imageResizeTargetWidth(400)
+                    ->imageResizeTargetHeight(400)
+                    ->maxSize(2048)
+                    ->helperText('Gambar akan dioptimasi ke 400x400px, max 2MB'),
             ]);
     }
 

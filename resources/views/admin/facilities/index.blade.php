@@ -17,6 +17,7 @@
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Name</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Icon</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Kondisi</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Description</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Actions</th>
             </tr>
@@ -28,6 +29,19 @@
                     <td class="px-6 py-4 text-sm">
                         @if($facility->icon)
                             <i class="{{ $facility->icon }} text-xl text-blue-600"></i> {{ $facility->icon }}
+                        @else
+                            <span>-</span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 text-sm">
+                        @if($facility->kondisi === 'tersedia')
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Tersedia</span>
+                        @elseif($facility->kondisi === 'perbaikan')
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">Perbaikan</span>
+                        @elseif($facility->kondisi === 'belum_ada')
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">Belum Ada</span>
+                        @elseif($facility->kondisi === 'akan_ada')
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Akan Ada</span>
                         @else
                             <span>-</span>
                         @endif

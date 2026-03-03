@@ -35,8 +35,7 @@
             @error('content') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
 
-        <div>
-            <label class="block text-sm font-medium mb-1">Image (Optional)</label>
+        <div id="imageField"><label class="block text-sm font-medium mb-1">Image (Optional)</label>
             <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition" id="dropZone">
                 <input type="file" id="image" name="image" accept="image/*" class="hidden">
                 <div>
@@ -56,17 +55,29 @@
         document.addEventListener('DOMContentLoaded', function() {
             const keySelect = document.getElementById('keySelect');
             const principalNameField = document.getElementById('principalNameField');
+            const imageField = document.getElementById('imageField');
+            const noImageKeys = ['school_profile', 'mission', 'vision'];
 
-            function togglePrincipalName() {
-                if (keySelect.value === 'principal_greeting') {
+            function toggleFields() {
+                const selectedKey = keySelect.value;
+                
+                // Toggle principal name field
+                if (selectedKey === 'principal_greeting') {
                     principalNameField.classList.remove('hidden');
                 } else {
                     principalNameField.classList.add('hidden');
                 }
+                
+                // Toggle image field
+                if (noImageKeys.includes(selectedKey)) {
+                    imageField.classList.add('hidden');
+                } else {
+                    imageField.classList.remove('hidden');
+                }
             }
 
-            keySelect.addEventListener('change', togglePrincipalName);
-            togglePrincipalName();
+            keySelect.addEventListener('change', toggleFields);
+            toggleFields(); // Call on page load
         });
         </script>
 

@@ -27,7 +27,7 @@ class NewsResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn(Forms\Set $set, ?string $state) => $set('slug', str()->slug($state))),
+                    ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', str()->slug($state))),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
@@ -39,7 +39,14 @@ class NewsResource extends Resource
                 Forms\Components\FileUpload::make('featured_image')
                     ->image()
                     ->disk('public')
-                    ->directory('news'),
+                    ->directory('news')
+                    ->shouldPreserveFilesNamed()
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16 / 9')
+                    ->imageResizeTargetWidth(1200)
+                    ->imageResizeTargetHeight(675)
+                    ->maxSize(5120)
+                    ->helperText('Gambar akan dioptimasi ke 1200x675px, max 5MB'),
                 Forms\Components\Select::make('status')
                     ->options([
                         'draft' => 'Draft',

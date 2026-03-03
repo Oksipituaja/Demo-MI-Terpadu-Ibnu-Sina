@@ -3,19 +3,26 @@
 namespace App\Livewire\Pages;
 
 use App\Models\Registration;
-use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Component;
 
 #[Layout('components.layouts.app')]
 class PPDB extends Component
 {
     public string $student_name = '';
+
     public string $email = '';
+
     public string $phone = '';
+
     public string $birth_date = '';
+
     public string $current_school = '';
+
     public string $address = '';
+
     public string $guardian_name = '';
+
     public string $guardian_phone = '';
 
     public function submit()

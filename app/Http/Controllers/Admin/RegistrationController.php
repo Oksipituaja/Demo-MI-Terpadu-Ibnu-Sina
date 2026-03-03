@@ -11,12 +11,14 @@ class RegistrationController extends Controller
     public function index(): View
     {
         $registrations = Registration::latest()->paginate(15);
+
         return view('admin.registrations.index', compact('registrations'));
     }
 
     public function destroy(Registration $registration)
     {
         $registration->delete();
+
         return redirect()->route('admin.registrations.index')->with('success', 'Registration deleted successfully!');
     }
 }

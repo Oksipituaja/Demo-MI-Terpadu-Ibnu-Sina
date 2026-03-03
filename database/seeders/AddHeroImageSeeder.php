@@ -10,7 +10,7 @@ class AddHeroImageSeeder extends Seeder
     public function run(): void
     {
         // Cek apakah hero_image sudah ada
-        if (!About::where('key', 'hero_image')->exists()) {
+        if (! About::where('key', 'hero_image')->exists()) {
             About::create([
                 'title' => 'Hero Image',
                 'key' => 'hero_image',

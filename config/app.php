@@ -123,4 +123,16 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Limits
+    |--------------------------------------------------------------------------
+    |
+    | These values determine the maximum permitted records for various entities.
+    | Adjust these values based on your institution's requirements.
+    |
+    */
+
+    'teacher_limit' => env('TEACHER_LIMIT', 100),
+
 ];
