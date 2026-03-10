@@ -30,7 +30,7 @@ class News extends Component
                     ->orWhere('excerpt', 'like', "%{$this->search}%");
             })
             ->orderBy('published_at', 'desc')
-            ->paginate(9);
+            ->paginate(50);
 
         return view('livewire.pages.news', [
             'news' => $news,

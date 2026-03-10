@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -51,5 +53,21 @@ class User extends Authenticatable
             'is_active' => 'boolean',
             'last_login' => 'datetime',
         ];
+    }
+
+    /**
+     * Check if user can access Filament admin panel.
+     */
+    public function canAccessPanel(Panel|null $panel): bool
+    {
+        return $this->is_active && in_array($this->role, [UserRole::SuperAdmin, UserRole::Admin]);
+    }
+
+    /**
+     * Get the name displayed in Filament.
+     */
+    public function getFilamentName(): string
+    {
+        return $this->name;
     }
 }

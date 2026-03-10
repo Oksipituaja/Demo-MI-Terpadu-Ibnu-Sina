@@ -30,14 +30,11 @@
                         @if($teacher->image)
                             <img src="{{ asset('storage/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="w-full h-full object-cover">
                         @else
-                            <span class="text-5xl">👨‍🏫</span>
+                            <i class="fas fa-chalkboard-user text-5xl text-white"></i>
                         @endif
                     </div>
                     <h3 class="font-display text-xl font-bold text-gray-900 group-hover:text-blue-700 transition">{{ $teacher->name }}</h3>
                     <p class="text-blue-700 font-semibold mb-3 text-lg">{{ $teacher->subject }}</p>
-                    <p class="text-gray-600 text-sm leading-relaxed">
-                        {{ $teacher->bio ?? 'Guru profesional yang berdedikasi dalam memberikan pendidikan terbaik' }}
-                    </p>
                 </div>
             @empty
                 <div class="col-span-full bg-gradient-to-br from-blue-50 to-blue-100 p-12 rounded-2xl text-center">

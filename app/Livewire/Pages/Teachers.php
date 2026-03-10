@@ -11,7 +11,7 @@ class Teachers extends Component
 {
     public function render()
     {
-        $teachers = Teacher::orderBy('created_at', 'desc')->paginate(12);
+        $teachers = Teacher::orderBy('created_at', 'desc')->paginate(60);
 
         return view('livewire.pages.teachers', [
             'teachers' => $teachers,

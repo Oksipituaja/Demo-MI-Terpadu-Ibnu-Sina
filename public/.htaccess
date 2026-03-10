@@ -30,6 +30,17 @@
     AddEncoding gzip .gz
 </IfModule>
 
+# Add proper MIME types
+<IfModule mod_mime.c>
+    AddType text/css .css
+    AddType application/javascript .js
+    AddType application/font-woff .woff
+    AddType application/font-woff2 .woff2
+    AddType application/x-font-ttf .ttf
+    AddType image/svg+xml .svg
+    AddEncoding gzip .svgz
+</IfModule>
+
 # Browser Caching
 <IfModule mod_expires.c>
     ExpiresActive On

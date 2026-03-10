@@ -59,22 +59,36 @@ return new class extends Migration
     {
         // This is safe - only removes if exists
         Schema::table('news', function (Blueprint $table) {
-            $table->dropIndexIfExists(['status']);
-            $table->dropIndexIfExists(['user_id']);
+            if ($this->indexExists('news', 'news_status_index')) {
+                $table->dropIndex('news_status_index');
+            }
+            if ($this->indexExists('news', 'news_user_id_index')) {
+                $table->dropIndex('news_user_id_index');
+            }
         });
 
         Schema::table('galleries', function (Blueprint $table) {
-            $table->dropIndexIfExists(['category']);
+            if ($this->indexExists('galleries', 'galleries_category_index')) {
+                $table->dropIndex('galleries_category_index');
+            }
         });
 
         Schema::table('agendas', function (Blueprint $table) {
-            $table->dropIndexIfExists(['event_date']);
-            $table->dropIndexIfExists(['status']);
+            if ($this->indexExists('agendas', 'agendas_event_date_index')) {
+                $table->dropIndex('agendas_event_date_index');
+            }
+            if ($this->indexExists('agendas', 'agendas_status_index')) {
+                $table->dropIndex('agendas_status_index');
+            }
         });
 
         Schema::table('prestasis', function (Blueprint $table) {
-            $table->dropIndexIfExists(['status']);
-            $table->dropIndexIfExists(['achievement_date']);
+            if ($this->indexExists('prestasis', 'prestasis_status_index')) {
+                $table->dropIndex('prestasis_status_index');
+            }
+            if ($this->indexExists('prestasis', 'prestasis_achievement_date_index')) {
+                $table->dropIndex('prestasis_achievement_date_index');
+            }
         });
     }
 
@@ -87,6 +101,7 @@ return new class extends Migration
 
         if ($driver === 'sqlite') {
             $result = \DB::selectOne("PRAGMA index_info({$indexName})");
+
             return $result !== null;
         }
 

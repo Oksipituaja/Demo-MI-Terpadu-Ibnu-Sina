@@ -1,57 +1,83 @@
 @extends('admin.layout')
 
-@section('page_title', 'Edit Gallery Item')
+@section('page_title', 'Edit Gallery')
 
 @section('content')
 <div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-6">
     <form action="{{ route('admin.galleries.update', $gallery) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf @method('PUT')
 
-        <div><label class="block text-sm font-medium mb-1">Title</label>
-            <input type="text" name="title" value="{{ old('title', $gallery->title) }}" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+        <div>
+            <label class="block text-sm font-medium mb-1">Title</label>
+            <input type="text" name="title" id="galleryTitle" value="{{ old('title', $gallery->title) }}" required
+                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
             @error('title') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
 
-        <div><label class="block text-sm font-medium mb-1">Slug</label>
-            <input type="text" name="slug" value="{{ old('slug', $gallery->slug) }}" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+        <div>
+            <label class="block text-sm font-medium mb-1">
+                Slug
+                <span class="ml-1 text-xs text-yellow-600">⚠ Hati-hati mengubah slug</span>
+            </label>
+            <div class="flex gap-2">
+                <input type="text" name="slug" id="gallerySlug" value="{{ old('slug', $gallery->slug) }}" required
+                    class="flex-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50">
+                <button type="button" id="btn-reset-slug"
+                    class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg text-xs font-medium transition">
+                    <i class="fas fa-sync-alt mr-1"></i> Generate dari Title
+                </button>
+            </div>
             @error('slug') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
 
-        <div><label class="block text-sm font-medium mb-1">Category</label>
-            <input type="text" name="category" value="{{ old('category', $gallery->category) }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+        <div>
+            <label class="block text-sm font-medium mb-1">Kategori</label>
+            <input type="text" name="category" value="{{ old('category', $gallery->category) }}" required
+                list="categoryList"
+                placeholder="cth: Acara Sekolah, Olahraga, Seni"
+                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+            <datalist id="categoryList">
+                <option value="Acara Sekolah">
+                <option value="Program Pembelajaran">
+                <option value="Olahraga">
+                <option value="Seni">
+                <option value="Ekstrakurikuler">
+                <option value="Keagamaan">
+            </datalist>
+            @error('category') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
 
-        <!-- Image Upload with Preview -->
         <div>
-            <label class="block text-sm font-medium mb-2">Image (Maks 5 MB)</label>
-            
-            <!-- Current Image -->
+            <label class="block text-sm font-medium mb-1">Deskripsi</label>
+            <textarea name="description" rows="3"
+                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">{{ old('description', $gallery->description) }}</textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Image</label>
             @if($gallery->image)
-                <div class="mb-4 p-4 bg-gray-50 rounded-lg">
-                    <p class="text-xs text-gray-600 mb-2">Gambar Saat Ini:</p>
-                    <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}" class="max-w-xs h-40 object-cover rounded">
+                <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <p class="text-xs font-medium text-gray-600 mb-2">Gambar Saat Ini</p>
+                    <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}"
+                        class="max-w-sm h-40 object-cover rounded">
                 </div>
             @endif
-            
-            <!-- Image Upload -->
-            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-500 transition" id="dropZone">
-                <input type="file" name="image" accept="image/*" id="imageInput" class="hidden">
-                <i class="fas fa-cloud-upload-alt text-4xl text-gray-300 mb-3 inline-block"></i>
-                <p class="text-gray-600">Drag & drop gambar atau <button type="button" onclick="document.getElementById('imageInput').click()" class="text-blue-600 hover:text-blue-800 font-semibold">pilih file</button></p>
-                <p class="text-xs text-gray-500 mt-2">JPG, PNG (Maks 5 MB)</p>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition" id="dropZone">
+                <input type="file" id="image" name="image" accept="image/*" class="hidden">
+                <div>
+                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                    <p class="text-gray-600">Drag & drop atau
+                        <button type="button" class="text-blue-600 hover:text-blue-700 font-medium"
+                            onclick="document.getElementById('image').click()">pilih file</button>
+                    </p>
+                    <p class="text-xs text-gray-500 mt-2">JPG, PNG, WebP (Max 5MB)</p>
+                </div>
             </div>
-            
-            <!-- Image Preview -->
-            <div id="imagePreview" class="mt-4 hidden">
-                <p class="text-xs text-gray-600 mb-2">Pratinjau Gambar Baru:</p>
-                <img id="previewImg" src="" alt="Preview" class="max-w-xs h-40 object-cover rounded-lg">
-                <p id="fileName" class="text-sm text-gray-600 mt-2"></p>
+            <div id="imagePreview" class="hidden mt-4">
+                <p class="text-xs font-medium text-gray-600 mb-2">Pratinjau Gambar Baru</p>
+                <img id="previewImg" src="" alt="Preview" class="max-w-sm h-40 object-cover rounded-lg">
+                <p id="fileName" class="text-xs text-gray-600 mt-2"></p>
             </div>
-            @error('image') <p class="text-red-600 text-sm mt-2">{{ $message }}</p> @enderror
-        </div>
-
-        <div><label class="block text-sm font-medium mb-1">Description</label>
-            <textarea name="description" rows="4" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">{{ old('description', $gallery->description) }}</textarea>
         </div>
 
         <div class="flex gap-3 pt-4 border-t">
@@ -62,49 +88,53 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const imageInput = document.getElementById('imageInput');
-    const dropZone = document.getElementById('dropZone');
-    const imagePreview = document.getElementById('imagePreview');
-    const previewImg = document.getElementById('previewImg');
-    const fileName = document.getElementById('fileName');
+document.addEventListener('DOMContentLoaded', function () {
+    var titleInput = document.getElementById('galleryTitle');
+    var slugInput  = document.getElementById('gallerySlug');
 
-    // Handle file selection
-    imageInput.addEventListener('change', function(e) {
-        handleFile(this.files[0]);
+    function generateSlug(text) {
+        return text.toLowerCase().trim()
+            .replace(/[àáâãäå]/g, 'a').replace(/[èéêë]/g, 'e')
+            .replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o')
+            .replace(/[ùúûü]/g, 'u')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/[\s-]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+    }
+
+    document.getElementById('btn-reset-slug').addEventListener('click', function () {
+        if (confirm('Generate ulang slug dari title?\nURL lama bisa tidak berfungsi!')) {
+            slugInput.value = generateSlug(titleInput.value);
+        }
     });
 
-    // Handle drag & drop
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('border-blue-500', 'bg-blue-50');
-    });
-    dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-    });
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-        handleFile(e.dataTransfer.files[0]);
-    });
+    var dropZone     = document.getElementById('dropZone');
+    var fileInput    = document.getElementById('image');
+    var imagePreview = document.getElementById('imagePreview');
+    var previewImg   = document.getElementById('previewImg');
+    var fileName     = document.getElementById('fileName');
+    var maxSize      = 5 * 1024 * 1024;
 
     function handleFile(file) {
-        if (file && file.type.startsWith('image/')) {
-            if (file.size > 5 * 1024 * 1024) {
-                alert('File terlalu besar. Maksimal 5 MB');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImg.src = e.target.result;
-                fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
-                imagePreview.classList.remove('hidden');
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('File harus berupa image');
-        }
+        if (!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
+        if (file.size > maxSize) { alert('File size must be less than 5MB'); return; }
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            previewImg.src = e.target.result;
+            fileName.textContent = 'File: ' + file.name + ' (' + (file.size/1024).toFixed(2) + ' KB)';
+            imagePreview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
     }
+
+    fileInput.addEventListener('change', function (e) { if (e.target.files[0]) handleFile(e.target.files[0]); });
+    dropZone.addEventListener('dragover', function (e) { e.preventDefault(); dropZone.classList.add('border-blue-500', 'bg-blue-50'); });
+    dropZone.addEventListener('dragleave', function () { dropZone.classList.remove('border-blue-500', 'bg-blue-50'); });
+    dropZone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+        if (e.dataTransfer.files[0]) { fileInput.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
+    });
 });
 </script>
 @endsection

@@ -45,9 +45,9 @@ class AccountManagement extends Page implements HasTable
                     ->label('Role')
                     ->formatStateUsing(fn (UserRole $state) => $state->label())
                     ->colors([
-                        'danger' => 'super_admin',
-                        'warning' => 'admin',
-                        'success' => 'user',
+                        'danger' => UserRole::SuperAdmin->value,
+                        'warning' => UserRole::Admin->value,
+                        'info' => UserRole::User->value,
                     ]),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label('Status')
@@ -119,7 +119,7 @@ class AccountManagement extends Page implements HasTable
                         ->label('Role / Peran')
                         ->options(UserRole::class)
                         ->required()
-                        ->default(UserRole::User),
+                        ->default(UserRole::User->value),
                 ])->columns(2),
 
             Forms\Components\Section::make('Status')

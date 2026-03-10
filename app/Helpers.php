@@ -2,7 +2,7 @@
 
 use App\Helpers\PrestasiHelper;
 
-if (!function_exists('getAwardIcon')) {
+if (! function_exists('getAwardIcon')) {
     /**
      * Get award icon and color based on category
      */

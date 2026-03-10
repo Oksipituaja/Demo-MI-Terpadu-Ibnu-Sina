@@ -10,18 +10,42 @@ use Symfony\Component\HttpFoundation\Response;
 class CachePageResponse
 {
     /**
-     * Cache public pages selama 1 jam untuk super fast loading
+     * Route prefix yang TIDAK boleh di-cache sama sekali
+     * karena memerlukan autentikasi atau bersifat dinamis
+     */
+    private array $noCacheRoutes = [
+        '/login',
+        '/register',
+        '/logout',
+        '/forgot-password',
+        '/reset-password',
+        '/dashboard',
+        '/admin-panel',   
+        '/admin',
+        '/livewire',
+    ];
+
+    /**
+     * Cache hanya public pages, TIDAK pernah cache protected/auth routes
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Hanya cache GET requests untuk public pages
+       
         if (! $request->isMethod('GET') || auth()->check()) {
             return $next($request);
         }
 
-        $cacheKey = 'page.response.'.md5($request->getPathInfo());
+        $path = $request->getPathInfo();
+        foreach ($this->noCacheRoutes as $route) {
+            if ($path === $route || str_starts_with($path, $route . '/')) {
+                return $next($request);
+            }
+        }
 
-        // Try get dari cache terlebih dahulu
+        $fullUrl = $path . ($request->getQueryString() ? '?' . $request->getQueryString() : '');
+        $cacheKey = 'page.response.' . md5($fullUrl);
+
+        // Ambil dari cache jika ada
         if (Cache::has($cacheKey)) {
             $cached = Cache::get($cacheKey);
 
@@ -30,11 +54,11 @@ class CachePageResponse
                 ->header('X-Cache', 'HIT');
         }
 
-        // Jika tidak ada di cache, generate dan cache
+        // Generate response dan cache
         $response = $next($request);
 
         if ($response->isSuccessful() && ! $response->headers->has('X-No-Cache')) {
-            Cache::put($cacheKey, $response->getContent(), 3600); // 1 jam
+            Cache::put($cacheKey, $response->getContent(), 3600);
             $response->header('X-Cache', 'MISS');
         }
 

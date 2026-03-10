@@ -12,36 +12,69 @@ class GallerySeeder extends Seeder
 
     public function run(): void
     {
-        Gallery::create([
-            'title' => 'Upacara Bendera Hari Senin',
-            'slug' => 'upacara-bendera-hari-senin',
-            'description' => 'Upacara bendera rutin kami setiap hari Senin pagi. Semua siswa dan guru hadir dengan tertib dan disiplin.',
-            'category' => 'Acara Sekolah',
-            'image' => 'gallery/upacara-bendera.jpg',
-        ]);
+        Gallery::truncate();
 
-        Gallery::create([
-            'title' => 'Kelas Baca Bersama',
-            'slug' => 'kelas-baca-bersama',
-            'description' => 'Program membaca bersama di perpustakaan sekolah untuk meningkatkan minat baca siswa.',
-            'category' => 'Program Pembelajaran',
-            'image' => 'gallery/kelas-baca.jpg',
-        ]);
+        $galleries = [
+            [
+                'title'       => 'Upacara Bendera Hari Senin',
+                'slug'        => 'upacara-bendera-hari-senin',
+                'description' => 'Upacara bendera rutin setiap hari Senin pagi yang diikuti seluruh siswa dan guru dengan tertib dan penuh semangat.',
+                'category'    => 'Acara Sekolah',
+                'image'       => null,
+            ],
+            [
+                'title'       => 'Program Kelas Baca Bersama',
+                'slug'        => 'program-kelas-baca-bersama',
+                'description' => 'Program membaca bersama di perpustakaan sekolah untuk meningkatkan minat baca dan literasi siswa.',
+                'category'    => 'Program Pembelajaran',
+                'image'       => null,
+            ],
+            [
+                'title'       => 'Turnamen Olahraga Antar Kelas',
+                'slug'        => 'turnamen-olahraga-antar-kelas',
+                'description' => 'Turnamen olahraga yang meriah dengan partisipasi dari seluruh kelas dalam rangka memperingati Hari Olahraga Nasional.',
+                'category'    => 'Olahraga',
+                'image'       => null,
+            ],
+            [
+                'title'       => 'Pameran Karya Seni Siswa',
+                'slug'        => 'pameran-karya-seni-siswa',
+                'description' => 'Pameran karya seni dan kreativitas siswa yang dipajang di aula sekolah sebagai bentuk apresiasi bakat.',
+                'category'    => 'Seni',
+                'image'       => null,
+            ],
+            [
+                'title'       => 'Pentas Seni Akhir Tahun',
+                'slug'        => 'pentas-seni-akhir-tahun',
+                'description' => 'Pertunjukan seni tahunan yang menampilkan berbagai penampilan tari, musik, dan drama oleh siswa SD Bangsri.',
+                'category'    => 'Acara Sekolah',
+                'image'       => null,
+            ],
+            [
+                'title'       => 'Kegiatan Pramuka',
+                'slug'        => 'kegiatan-pramuka',
+                'description' => 'Kegiatan pramuka rutin yang melatih kemandirian, kedisiplinan, dan jiwa kepemimpinan siswa.',
+                'category'    => 'Ekstrakurikuler',
+                'image'       => null,
+            ],
+            [
+                'title'       => 'Pesantren Kilat Ramadhan',
+                'slug'        => 'pesantren-kilat-ramadhan',
+                'description' => 'Kegiatan pesantren kilat dalam menyambut Ramadhan, diisi dengan tadarus, ceramah, dan buka puasa bersama.',
+                'category'    => 'Keagamaan',
+                'image'       => null,
+            ],
+            [
+                'title'       => 'Kunjungan Edukasi ke Museum',
+                'slug'        => 'kunjungan-edukasi-museum',
+                'description' => 'Kunjungan edukasi ke museum daerah dalam rangka pembelajaran sejarah dan budaya lokal.',
+                'category'    => 'Program Pembelajaran',
+                'image'       => null,
+            ],
+        ];
 
-        Gallery::create([
-            'title' => 'Olahraga Antar Kelas',
-            'slug' => 'olahraga-antar-kelas',
-            'description' => 'Turnamen olahraga antar kelas yang meriah dengan partisipasi dari semua kelas.',
-            'category' => 'Olahraga',
-            'image' => 'gallery/olahraga.jpg',
-        ]);
-
-        Gallery::create([
-            'title' => 'Pameran Karya Siswa',
-            'slug' => 'pameran-karya-siswa',
-            'description' => 'Pameran karya seni dan kreativitas siswa di aula sekolah.',
-            'category' => 'Seni',
-            'image' => 'gallery/pameran-karya.jpg',
-        ]);
+        foreach ($galleries as $data) {
+            Gallery::create($data);
+        }
     }
 }

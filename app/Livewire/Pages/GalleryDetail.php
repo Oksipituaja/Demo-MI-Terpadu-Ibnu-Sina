@@ -13,22 +13,17 @@ class GalleryDetail extends Component
 
     public function render()
     {
-        $gallery = GalleryModel::where('slug', $this->slug)
-            ->firstOrFail();
+        $gallery = GalleryModel::where('slug', $this->slug)->firstOrFail();
 
+        // ✅ Hapus $allCategories — tidak dipakai di blade, query sia-sia
         $relatedGalleries = GalleryModel::where('slug', '!=', $this->slug)
             ->where('category', $gallery->category)
             ->limit(3)
             ->get();
 
-        $allCategories = GalleryModel::distinct('category')
-            ->pluck('category')
-            ->toArray();
-
         return view('livewire.pages.gallery-detail', [
-            'gallery' => $gallery,
+            'gallery'          => $gallery,
             'relatedGalleries' => $relatedGalleries,
-            'allCategories' => $allCategories,
         ]);
     }
 }

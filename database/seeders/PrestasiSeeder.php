@@ -4,59 +4,83 @@ namespace Database\Seeders;
 
 use App\Models\Prestasi;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class PrestasiSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        Prestasi::truncate();
+
         $prestasis = [
             [
-                'title' => 'Juara 1 Lomba Matematika Tingkat Kabupaten',
-                'slug' => 'juara-1-lomba-matematika-tingkat-kabupaten',
-                'description' => 'Siswa SD Bangsri berhasil meraih prestasi gemilang dengan menjadi juara 1 dalam lomba matematika tingkat kabupaten. Prestasi ini menunjukkan dedikasi dan kerja keras dalam pembelajaran matematika.',
-                'category' => 'Academic',
+                'title'            => 'Juara 1 Olimpiade Matematika Tingkat Kabupaten',
+                'slug'             => 'juara-1-olimpiade-matematika-tingkat-kabupaten',
+                'description'      => 'Siswa SD Bangsri berhasil meraih Juara 1 dalam Olimpiade Matematika Tingkat Kabupaten. Prestasi ini merupakan hasil dari latihan intensif selama 3 bulan bersama guru pembimbing.',
+                'category'         => 'Juara 1',
                 'achievement_date' => now()->subMonths(3),
-                'status' => 'published',
+                'status'           => 'published',
             ],
             [
-                'title' => 'Medali Emas Lomba Olahraga Lari 100m',
-                'slug' => 'medali-emas-lomba-olahraga-lari-100m',
-                'description' => 'Prestasi gemilang dalam lomba olahraga tingkat provinsi. Siswa kami berhasil meraih medali emas dalam nomor lari 100m dengan waktu yang sangat kompetitif.',
-                'category' => 'Sports',
+                'title'            => 'Juara 1 Lomba Menyanyi Tunggal Tingkat Kecamatan',
+                'slug'             => 'juara-1-lomba-menyanyi-tunggal-tingkat-kecamatan',
+                'description'      => 'Salah satu siswa kami berhasil meraih Juara 1 dalam lomba menyanyi tunggal tingkat kecamatan yang diikuti oleh lebih dari 20 peserta dari berbagai sekolah.',
+                'category'         => 'Juara 1',
                 'achievement_date' => now()->subMonths(2),
-                'status' => 'published',
+                'status'           => 'published',
             ],
             [
-                'title' => 'Juara Festival Seni Rupa Sekolah Dasar',
-                'slug' => 'juara-festival-seni-rupa-sekolah-dasar',
-                'description' => 'Karya seni visual siswa kami berhasil memenangkan juara pertama dalam festival seni rupa antar sekolah dasar se-kabupaten. Ini menunjukkan kreativitas dan bakat seni yang luar biasa.',
-                'category' => 'Arts',
-                'achievement_date' => now()->subMonth(),
-                'status' => 'published',
+                'title'            => 'Juara 2 Lomba Cerdas Cermat Tingkat Kabupaten',
+                'slug'             => 'juara-2-lomba-cerdas-cermat-tingkat-kabupaten',
+                'description'      => 'Tim cerdas cermat SD Bangsri berhasil meraih Juara 2 dalam lomba cerdas cermat antar sekolah dasar tingkat kabupaten tahun ini.',
+                'category'         => 'Juara 2',
+                'achievement_date' => now()->subMonths(2),
+                'status'           => 'published',
             ],
             [
-                'title' => 'Penghargaan Akreditasi A dari BAN',
-                'slug' => 'penghargaan-akreditasi-a-dari-ban',
-                'description' => 'SD Bangsri dengan bangga mengumumkan bahwa sekolah kami telah meraih akreditasi A dari Badan Akreditasi Nasional (BAN). Ini adalah bukti komitmen kami terhadap kualitas pendidikan.',
-                'category' => 'Academic',
-                'achievement_date' => now()->subWeeks(2),
-                'status' => 'published',
+                'title'            => 'Juara 2 Lomba Lari 100m Tingkat Provinsi',
+                'slug'             => 'juara-2-lomba-lari-100m-tingkat-provinsi',
+                'description'      => 'Atlet muda SD Bangsri berhasil meraih Juara 2 dalam lomba lari 100m tingkat provinsi dengan catatan waktu yang membanggakan.',
+                'category'         => 'Juara 2',
+                'achievement_date' => now()->subMonths(1),
+                'status'           => 'published',
             ],
             [
-                'title' => 'Pemenang Kompetisi Coding Remaja Indonesia',
-                'slug' => 'pemenang-kompetisi-coding-remaja-indonesia',
-                'description' => 'Dua siswa kami berhasil menjadi pemenang dalam kompetisi coding remaja Indonesia 2026. Mereka menampilkan inovasi dan kemampuan problem-solving yang mengesankan.',
-                'category' => 'Technology',
+                'title'            => 'Juara 3 Festival Seni Rupa Antar Sekolah Dasar',
+                'slug'             => 'juara-3-festival-seni-rupa-antar-sekolah-dasar',
+                'description'      => 'Karya seni lukis siswa kami berhasil meraih Juara 3 dalam Festival Seni Rupa Antar Sekolah Dasar se-Kabupaten Jepara.',
+                'category'         => 'Juara 3',
                 'achievement_date' => now()->subWeeks(3),
-                'status' => 'published',
+                'status'           => 'published',
+            ],
+            [
+                'title'            => 'Harapan 1 Lomba Pidato Bahasa Indonesia',
+                'slug'             => 'harapan-1-lomba-pidato-bahasa-indonesia',
+                'description'      => 'Siswa SD Bangsri meraih Harapan 1 dalam lomba pidato Bahasa Indonesia tingkat kecamatan. Penampilan yang memukau dan penuh percaya diri.',
+                'category'         => 'Harapan 1',
+                'achievement_date' => now()->subWeeks(2),
+                'status'           => 'published',
+            ],
+            [
+                'title'            => 'Harapan 2 Kompetisi Sains Dasar Tingkat Kabupaten',
+                'slug'             => 'harapan-2-kompetisi-sains-dasar-tingkat-kabupaten',
+                'description'      => 'Tim sains SD Bangsri meraih Harapan 2 dalam Kompetisi Sains Dasar Tingkat Kabupaten. Eksperimen yang ditampilkan mendapat pujian dari juri.',
+                'category'         => 'Harapan 2',
+                'achievement_date' => now()->subWeeks(1),
+                'status'           => 'published',
+            ],
+            [
+                'title'            => 'Juara 3 Lomba Mewarnai Tingkat Kecamatan',
+                'slug'             => 'juara-3-lomba-mewarnai-tingkat-kecamatan',
+                'description'      => 'Siswa kelas 2 SD Bangsri meraih Juara 3 dalam lomba mewarnai tingkat kecamatan. Kreativitas dan ketelitian dalam mewarnai menjadi keunggulan.',
+                'category'         => 'Juara 3',
+                'achievement_date' => now()->subDays(5),
+                'status'           => 'published',
             ],
         ];
 
-        foreach ($prestasis as $prestasi) {
-            Prestasi::create($prestasi);
+        foreach ($prestasis as $item) {
+            Prestasi::create($item);
         }
     }
 }

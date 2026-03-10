@@ -12,7 +12,6 @@ class GalleryController extends Controller
     public function index(): View
     {
         $galleries = Gallery::latest()->paginate(15);
-
         return view('admin.galleries.index', compact('galleries'));
     }
 
@@ -21,39 +20,44 @@ class GalleryController extends Controller
         return view('admin.galleries.create');
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:galleries',
-            'description' => 'nullable|string',
-            'category' => 'required|string',
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
-        ]);
-
-        $validated['image'] = $request->file('image')->store('gallery', 'public');
-        Gallery::create($validated);
-
-        return redirect()->route('admin.galleries.index')->with('success', 'Gallery item added successfully!');
-    }
-
     public function edit(Gallery $gallery): View
     {
         return view('admin.galleries.edit', compact('gallery'));
     }
 
-    public function update(Gallery $gallery, Request $request)
+    public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:galleries,slug,'.$gallery->id,
+            'title'       => 'required|string|max:255',
+            'slug'        => 'required|string|unique:galleries,slug|max:255',
             'description' => 'nullable|string',
-            'category' => 'required|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'category'    => 'required|string|max:100',
+            // ✅ image nullable — tidak wajib saat create
+            'image'       => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
         if ($request->hasFile('image')) {
-            // Check if old image exists before deleting
+            $validated['image'] = $request->file('image')->store('gallery', 'public');
+        }
+
+        Gallery::create($validated);
+
+        return redirect()->route('admin.galleries.index')
+            ->with('success', 'Galeri berhasil ditambahkan.');
+    }
+
+    // ✅ BUG FIX: Request dulu, baru model
+    public function update(Request $request, Gallery $gallery)
+    {
+        $validated = $request->validate([
+            'title'       => 'required|string|max:255',
+            'slug'        => 'required|string|unique:galleries,slug,' . $gallery->id . '|max:255',
+            'description' => 'nullable|string',
+            'category'    => 'required|string|max:100',
+            'image'       => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+        ]);
+
+        if ($request->hasFile('image')) {
             if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
                 \Storage::disk('public')->delete($gallery->image);
             }
@@ -62,7 +66,8 @@ class GalleryController extends Controller
 
         $gallery->update($validated);
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Gallery item updated successfully!');
+        return redirect()->route('admin.galleries.index')
+            ->with('success', 'Galeri berhasil diperbarui.');
     }
 
     public function destroy(Gallery $gallery)
@@ -72,6 +77,7 @@ class GalleryController extends Controller
         }
         $gallery->delete();
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Gallery item deleted successfully!');
+        return redirect()->route('admin.galleries.index')
+            ->with('success', 'Galeri berhasil dihapus.');
     }
 }

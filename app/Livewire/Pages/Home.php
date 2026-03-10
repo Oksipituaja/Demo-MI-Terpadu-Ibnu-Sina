@@ -60,7 +60,7 @@ class Home extends Component
         });
 
         $principalGreeting = Cache::remember('about.principal_greeting', 86400, function () {
-            return About::where('key', 'principal_greeting')->select(['id', 'key', 'content'])->first();
+            return About::where('key', 'principal_greeting')->select(['id', 'key', 'title', 'principal_name', 'content', 'image'])->first();
         });
 
         $heroImage = Cache::remember('about.hero_image', 86400, function () {

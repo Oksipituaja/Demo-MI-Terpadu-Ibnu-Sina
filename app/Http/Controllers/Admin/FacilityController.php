@@ -46,7 +46,7 @@ class FacilityController extends Controller
         return view('admin.facilities.edit', compact('facility'));
     }
 
-    public function update(Facility $facility, Request $request)
+    public function update(Request $request, Facility $facility)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',

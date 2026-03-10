@@ -30,10 +30,6 @@
             <input type="text" name="subject" value="{{ old('subject') }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
         </div>
 
-        <div><label class="block text-sm font-medium mb-1">Bio</label>
-            <textarea name="bio" rows="4" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">{{ old('bio') }}</textarea>
-        </div>
-
         <div>
             <label class="block text-sm font-medium mb-1">Photo</label>
             <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition" id="dropZone">

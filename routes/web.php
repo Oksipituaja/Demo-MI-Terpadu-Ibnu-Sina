@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\PrestasiController;
 use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Livewire\Pages\About;
+use App\Livewire\Pages\MataPelajaran;
+use App\Livewire\Pages\Peraturan;
 use App\Livewire\Pages\Agenda;
 use App\Livewire\Pages\Facilities;
 use App\Livewire\Pages\FacilityDetail;
@@ -37,10 +39,13 @@ use App\Livewire\Pages\Privacy;
 use App\Livewire\Pages\Teachers;
 use App\Livewire\Pages\Terms;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
 Route::get('/about', About::class)->name('about');
+Route::get('/mata-pelajaran', MataPelajaran::class)->name('mata-pelajaran');
+Route::get('/peraturan', Peraturan::class)->name('peraturan');
 Route::get('/news', News::class)->name('news');
 Route::get('/news/{slug}', NewsDetail::class)->name('news.detail');
 Route::get('/gallery', Gallery::class)->name('gallery');
@@ -60,54 +65,47 @@ Route::get('/debug/agenda', [\App\Http\Controllers\DebugAgendaController::class,
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {
+
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
 
     Route::post('/login', function () {
         $credentials = request()->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required',
         ]);
 
         if (Auth::attempt($credentials, request()->boolean('remember'))) {
             request()->session()->regenerate();
-
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/admin-panel');
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
-    });
+        return back()
+            ->withErrors(['email' => 'Email atau password salah.'])
+            ->onlyInput('email');
 
-    Route::get('/register', function () {
-        return view('auth.register');
-    })->name('register');
-
-    Route::post('/register', function () {
-        $validated = request()->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
-        ]);
-
-        $user = \App\Models\User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-        ]);
-
-        Auth::login($user);
-
-        return redirect('/dashboard');
-    });
+    })->name('login.post');
 });
 
+// ✅ LOGOUT - Fixed: hapus remember_token di DB + hapus cookie remember_me
 Route::post('/logout', function () {
+    // 1. Hapus remember_token dari database agar cookie lama tidak bisa auto-login
+    if (Auth::check()) {
+        Auth::user()->forceFill(['remember_token' => null])->save();
+    }
+
+    // 2. Logout dari session
     Auth::logout();
+
+    // 3. Invalidate & regenerate session
     request()->session()->invalidate();
     request()->session()->regenerateToken();
 
-    return redirect('/');
+    // 4. Redirect ke login + hapus cookie remember_me dari browser
+    return redirect('/login')
+        ->withCookie(Cookie::forget('remember_web_' . sha1('App\Models\User')));
+
 })->name('logout')->middleware('auth');
 
 // Dashboard - Protected Route

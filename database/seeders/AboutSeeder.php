@@ -14,8 +14,15 @@ class AboutSeeder extends Seeder
     {
         About::create([
             'title' => 'Sambutan Kepala Sekolah',
+            'principal_name' => 'Dr. Bambang Sutrisno, M.Pd',
             'key' => 'principal_greeting',
-            'content' => '<p>Puji syukur kami panjatkan ke hadirat Tuhan Yang Maha Esa atas karunia dan hidayah-Nya, sehingga kami semua dapat membaktikan segala hal yang kami miliki untuk kemajuan dunia pendidikan. Apapun bentuk dan sumbangsin yang kami berikan, jika dilandasi niat yang tulus tanpa memandang imbalan apapun akan menghasilkan mahakarya yang agung untuk bekal kita dan generasi setelah kita. Pendidikan adalah harga mati untuk menjadi pondasi bangsa dan negara dalam menghadapi perkembangan zaman. Hal ini sejalan dengan penguasaan teknologi untuk dimanfaatkan sebaikk mungkin, sehingga menciptakan iklim kondusif dalam ranah keilmuan. Dengan konsep yang kontekstual dan efektif, kami mengejewantahkan nilai-nilai pendidikan yang tertuang dalam visi misi SMK NEGERI 1 BANGSRI, sebagai panduan hukum dalam menjabarkan tujuan hakiki pendidikan.</p>',
+            'content' => '<p>Assalamu\'alaikum warahmatullahi wabarakatuh. Saya mengucapkan terima kasih atas kepercayaan yang telah diberikan kepada kami. SD Bangsri berkomitmen untuk memberikan pendidikan berkualitas yang mengintegrasikan nilai-nilai karakter islami modern.</p>
+
+<p>Kami percaya bahwa setiap anak adalah amanah dari Allah SWT yang perlu dikembangkan potensinya secara optimal melalui pendidikan yang holistik. Dengan fasilitas terbaik, kurikulum yang relevan, dan tenaga pendidik yang profesional, kami siap membimbing anak-anak menjadi generasi yang unggul dan berkarakter kuat.</p>
+
+<p>Mari bersama-sama membangun masa depan cerah untuk anak-anak Indonesia. Semoga dedikasi dan komitmen kami menjadi cahaya bagi perjalanan pendidikan mereka.</p>
+
+<p>Wassalamu\'alaikum warahmatullahi wabarakatuh.</p>',
             'image' => null,
         ]);
 

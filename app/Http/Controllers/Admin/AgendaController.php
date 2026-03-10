@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreAgendaRequest;
-use App\Http\Requests\UpdateAgendaRequest;
 use App\Models\Agenda;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AgendaController extends Controller
 {
     public function index(): View
     {
-        $agendas = Agenda::latest()->paginate(15);
-
+        $agendas = Agenda::orderBy('event_date', 'desc')->paginate(15);
         return view('admin.agendas.index', compact('agendas'));
     }
 
@@ -23,18 +20,24 @@ class AgendaController extends Controller
         return view('admin.agendas.create');
     }
 
-    public function store(StoreAgendaRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
+        $validated = $request->validate([
+            'title'       => 'required|string|max:255',
+            'slug'        => 'required|string|unique:agendas,slug|max:255',
+            'description' => 'nullable|string',
+            'event_date'  => 'required|string', // string karena flatpickr kirim "Y-m-d H:i"
+            'location'    => 'nullable|string|max:255',
+            'status'      => 'required|in:upcoming,completed',
+        ]);
 
-        // Pecah datetime menjadi date dan time
-        $dt = Carbon::parse($data['event_date']);
-        $data['event_date'] = $dt->format('Y-m-d');
-        $data['event_time'] = $dt->format('H:i:s');
+        // Pisah date dan time dari input flatpickr "2026-05-02 07:00"
+        $this->splitDateTime($validated);
 
-        Agenda::create($data);
+        Agenda::create($validated);
 
-        return redirect()->route('admin.agendas.index')->with('success', 'Agenda berhasil dibuat!');
+        return redirect()->route('admin.agendas.index')
+            ->with('success', 'Agenda berhasil ditambahkan.');
     }
 
     public function edit(Agenda $agenda): View
@@ -42,24 +45,48 @@ class AgendaController extends Controller
         return view('admin.agendas.edit', compact('agenda'));
     }
 
-    public function update(Agenda $agenda, UpdateAgendaRequest $request)
+    public function update(Request $request, Agenda $agenda)
     {
-        $data = $request->validated();
+        $validated = $request->validate([
+            'title'       => 'required|string|max:255',
+            'slug'        => 'required|string|unique:agendas,slug,' . $agenda->id . '|max:255',
+            'description' => 'nullable|string',
+            'event_date'  => 'required|string',
+            'location'    => 'nullable|string|max:255',
+            'status'      => 'required|in:upcoming,completed',
+        ]);
 
-        // Pecah datetime menjadi date dan time
-        $dt = Carbon::parse($data['event_date']);
-        $data['event_date'] = $dt->format('Y-m-d');
-        $data['event_time'] = $dt->format('H:i:s');
+        $this->splitDateTime($validated);
 
-        $agenda->update($data);
+        $agenda->update($validated);
 
-        return redirect()->route('admin.agendas.index')->with('success', 'Agenda berhasil diperbarui!');
+        return redirect()->route('admin.agendas.index')
+            ->with('success', 'Agenda berhasil diperbarui.');
     }
 
     public function destroy(Agenda $agenda)
     {
         $agenda->delete();
+        return redirect()->route('admin.agendas.index')
+            ->with('success', 'Agenda berhasil dihapus.');
+    }
 
-        return redirect()->route('admin.agendas.index')->with('success', 'Agenda berhasil dihapus!');
+    /**
+     * Flatpickr mengirim event_date sebagai "2026-05-02 07:00"
+     * Pisah menjadi event_date (date) dan event_time (time)
+     */
+    private function splitDateTime(array &$validated): void
+    {
+        $raw = $validated['event_date'] ?? '';
+
+        if (str_contains($raw, ' ')) {
+            [$date, $time]           = explode(' ', $raw, 2);
+            $validated['event_date'] = $date;
+            $validated['event_time'] = $time . ':00'; // "07:00" → "07:00:00"
+        } else {
+            // Hanya tanggal tanpa jam
+            $validated['event_date'] = $raw;
+            $validated['event_time'] = null;
+        }
     }
 }

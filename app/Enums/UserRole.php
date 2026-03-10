@@ -6,12 +6,14 @@ enum UserRole: string
 {
     case SuperAdmin = 'super_admin';
     case Admin = 'admin';
+    case User = 'user';
 
     public function label(): string
     {
         return match ($this) {
             self::SuperAdmin => 'Super Admin',
             self::Admin => 'Admin',
+            self::User => 'User',
         };
     }
 
@@ -20,6 +22,7 @@ enum UserRole: string
         return match ($this) {
             self::SuperAdmin => 'Akses penuh ke semua fitur sistem',
             self::Admin => 'Akses ke fitur manajemen konten',
+            self::User => 'Akses sebagai pengguna biasa',
         };
     }
 }

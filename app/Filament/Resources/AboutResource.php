@@ -25,6 +25,7 @@ class AboutResource extends Resource
                         'principal_greeting' => 'Sambutan Kepala Sekolah',
                         'vision' => 'Visi',
                         'mission' => 'Misi',
+                        'school_profile' => 'Profil Sekolah',
                     ])
                     ->required()
                     ->unique(About::class, 'key', ignoreRecord: true)
@@ -34,6 +35,11 @@ class AboutResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->helperText('Judul atau nama konten'),
+
+                Forms\Components\TextInput::make('principal_name')
+                    ->maxLength(255)
+                    ->visible(fn (Forms\Get $get) => $get('key') === 'principal_greeting')
+                    ->helperText('Nama Kepala Sekolah (hanya untuk Sambutan Kepala Sekolah)'),
 
                 Forms\Components\RichEditor::make('content')
                     ->columnSpanFull()
@@ -45,11 +51,11 @@ class AboutResource extends Resource
                     ->directory('about')
                     ->shouldPreserveFilesNamed()
                     ->imageResizeMode('cover')
-                    ->imageCropAspectRatio('16 / 9')
-                    ->imageResizeTargetWidth(1600)
-                    ->imageResizeTargetHeight(900)
+                    ->imageCropAspectRatio('4 / 5')
+                    ->imageResizeTargetWidth(800)
+                    ->imageResizeTargetHeight(1000)
                     ->maxSize(5120)
-                    ->helperText('Gambar akan dioptimasi ke 1600x900px, max 5MB'),
+                    ->helperText('Gambar Kepala Sekolah akan dioptimasi ke format portrait 800x1000px, max 5MB'),
             ]);
     }
 
@@ -58,13 +64,29 @@ class AboutResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('key')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->formatStateUsing(fn ($state) => match($state) {
+                        'hero_image' => 'Hero Image',
+                        'principal_greeting' => 'Kepala Sekolah',
+                        'vision' => 'Visi',
+                        'mission' => 'Misi',
+                        'school_profile' => 'Profil Sekolah',
+                        default => $state,
+                    }),
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
+                    ->searchable()
+                    ->limit(50),
+                Tables\Columns\TextColumn::make('principal_name')
+                    ->label('Nama Kepala')
+                    ->searchable()
+                    ->limit(30),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Gambar'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->label('Dibuat'),
             ])
             ->filters([
                 //
