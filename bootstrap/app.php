@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CachePageResponse;
+use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\OptimizeCaching;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(CachePageResponse::class);
         $middleware->append(OptimizeCaching::class);
+
+        $middleware->alias([
+            'super_admin' => EnsureSuperAdmin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

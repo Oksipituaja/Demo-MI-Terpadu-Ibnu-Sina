@@ -5,6 +5,7 @@
 
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+
     <!-- News Stats -->
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex items-center justify-between">
@@ -100,6 +101,60 @@
             View Registrations →
         </a>
     </div>
+
+    <!-- Prestasi Stats -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm mb-1">Prestasi</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $stats['prestasi_count'] }}</p>
+            </div>
+            <div class="text-4xl text-orange-500 opacity-20">
+                <i class="fas fa-trophy"></i>
+            </div>
+        </div>
+        <a href="{{ route('admin.prestasis.index') }}" class="mt-4 text-blue-600 text-sm hover:text-blue-800">
+            Manage Prestasi →
+        </a>
+    </div>
+
+    <!-- About Stats -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm mb-1">About</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $stats['about_count'] }}</p>
+            </div>
+            <div class="text-4xl text-teal-500 opacity-20">
+                <i class="fas fa-info-circle"></i>
+            </div>
+        </div>
+        <a href="{{ route('admin.about.index') }}" class="mt-4 text-blue-600 text-sm hover:text-blue-800">
+            Manage About →
+        </a>
+    </div>
+
+    <!-- Management Account Stats (Super Admin only) -->
+    @if(auth()->user()->role === \App\Enums\UserRole::SuperAdmin)
+    <div class="bg-white rounded-lg shadow p-6 border-2 border-pink-200">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600 text-sm mb-1">Management Account</p>
+                <p class="text-3xl font-bold text-gray-800">{{ $stats['management_account_count'] }}</p>
+            </div>
+            <div class="text-4xl text-pink-500 opacity-20">
+                <i class="fas fa-users-cog"></i>
+            </div>
+        </div>
+        <a href="{{ route('admin.management-account.index') }}" class="mt-4 text-blue-600 text-sm hover:text-blue-800">
+            Manage Accounts →
+        </a>
+        <p class="mt-1 text-xs text-pink-400">
+            <i class="fas fa-shield-alt mr-1"></i>Super Admin Only
+        </p>
+    </div>
+    @endif
+
 </div>
 
 <div class="bg-white rounded-lg shadow p-6">
@@ -115,6 +170,11 @@
         <li>Facilities information</li>
         <li>School information and descriptions</li>
         <li>Student registrations</li>
+        <li>Prestasi siswa</li>
+        <li>About school information</li>
+        @if(auth()->user()->role === \App\Enums\UserRole::SuperAdmin)
+        <li>Management account users <span class="text-pink-400 text-xs">(Super Admin only)</span></li>
+        @endif
     </ul>
 </div>
 @endsection

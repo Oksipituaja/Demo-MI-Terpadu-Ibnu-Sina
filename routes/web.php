@@ -60,6 +60,13 @@ Route::get('/ppdb', PPDB::class)->name('ppdb');
 Route::get('/privacy-policy', Privacy::class)->name('privacy');
 Route::get('/terms-and-conditions', Terms::class)->name('terms');
 
+// Hanya testing error page
+Route::get('/test-403', fn() => abort(403));
+Route::get('/test-404', fn() => abort(404));
+Route::get('/test-500', fn() => abort(500));
+Route::get('/test-419', fn() => abort(419));
+Route::get('/test-429', fn() => abort(429));
+
 // Debug Route (untuk verify agenda data)
 Route::get('/debug/agenda', [\App\Http\Controllers\DebugAgendaController::class, 'checkDisplay'])->name('debug.agenda');
 
@@ -78,6 +85,12 @@ Route::middleware('guest')->group(function () {
 
         if (Auth::attempt($credentials, request()->boolean('remember'))) {
             request()->session()->regenerate();
+
+            // ✅ Catat waktu login terakhir
+            Auth::user()->forceFill([
+                'last_login' => now(),
+            ])->save();
+
             return redirect()->intended('/admin-panel');
         }
 
@@ -148,8 +161,8 @@ Route::middleware('auth')->prefix('admin-panel')->name('admin.')->group(function
     Route::get('registrations', [RegistrationController::class, 'index'])->name('registrations.index');
     Route::delete('registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
 
-    // Management Account Routes
-    Route::resource('management-account', ManagementAccountController::class);
+    // Management Account Routes (Super Admin only)
+    Route::middleware('super_admin')->resource('management-account', ManagementAccountController::class);
 });
 
 // Filament Admin Panel - Auto-routed via PanelProvider
