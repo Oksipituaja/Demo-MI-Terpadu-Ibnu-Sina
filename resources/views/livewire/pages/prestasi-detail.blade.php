@@ -1,72 +1,91 @@
-<div>
-    <!-- Hero Section -->
-    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-12">
-        <div class="container mx-auto px-4">
-            <a href="{{ route('prestasi.index') }}" class="text-blue-100 hover:text-white transition mb-4 inline-block">
-                <i class="fas fa-arrow-left mr-2"></i> Kembali ke Prestasi
+<div style="background: #F0F4ED; min-height: 100vh">
+
+    <div class="py-12 text-white" style="background: linear-gradient(to right, #15803d, #166534)">
+        <div class="container px-6 mx-auto">
+            <a href="{{ route('prestasi.index') }}"
+                class="inline-flex items-center mb-4 text-sm transition-colors hover:text-white"
+                style="color: #86efac">
+                <i class="mr-2 fas fa-arrow-left"></i> Kembali ke Prestasi
             </a>
-            <h1 class="text-4xl font-bold">{{ $prestasi->title }}</h1>
+            <h1 class="text-4xl font-bold text-white">{{ $prestasi->title }}</h1>
             <div class="flex flex-wrap gap-4 mt-4">
                 @if($prestasi->category)
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold">{{ $prestasi->category }}</span>
+                    <span class="px-3 py-1 text-sm font-semibold rounded-full"
+                        style="background: rgba(255,255,255,0.2); color: white">
+                        {{ $prestasi->category }}
+                    </span>
                 @endif
                 @if($prestasi->achievement_date)
-                    <span class="text-blue-100">
-                        <i class="fas fa-calendar mr-2"></i> {{ $prestasi->achievement_date->format('d F Y') }}
+                    <span class="flex items-center gap-2 text-sm" style="color: #86efac">
+                        <i class="fas fa-calendar"></i>
+                        {{ $prestasi->achievement_date->format('d F Y') }}
                     </span>
                 @endif
             </div>
         </div>
     </div>
 
-    <!-- Content Section -->
-    <div class="container mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Main Content -->
+    <div class="container px-6 py-12 mx-auto">
+        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+
             <div class="lg:col-span-2">
-                <!-- Featured Image -->
                 @if($prestasi->image)
-                    <div class="w-full rounded-lg overflow-hidden shadow-lg mb-8">
-                        <img src="{{ asset('storage/' . $prestasi->image) }}" alt="{{ $prestasi->title }}" class="w-full h-auto object-cover">
+                    <div class="w-full mb-8 overflow-hidden shadow-lg rounded-xl">
+                        <img src="{{ asset('storage/' . $prestasi->image) }}"
+                            alt="{{ $prestasi->title }}"
+                            class="object-cover w-full h-auto">
+                    </div>
+                @else
+                    @php $award = getAwardIcon($prestasi->category ?? ''); @endphp
+                    <div class="flex items-center justify-center w-full h-64 mb-8 rounded-xl"
+                        style="{{ $award['bgStyle'] }}">
+                        <i class="{{ $award['icon'] }} text-white text-8xl opacity-40"></i>
                     </div>
                 @endif
 
-                <!-- Description -->
                 <div class="prose prose-lg max-w-none">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Deskripsi</h2>
-                    <div class="text-gray-700 leading-relaxed whitespace-pre-line">
+                    <h2 class="mb-4 text-2xl font-bold" style="color: #14532d">Deskripsi</h2>
+                    <div class="leading-relaxed text-gray-700 whitespace-pre-line">
                         {{ $prestasi->description }}
                     </div>
                 </div>
             </div>
 
-            <!-- Sidebar -->
             <div class="lg:col-span-1">
-                <div class="bg-blue-50 rounded-lg p-6 sticky top-4">
-                    <h3 class="text-lg font-bold text-gray-900 mb-6">Informasi Prestasi</h3>
-                    
-                    <!-- Category -->
+                <div class="sticky p-6 rounded-xl top-4" style="background: #dcfce7">
+                    <h3 class="mb-6 text-lg font-bold" style="color: #14532d">Informasi Prestasi</h3>
+
                     @if($prestasi->category)
+                        @php $award = getAwardIcon($prestasi->category); @endphp
                         <div class="mb-6">
-                            <p class="text-sm text-gray-600 font-semibold mb-2">Kategori</p>
-                            <p class="text-gray-900">{{ $prestasi->category }}</p>
+                            <p class="mb-2 text-sm font-semibold text-gray-600">Kategori</p>
+                            <div class="flex items-center gap-3">
+                                <div class="flex items-center justify-center w-10 h-10 rounded-full shrink-0"
+                                    style="{{ $award['bgStyle'] }}">
+                                    <i class="{{ $award['icon'] }} text-white text-sm"></i>
+                                </div>
+                                <span class="font-semibold" style="{{ $award['textStyle'] }}">
+                                    {{ $prestasi->category }}
+                                </span>
+                            </div>
                         </div>
                     @endif
 
-                    <!-- Date -->
                     @if($prestasi->achievement_date)
                         <div class="mb-6">
-                            <p class="text-sm text-gray-600 font-semibold mb-2">Tanggal Pencapaian</p>
-                            <p class="text-gray-900">{{ $prestasi->achievement_date->format('d F Y') }}</p>
+                            <p class="mb-2 text-sm font-semibold text-gray-600">Tanggal Pencapaian</p>
+                            <p class="font-medium text-gray-900">{{ $prestasi->achievement_date->format('d F Y') }}</p>
                         </div>
                     @endif
 
-                    <!-- Back Button -->
-                    <a href="{{ route('prestasi.index') }}" class="inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition">
-                        <i class="fas fa-list mr-2"></i> Lihat Semua Prestasi
+                    <a href="{{ route('prestasi.index') }}"
+                        class="inline-flex items-center justify-center w-full gap-2 px-4 py-2.5 font-semibold text-white transition-all rounded-xl hover:-translate-y-0.5"
+                        style="background: #15803d; box-shadow: 0 4px 12px #15803d33">
+                        <i class="fas fa-list"></i> Lihat Semua Prestasi
                     </a>
                 </div>
             </div>
+
         </div>
     </div>
 </div>

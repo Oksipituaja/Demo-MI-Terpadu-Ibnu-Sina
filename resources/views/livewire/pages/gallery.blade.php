@@ -1,103 +1,92 @@
 <div>
-    <!-- Breadcrumb -->
-    <div class="pt-8 pb-8 bg-gradient-to-r from-blue-700 to-blue-600">
-        <div class="container mx-auto px-6">
-            <nav class="flex items-center space-x-2 text-white text-sm mb-4">
-                <a href="{{ route('home') }}" class="hover:underline">Home</a>
+    <div class="pt-8 pb-8 text-white" style="background: linear-gradient(to right, #15803d, #166534)">
+        <div class="container px-6 mx-auto">
+            <nav class="flex items-center mb-4 space-x-2 text-sm" style="color: #86efac">
+                <a href="{{ route('home') }}" class="transition-colors hover:text-white">Home</a>
                 <span>/</span>
-                <span>Galeri Sekolah</span>
+                <span class="text-white">Galeri Sekolah</span>
             </nav>
-            <h1 class="font-display text-4xl font-bold text-white">Galeri Sekolah</h1>
-            <p class="text-white/90 mt-2">Koleksi dokumentasi aktivitas dan kegiatan sekolah</p>
+            <h1 class="text-4xl font-bold text-white font-display">Galeri Sekolah</h1>
+            <p class="mt-2" style="color: #bbf7d0">Koleksi dokumentasi aktivitas dan kegiatan sekolah</p>
         </div>
     </div>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-
-            <!-- Filter Buttons -->
+    <section id="gallery" class="py-20" style="background: #F0F4ED">
+        <div class="container px-6 mx-auto">
             <div class="flex flex-wrap justify-center gap-3 mb-16">
                 <button wire:click="$set('category', '')"
-                    class="px-6 py-2 rounded-full font-semibold transition-all
-                        {{ $category === '' ? 'bg-blue-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-700 hover:text-white' }}">
+                    class="px-6 py-2 font-semibold transition-all rounded-full"
+                    style="{{ $category === '' ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                     Semua
                 </button>
                 @foreach ($categories as $cat)
                     <button wire:click="$set('category', @js($cat))"
-                        class="px-6 py-2 rounded-full font-semibold transition-all
-                            {{ $category === $cat ? 'bg-blue-700 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-700 hover:text-white' }}">
+                        class="px-6 py-2 font-semibold transition-all rounded-full"
+                        style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                         {{ ucfirst($cat) }}
                     </button>
                 @endforeach
             </div>
 
-            <!-- Gallery Grid -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-                wire:loading.class="opacity-50 transition-opacity">
+            <div class="grid gap-6 mb-12 md:grid-cols-2 lg:grid-cols-3"
+                wire:loading.class="transition-opacity opacity-50">
                 @forelse($galleries as $item)
                     <a href="{{ route('gallery.detail', $item->slug) }}"
-                        class="gallery-item group cursor-pointer block">
-                        <div
-                            class="relative overflow-hidden rounded-xl h-64 bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
+                        class="block cursor-pointer gallery-item group">
+                        <div class="relative flex items-center justify-center h-64 overflow-hidden rounded-xl"
+                            style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                             @if ($item->image)
                                 <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                     loading="lazy">
                             @else
-                                <div
-                                    class="flex flex-col items-center justify-center gap-2 w-full h-full bg-gradient-to-br from-blue-100 to-blue-50 group-hover:from-blue-200 group-hover:to-blue-100 transition">
-                                    <i
-                                        class="fas fa-images text-5xl text-blue-300 group-hover:text-blue-400 transition"></i>
-                                    <span class="text-blue-400 text-xs font-medium uppercase tracking-widest">Foto
-                                        Segera Hadir</span>
+                                <div class="flex flex-col items-center justify-center w-full h-full gap-2 transition"
+                                    style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
+                                    <i class="text-5xl transition fas fa-images" style="color: #15803d40"></i>
+                                    <span class="text-xs font-medium tracking-widest uppercase" style="color: #15803d80">Foto Segera Hadir</span>
                                 </div>
                             @endif
-                            <div
-                                class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end justify-start p-4">
-                                <span
-                                    class="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-semibold line-clamp-2">
+                            <div class="absolute inset-0 flex items-end justify-start p-4 transition-colors duration-300 bg-black/0 group-hover:bg-black/40">
+                                <span class="text-sm font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100 line-clamp-2">
                                     {{ $item->title }}
                                 </span>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <h3 class="font-bold text-gray-900 group-hover:text-blue-700 transition line-clamp-1">
-                                {{ $item->title }}</h3>
-                            <span
-                                class="inline-block mt-1 text-xs font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full">
+                            <h3 class="font-bold text-gray-900 transition line-clamp-1" style="hover: color: #15803d">{{ $item->title }}</h3>
+                            <span class="inline-block mt-1 text-xs font-semibold px-2 py-0.5 rounded-full"
+                                style="color: #15803d; background: #dcfce7">
                                 {{ ucfirst($item->category) }}
                             </span>
                         </div>
                     </a>
                 @empty
-                    <div class="col-span-full bg-gradient-to-br from-blue-50 to-blue-100 p-12 rounded-xl text-center">
-                        <i class="fas fa-images text-5xl text-blue-300 mb-4"></i>
-                        <p class="text-gray-600 text-lg font-semibold">Tidak ada galeri untuk kategori ini</p>
-                        <p class="text-gray-500 text-sm mt-2">Silakan pilih kategori lain</p>
+                    <div class="p-12 text-center col-span-full rounded-xl" style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
+                        <i class="mb-4 text-5xl fas fa-images" style="color: #15803d40"></i>
+                        <p class="text-lg font-semibold text-gray-600">Tidak ada galeri untuk kategori ini</p>
+                        <p class="mt-2 text-sm text-gray-500">Silakan pilih kategori lain</p>
                     </div>
                 @endforelse
             </div>
 
-            <!-- Pagination -->
-            <div class="mt-8 flex justify-center">
+            <div class="flex justify-center mt-8">
                 {{ $galleries->links() }}
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-blue-700 to-blue-600 text-white relative overflow-hidden">
+    <section class="relative py-20 overflow-hidden text-white" style="background: linear-gradient(to right, #15803d, #166534)">
         <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute top-0 left-0 bg-white rounded-full w-96 h-96 blur-3xl"></div>
         </div>
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <h2 class="font-display text-4xl font-bold mb-6">Tertarik Bergabung?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+        <div class="container relative z-10 px-6 mx-auto text-center">
+            <h2 class="mb-6 text-4xl font-bold font-display">Tertarik Bergabung?</h2>
+            <p class="max-w-2xl mx-auto mb-8 text-xl opacity-90">
                 Jadilah bagian dari komunitas {{ config('app.name') }} dan rasakan pengalaman belajar yang luar biasa.
             </p>
             <a href="{{ route('ppdb') }}"
-                class="inline-block bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold py-4 px-8 rounded-xl shadow-lg transition-all hover:-translate-y-1 active:scale-95">
+                class="inline-block px-8 py-4 font-bold transition-all shadow-lg rounded-xl hover:-translate-y-1"
+                style="background: #EAB308; color: #14532d;">
                 Daftar PPDB 2026/2027 <span class="ml-2">→</span>
             </a>
         </div>

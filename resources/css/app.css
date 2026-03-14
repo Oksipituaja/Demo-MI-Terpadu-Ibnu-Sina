@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
-@import 'flatpickr/dist/flatpickr.min.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,21 +7,29 @@
 @source '../**/*.js';
 
 @theme {
+    --color-neutral-bg: #FAFAFA;
+
     --color-eduBlue-main: #1E40AF;
     --color-eduBlue-light: #3B82F6;
     --color-eduBlue-dark: #1E3A8A;
-    --color-sunJoy: #FCD34D;
-    --color-careGreen: #10B981;
+
+    --color-careGreen: #15803D;
+    --color-careGreen-light: #22C55E;
+    --color-careGreen-dark: #166534;
+
+    --color-sunJoy: #FACC15;
+    --color-sunJoy-light: #FCD34D;
+    --color-sunJoy-dark: #EAB308;
+
     --color-softBlack: #1F2937;
+    --color-softGray: #6B7280;
 
-    --font-family-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-family-body: 'Roboto', ui-sans-serif, system-ui, sans-serif;
+    --font-family-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-family-body: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 
-    --font-sans: 'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Default font assignments */
 html {
     font-family: var(--font-family-body);
     scroll-behavior: smooth;
@@ -32,7 +39,6 @@ body {
     font-family: var(--font-family-body);
 }
 
-/* Custom Typography */
 .font-display {
     font-family: var(--font-family-display);
 }
@@ -41,88 +47,36 @@ body {
     font-family: var(--font-family-body);
 }
 
-/* Navigation Links */
-.nav-link {
-    @apply relative font-semibold text-gray-600 transition-colors hover:text-eduBlue-main;
-    @apply after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5;
-    @apply after:bg-sunJoy after:transition-all hover:after:w-full;
-}
-
-.mobile-nav-link {
-    @apply block px-4 py-3 font-semibold text-gray-700 rounded-xl;
-    @apply transition-colors hover:bg-eduBlue-light/10 hover:text-eduBlue-main;
-}
-
-/* Buttons */
 .btn-primary {
-    @apply inline-flex items-center bg-linear-to-r from-eduBlue-main to-eduBlue-light;
-    @apply hover:from-eduBlue-light hover:to-eduBlue-main;
-    @apply px-8 py-4 font-bold text-white shadow-xl rounded-xl;
-    @apply transition-all duration-300 hover:-translate-y-1 active:scale-95;
+    @apply inline-flex items-center px-8 py-4 font-bold text-white transition-all duration-300 shadow-xl rounded-xl hover:-translate-y-1 active:scale-95;
+    background: linear-gradient(to right, #1E40AF, #3B82F6);
 }
 
 .btn-secondary {
-    @apply inline-flex items-center bg-white border-2 border-eduBlue-main;
-    @apply px-8 py-4 font-bold text-eduBlue-main rounded-xl;
-    @apply transition-all duration-300 hover:bg-eduBlue-main hover:text-white;
+    @apply inline-flex items-center px-8 py-4 font-bold transition-all duration-300 rounded-xl;
+    border: 2px solid #1E40AF;
+    color: #1E40AF;
 }
 
-/* Cards */
+.btn-secondary:hover {
+    background: #1E40AF;
+    color: white;
+}
+
 .card {
-    @apply p-6 bg-white shadow-md rounded-2xl;
-    @apply transition-all duration-300 hover:shadow-xl;
-    @apply border border-gray-100;
+    @apply p-6 transition-all duration-300 bg-white border border-gray-100 shadow-md rounded-2xl hover:shadow-xl;
 }
 
 .facility-card {
-    @apply overflow-hidden bg-white shadow-lg rounded-2xl;
-    @apply transition-all duration-500 hover:shadow-2xl;
-    @apply transform hover:-translate-y-2;
+    @apply overflow-hidden transition-all duration-500 transform bg-white shadow-lg rounded-2xl hover:shadow-2xl hover:-translate-y-2;
 }
 
-.facility-image {
-    @apply object-cover w-full h-64;
-    @apply transition-transform duration-700 group-hover:scale-110;
-}
-
-.facility-overlay {
-    @apply absolute inset-0 opacity-0 bg-eduBlue-main/80;
-    @apply transition-opacity duration-300 group-hover:opacity-100;
-    @apply flex items-center justify-center;
-}
-
-/* News & Content Cards */
 .news-card {
-    @apply p-6 bg-white shadow-md rounded-2xl;
-    @apply transition-all duration-300 hover:shadow-xl;
-    @apply border border-gray-100;
-    @apply transform hover:-translate-y-1;
-}
-
-.agenda-item {
-    @apply p-6 bg-white shadow-md rounded-xl;
-    @apply transition-all duration-300 hover:shadow-lg;
-    @apply flex items-start gap-6;
-    @apply border-l-4 border-eduBlue-main;
-    @apply hover:border-sunJoy;
-}
-
-.agenda-date {
-    @apply flex flex-col items-center justify-center;
-    @apply w-16 h-16 bg-eduBlue-light/10 rounded-xl;
-    @apply shrink-0;
-}
-
-.badge-agenda {
-    @apply px-3 py-1 text-xs font-semibold rounded-full;
-    @apply self-start shrink-0;
+    @apply p-6 transition-all duration-300 transform bg-white border border-gray-100 shadow-md rounded-2xl hover:shadow-xl hover:-translate-y-1;
 }
 
 .teacher-card {
-    @apply p-8 bg-white shadow-md rounded-2xl;
-    @apply transition-all duration-300 hover:shadow-xl;
-    @apply border border-gray-100;
-    @apply transform hover:-translate-y-2;
+    @apply p-8 transition-all duration-300 transform bg-white border border-gray-100 shadow-md rounded-2xl hover:shadow-xl hover:-translate-y-2;
 }
 
 .gallery-item {
@@ -130,36 +84,44 @@ body {
 }
 
 .gallery-item:hover {
-    @apply transform hover:scale-105;
+    @apply scale-105;
 }
 
-/* Animations */
 @keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
     animation: fade-in 0.8s ease-out;
 }
 
-/* Smooth Scrolling */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Utilities */
 .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+}
+
+.prose ol li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+}
+
+.prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+}
+
+.prose ul li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
 }

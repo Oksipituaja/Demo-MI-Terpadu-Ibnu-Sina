@@ -1,19 +1,22 @@
 <div>
-    <section class="relative pt-12 pb-20 overflow-hidden bg-linear-to-br from-blue-50/50 via-white to-yellow-50/20">
+    <section class="relative pt-12 pb-20 overflow-hidden"
+        style="background: linear-gradient(to bottom right, #F0F4ED, #F0F4ED, #15803d0d)">
         <div class="absolute inset-0 opacity-5">
-            <div class="absolute bg-blue-600 rounded-full top-20 left-20 w-72 h-72 blur-3xl"></div>
-            <div class="absolute bg-yellow-300 rounded-full bottom-20 right-20 w-96 h-96 blur-3xl"></div>
+            <div class="absolute rounded-full top-20 left-20 w-72 h-72 blur-3xl" style="background: #15803d"></div>
+            <div class="absolute rounded-full bottom-20 right-20 w-96 h-96 blur-3xl" style="background: #EAB308"></div>
         </div>
 
         <div class="container relative z-10 px-6 mx-auto">
             <div class="grid items-center gap-12 lg:grid-cols-2">
                 <div class="space-y-6 animate-fade-in">
-                    <div class="inline-block px-4 py-2 rounded-full bg-blue-700/10">
-                        <span class="text-sm font-semibold text-blue-700">🏆 Akreditasi A</span>
+                    <div class="inline-block px-4 py-2 rounded-full" style="background: #15803d1a">
+                        <span class="text-sm font-semibold" style="color: #15803d">🏆 Akreditasi B</span>
                     </div>
                     <h1 class="text-5xl font-bold leading-tight text-gray-900 font-display lg:text-6xl">
                         Membentuk Generasi
-                        <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-700 to-blue-500">Unggul &
+                        <span class="text-transparent bg-clip-text"
+                            style="background-image: linear-gradient(to right, #15803d, #22c55e); -webkit-background-clip: text; background-clip: text;">Unggul
+                            &
                             Berkarakter</span>
                     </h1>
                     <p class="text-lg leading-relaxed text-gray-600">
@@ -21,11 +24,15 @@
                         dan tenaga pendidik profesional untuk mengembangkan potensi anak Indonesia.
                     </p>
                     <div class="flex flex-wrap gap-4 pt-4">
-                        <a href="{{ route('ppdb') }}" class="btn-primary">
+                        <a href="{{ route('ppdb') }}"
+                            class="inline-flex items-center px-6 py-3 font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5"
+                            style="background: #EAB308; color: #14532d; box-shadow: 0 10px 20px #EAB30833;">
                             Daftar Sekarang
                             <span class="ml-2">→</span>
                         </a>
-                        <a href="{{ route('about') }}" class="btn-secondary">
+                        <a href="{{ route('about') }}"
+                            class="inline-flex items-center px-6 py-3 font-bold rounded-xl border-2 transition-all duration-300 hover:-translate-y-0.5"
+                            style="color: #15803d; border-color: #15803d; background: #F0F4ED;">
                             Pelajari Lebih Lanjut
                             <span class="ml-2">→</span>
                         </a>
@@ -33,24 +40,23 @@
 
                     <div class="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-blue-700">450+</div>
+                            <div class="text-3xl font-bold" style="color: #15803d">357+</div>
                             <div class="mt-1 text-sm text-gray-600">Siswa Aktif</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-blue-700">35+</div>
+                            <div class="text-3xl font-bold" style="color: #15803d">35+</div>
                             <div class="mt-1 text-sm text-gray-600">Guru Profesional</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-blue-700">25+</div>
+                            <div class="text-3xl font-bold" style="color: #15803d">25+</div>
                             <div class="mt-1 text-sm text-gray-600">Tahun Berpengalaman</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="relative flex items-center justify-center p-4">
-                    <div
-                        class="absolute w-full h-full -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 bg-linear-to-tr from-blue-500/10 to-yellow-500/10 blur-3xl">
-                    </div>
+                    <div class="absolute w-full h-full -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 blur-3xl"
+                        style="background: linear-gradient(to top right, #15803d1a, #EAB3081a)"></div>
 
                     <div class="relative w-full max-w-lg">
                         <div
@@ -63,14 +69,14 @@
                                 <img src="{{ asset('hero_image.png') }}"
                                     class="object-cover w-full h-auto aspect-4/5 md:aspect-square">
                             @endif
-
-                            <div class="absolute inset-0 bg-linear-to-t from-blue-900/20 to-transparent"></div>
+                            <div class="absolute inset-0"
+                                style="background: linear-gradient(to top, #14532d33, transparent)"></div>
                         </div>
 
-                        <div
-                            class="absolute flex items-center p-4 space-x-4 border shadow-2xl -bottom-4 -right-4 md:-right-8 bg-white/90 backdrop-blur-sm rounded-2xl border-slate-100 animate-bounce-slow">
-                            <div
-                                class="flex items-center justify-center w-12 h-12 bg-green-500 rounded-full shadow-lg shrink-0 shadow-green-200">
+                        <div class="absolute flex items-center p-4 space-x-4 border shadow-2xl -bottom-4 -right-4 md:-right-8 rounded-2xl animate-bounce-slow"
+                            style="background: #F0F4EDF0; backdrop-filter: blur(4px); border-color: #d1fae5;">
+                            <div class="flex items-center justify-center w-12 h-12 rounded-full shadow-lg shrink-0"
+                                style="background: #15803d; box-shadow: 0 4px 12px #15803d4d;">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
@@ -83,8 +89,8 @@
                             </div>
                         </div>
 
-                        <div
-                            class="absolute -top-4 -left-4 bg-yellow-400 text-blue-900 font-bold py-2 px-4 rounded-lg shadow-lg rotate-[-5deg]">
+                        <div class="absolute -top-4 -left-4 font-bold py-2 px-4 rounded-lg shadow-lg rotate-[-5deg]"
+                            style="background: #EAB308; color: #14532d;">
                             Unggul & Berkarakter
                         </div>
                     </div>
@@ -93,91 +99,94 @@
         </div>
     </section>
 
-    {{-- ===== SAMBUTAN: hanya render jika konten tersedia ===== --}}
+    {{-- ===== SAMBUTAN ===== --}}
     @if ($principalGreeting?->title)
-    <section id="sambutan" class="relative py-24 overflow-hidden bg-slate-50">
-        <div
-            class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-blue-100 rounded-full opacity-50 w-96 h-96 blur-3xl">
-        </div>
+        <section id="sambutan" class="relative py-24 overflow-hidden" style="background: #F0F4ED">
+            <div class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 w-96 h-96 blur-3xl"
+                style="background: #15803d1a"></div>
 
-        <div class="container relative z-10 px-6 mx-auto">
-            <div class="max-w-6xl mx-auto">
-                <div class="grid items-center gap-16 lg:grid-cols-12">
+            <div class="container relative z-10 px-6 mx-auto">
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid items-center gap-16 lg:grid-cols-12">
 
-                    <div class="flex justify-center order-1 lg:col-span-5">
-                        <div class="relative group">
-                            <div
-                                class="absolute transition-transform duration-500 border-2 border-blue-200 border-dashed -inset-4 rounded-4xl rotate-3 group-hover:rotate-0">
-                            </div>
+                        <div class="flex justify-center order-1 lg:col-span-5">
+                            <div class="relative group">
+                                <div class="absolute transition-transform duration-500 border-2 border-dashed -inset-4 rounded-4xl rotate-3 group-hover:rotate-0"
+                                    style="border-color: #15803d33"></div>
 
-                            <div
-                                class="relative w-72 h-96 md:w-80 md:h-112.5 bg-slate-200 rounded-4xl overflow-hidden shadow-2xl border-8 border-white">
-                                @if ($principalGreeting?->image)
-                                    <img src="{{ asset('storage/' . $principalGreeting->image) }}"
-                                        alt="{{ $principalGreeting->principal_name ?? 'Kepala Sekolah' }}"
-                                        class="object-cover w-full h-full">
-                                @else
-                                    <div
-                                        class="flex flex-col items-center justify-center w-full h-full bg-linear-to-br from-slate-100 to-slate-200">
-                                        <i class="fas fa-user-tie text-7xl text-slate-300"></i>
-                                        <p class="mt-4 text-xs tracking-widest uppercase text-slate-400">Photo
-                                            Placeholder</p>
+                                <div class="relative w-72 h-96 md:w-80 md:h-112.5 rounded-4xl overflow-hidden shadow-2xl border-8"
+                                    style="background: #d1fae5; border-color: #F0F4ED;">
+                                    @if ($principalGreeting?->image)
+                                        <img src="{{ asset('storage/' . $principalGreeting->image) }}"
+                                            alt="{{ $principalGreeting->principal_name ?? 'Kepala Sekolah' }}"
+                                            class="object-cover w-full h-full">
+                                    @else
+                                        <div class="flex flex-col items-center justify-center w-full h-full"
+                                            style="background: linear-gradient(to bottom right, #dcfce7, #bbf7d0)">
+                                            <i class="fas fa-user-tie text-7xl" style="color: #86efac"></i>
+                                            <p class="mt-4 text-xs tracking-widest uppercase" style="color: #4ade80">
+                                                Photo Placeholder</p>
+                                        </div>
+                                    @endif
+
+                                    <div class="absolute inset-x-0 bottom-0 p-6 pt-12"
+                                        style="background: linear-gradient(to top, #14532de6, transparent)">
+                                        <p class="mb-0 text-xl font-bold text-white">
+                                            {{ $principalGreeting?->principal_name ?? 'Kepala Sekolah' }}</p>
+                                        <p class="text-sm italic" style="color: #86efac">Kepala Sekolah
+                                            {{ config('app.name') }}</p>
                                     </div>
-                                @endif
-
-                                <div
-                                    class="absolute inset-x-0 bottom-0 p-6 pt-12 bg-linear-to-t from-blue-900/90 to-transparent">
-                                    <p class="mb-0 text-xl font-bold text-white">
-                                        {{ $principalGreeting?->principal_name ?? 'Kepala Sekolah' }}</p>
-                                    <p class="text-sm italic text-blue-200">Kepala Sekolah {{ config('app.name') }}</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="order-2 space-y-6 lg:col-span-7">
-                        <div>
-                            <span
-                                class="inline-block px-4 py-1.5 bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-[0.2em] rounded-full mb-4">
-                                Sambutan Kepala Sekolah
-                            </span>
-                            <h2 class="text-3xl font-extrabold leading-tight md:text-5xl text-slate-900">
-                                {{ $principalGreeting?->title }}
-                            </h2>
-                        </div>
+                        <div class="order-2 space-y-6 lg:col-span-7">
+                            <div>
+                                <span
+                                    class="inline-block px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] rounded-full mb-4"
+                                    style="background: #15803d1a; color: #15803d">
+                                    Sambutan Kepala Sekolah
+                                </span>
+                                <h2 class="text-3xl font-extrabold leading-tight md:text-5xl" style="color: #14532d">
+                                    {{ $principalGreeting?->title }}
+                                </h2>
+                            </div>
 
-                        <div class="relative">
-                            <i class="absolute text-5xl fas fa-quote-left text-blue-500/10 -top-4 -left-6"></i>
+                            <div class="relative">
+                                <i class="absolute text-5xl fas fa-quote-left -top-4 -left-6"
+                                    style="color: #15803d1a"></i>
+                                <div class="relative z-10 text-lg italic leading-relaxed text-gray-600">
+                                    "{!! Str::limit(strip_tags($principalGreeting?->content ?? ''), 450) !!}"
+                                </div>
+                            </div>
 
-                            <div class="relative z-10 text-lg italic leading-relaxed text-slate-600">
-                                "{!! Str::limit(strip_tags($principalGreeting?->content ?? ''), 450) !!}"
+                            <div class="pt-4">
+                                <a href="{{ route('about') }}"
+                                    class="inline-flex items-center px-8 py-4 font-bold text-white transition-all duration-300 group rounded-xl hover:-translate-y-1"
+                                    style="background: #15803d; box-shadow: 0 10px 20px #15803d4d;">
+                                    Pelajari Lebih Lanjut
+                                    <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
 
-                        <div class="pt-4">
-                            <a href="{{ route('about') }}"
-                                class="inline-flex items-center group px-8 py-4 bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 shadow-[0_10px_20px_rgba(37,99,235,0.3)] hover:bg-blue-700 hover:-translate-y-1">
-                                Pelajari Lebih Lanjut
-                                <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1"
-                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                </svg>
-                            </a>
-                        </div>
                     </div>
-
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
 
-    <section id="guru" class="py-20 bg-white">
+    {{-- ===== GURU ===== --}}
+    <section id="guru" class="py-20" style="background: #fefefe">
         <div class="container px-6 mx-auto">
             <div class="max-w-3xl mx-auto mb-16 text-center">
-                <span class="text-sm font-semibold tracking-wider text-blue-700 uppercase">Tim Kami</span>
-                <h2 class="mt-4 mb-6 text-4xl font-bold text-gray-900 font-display">Tenaga Pendidik & Pengajar</h2>
+                <span class="text-sm font-semibold tracking-wider uppercase" style="color: #15803d">Tim Kami</span>
+                <h2 class="mt-4 mb-6 text-4xl font-bold font-display" style="color: #14532d">Tenaga Pendidik &
+                    Pengajar</h2>
                 <p class="leading-relaxed text-gray-600">Guru berpengalaman dan berdedikasi tinggi siap membimbing
                     potensi siswa.</p>
             </div>
@@ -185,8 +194,8 @@
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 @forelse($teachers as $teacher)
                     <div class="text-center teacher-card">
-                        <div
-                            class="flex items-center justify-center w-32 h-32 mx-auto mb-4 overflow-hidden text-5xl transition-transform duration-300 rounded-full bg-linear-to-br from-blue-600 to-blue-400 hover:scale-105">
+                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-4 overflow-hidden transition-transform duration-300 rounded-full hover:scale-105"
+                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
                             @if ($teacher->image)
                                 <img src="{{ asset('storage/' . $teacher->image) }}" alt="{{ $teacher->name }}"
                                     class="object-cover w-full h-full">
@@ -194,8 +203,10 @@
                                 <i class="text-5xl text-white fas fa-chalkboard-user"></i>
                             @endif
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 font-display">{{ $teacher->name ?? 'Guru' }}</h3>
-                        <p class="mb-2 font-semibold text-blue-700">{{ $teacher->subject ?? 'Pendidik' }}</p>
+                        <h3 class="text-xl font-bold font-display" style="color: #14532d">
+                            {{ $teacher->name ?? 'Guru' }}</h3>
+                        <p class="mb-2 font-semibold" style="color: #15803d">{{ $teacher->subject ?? 'Pendidik' }}
+                        </p>
                     </div>
                 @empty
                     <div class="py-10 text-center col-span-full">
@@ -203,12 +214,13 @@
                     </div>
                 @endforelse
             </div>
+
             <div class="mt-12 text-center">
                 <a href="{{ route('teachers') }}"
-                    class="inline-flex items-center px-8 py-3 font-semibold text-white transition-all duration-300 bg-blue-600 shadow-lg hover:bg-blue-700 rounded-xl hover:shadow-xl hover:-translate-y-1">
+                    class="inline-flex items-center px-8 py-3 font-semibold text-white transition-all duration-300 rounded-xl hover:-translate-y-1"
+                    style="background: #15803d; box-shadow: 0 4px 16px #15803d33;">
                     Lihat Semua Guru
-                    <svg class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -217,49 +229,52 @@
         </div>
     </section>
 
-    <section id="berita" class="py-20 bg-white border-t border-gray-50">
+    {{-- ===== BERITA ===== --}}
+    <section id="berita" class="py-20 border-t" style="background: #F0F4ED; border-color: #d1fae5">
         <div class="container px-6 mx-auto">
             <div class="flex flex-col items-center justify-between gap-8 mb-12 md:flex-row">
                 <div>
-                    <span class="text-sm font-semibold tracking-wider text-blue-700 uppercase">Berita Terkini</span>
-                    <h2 class="mt-2 text-4xl font-bold text-gray-900 font-display">Berita & Pengumuman</h2>
+                    <span class="text-sm font-semibold tracking-wider uppercase" style="color: #15803d">Berita
+                        Terkini</span>
+                    <h2 class="mt-2 text-4xl font-bold font-display" style="color: #14532d">Berita & Pengumuman</h2>
                 </div>
-                <a href="{{ route('news') }}"
-                    class="flex items-center font-semibold text-blue-700 transition-colors hover:text-blue-800">
+                <a href="{{ route('news') }}?tab=agenda" class="flex items-center font-semibold transition-colors"
+                    style="color: #15803d">
                     Lihat Semua <span class="ml-2">→</span>
                 </a>
             </div>
 
             <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 @forelse($latestNews as $news)
-                    <div
-                        class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-md rounded-xl hover:shadow-xl group">
+                    <div class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border shadow-md rounded-xl hover:shadow-xl group"
+                        style="border-color: #d1fae5">
                         <div class="relative h-56 overflow-hidden">
                             @if ($news->featured_image)
                                 <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}"
                                     class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
                             @else
-                                <div
-                                    class="flex items-center justify-center w-full h-full text-4xl font-bold text-white bg-blue-600">
+                                <div class="flex items-center justify-center w-full h-full text-4xl font-bold text-white"
+                                    style="background: #15803d">
                                     {{ strtoupper(substr($news->title, 0, 1)) }}
                                 </div>
                             @endif
                         </div>
-                        <div class="flex flex-col flex-1 p-6">
-                            <span
-                                class="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full w-fit mb-4">
+                        <div class="flex flex-col flex-1 p-6" style="background: #fefefe">
+                            <span class="text-xs font-semibold px-3 py-1.5 rounded-full w-fit mb-4"
+                                style="color: #15803d; background: #15803d1a">
                                 {{ $news->published_at?->format('d M Y') ?? 'Terbaru' }}
                             </span>
-                            <h3
-                                class="mb-4 text-base font-bold leading-tight text-gray-900 transition font-display line-clamp-2 group-hover:text-blue-700">
+                            <h3 class="mb-4 text-base font-bold leading-tight text-gray-900 transition font-display line-clamp-2"
+                                style="transition: color 0.2s">
                                 {{ $news->title }}
                             </h3>
                             <p class="flex-1 mb-6 text-sm leading-relaxed text-gray-600 line-clamp-3">
                                 {{ $news->excerpt ?? Str::limit(strip_tags($news->content), 100) }}
                             </p>
-                            <div class="mb-4 border-t border-gray-100"></div>
+                            <div class="mb-4 border-t" style="border-color: #d1fae5"></div>
                             <a href="{{ route('news.detail', $news->slug) }}"
-                                class="inline-flex items-center text-sm font-semibold text-blue-600 group/link">
+                                class="inline-flex items-center text-sm font-semibold group/link"
+                                style="color: #15803d">
                                 Baca Selengkapnya <i
                                     class="ml-2 transition-transform fas fa-arrow-right group-hover/link:translate-x-1"></i>
                             </a>
@@ -275,12 +290,13 @@
     </section>
 
     {{-- ===== PRESTASI ===== --}}
-    <div class="py-20 bg-linear-to-b from-white to-blue-50">
+    <div class="py-20" style="background: linear-gradient(to bottom, #fefefe, #F0F4ED)">
         <div class="container px-6 mx-auto">
             <div class="max-w-3xl mx-auto mb-16 text-center">
-                <span class="text-sm font-semibold tracking-wider text-blue-700 uppercase">Pencapaian Sekolah</span>
-                {{-- FIX: Nama sekolah diambil dari config, bukan hardcode SMK --}}
-                <h2 class="mt-4 mb-6 text-4xl font-bold text-gray-900 font-display">Prestasi Terbaru {{ config('app.name') }}</h2>
+                <span class="text-sm font-semibold tracking-wider uppercase" style="color: #15803d">Pencapaian
+                    Sekolah</span>
+                <h2 class="mt-4 mb-6 text-4xl font-bold font-display" style="color: #14532d">Prestasi Terbaru
+                    {{ config('app.name') }}</h2>
             </div>
 
             <div class="grid grid-cols-1 gap-8 mb-12 md:grid-cols-2 lg:grid-cols-3">
@@ -290,15 +306,13 @@
                     </div>
                 @else
                     @foreach ($prestasis as $prestasi)
-                        @php
-                            $award = getAwardIcon($prestasi->category);
-                        @endphp
+                        @php $award = getAwardIcon($prestasi->category); @endphp
                         <div
                             class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border border-gray-200 shadow-lg rounded-2xl hover:shadow-2xl group">
-                            <div
-                                class="flex items-center justify-center px-6 py-8 bg-linear-to-br from-gray-50 to-gray-100 shrink-0">
-                                <div
-                                    class="w-24 h-24 bg-linear-to-br {{ $award['bgColor'] }} rounded-full flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                            <div class="flex items-center justify-center px-6 py-8 shrink-0"
+                                style="background: linear-gradient(to bottom right, #f8fafc, #f1f5f9)">
+                                <div class="flex items-center justify-center w-24 h-24 transition-transform duration-300 transform rounded-full shadow-lg group-hover:scale-110"
+                                    style="{{ $award['bgStyle'] }}">
                                     <i class="{{ $award['icon'] }} text-white text-5xl"></i>
                                 </div>
                             </div>
@@ -308,15 +322,14 @@
                                     {{ $prestasi->title }}</h3>
 
                                 @if ($prestasi->category)
-                                    <div
-                                        class="{{ $award['textColor'] }} font-semibold text-xs uppercase tracking-wide mb-3 line-clamp-1">
+                                    <div class="mb-3 text-xs font-semibold tracking-wide uppercase line-clamp-1"
+                                        style="{{ $award['textStyle'] }}">
                                         {{ $prestasi->category }}
                                     </div>
                                 @endif
 
                                 <p class="flex-1 mb-3 text-sm leading-relaxed text-gray-600 line-clamp-2">
-                                    {{ $prestasi->description }}
-                                </p>
+                                    {{ $prestasi->description }}</p>
 
                                 @if ($prestasi->achievement_date)
                                     <div class="flex items-center mb-4 text-xs text-gray-500">
@@ -326,11 +339,11 @@
                                 @endif
 
                                 <div class="pt-3 mt-auto border-t border-gray-200"></div>
-
-                                {{-- FIX: "Read More" → "Baca Selengkapnya" --}}
                                 <a href="{{ route('prestasi.detail', $prestasi->slug) }}"
-                                    class="inline-block {{ $award['textColor'] }} hover:opacity-80 font-semibold text-sm group/link transition-colors mt-3">
-                                    Baca Selengkapnya <i
+                                    class="inline-block mt-3 text-sm font-semibold transition-opacity hover:opacity-80 group/link"
+                                    style="{{ $award['textStyle'] }}">
+                                    Baca Selengkapnya
+                                    <i
                                         class="ml-2 transition-transform fas fa-arrow-right group-hover/link:translate-x-1"></i>
                                 </a>
                             </div>
@@ -342,7 +355,8 @@
             @if ($prestasis->isNotEmpty())
                 <div class="text-center">
                     <a href="{{ route('prestasi.index') }}"
-                        class="inline-block px-8 py-3 font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl">
+                        class="inline-block px-8 py-3 font-semibold text-white transition-all duration-300 rounded-lg shadow-lg hover:-translate-y-1"
+                        style="background: #15803d; box-shadow: 0 4px 16px #15803d33;">
                         Lihat Semua Prestasi <i class="ml-2 fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -350,98 +364,4 @@
         </div>
     </div>
 
-    <section id="agenda" class="pt-20 pb-8 bg-gradient-to-br from-blue-50 to-white">
-        <div class="container px-6 mx-auto">
-            <div class="flex flex-col items-center justify-between gap-8 mb-12 md:flex-row">
-                <div>
-                    <span class="text-sm font-semibold tracking-wider text-blue-700 uppercase">Jadwal Kegiatan</span>
-                    <h2 class="mt-2 text-4xl font-bold text-gray-900 font-display">Agenda Kegiatan</h2>
-                </div>
-                <a href="{{ route('agenda') }}"
-                    class="flex items-center font-semibold text-blue-700 transition-colors hover:text-blue-800">
-                    Lihat Semua <span class="ml-2">→</span>
-                </a>
-            </div>
-
-            <div class="space-y-4">
-                @forelse($agendas as $agenda)
-                    @php
-                        $statusClasses = [
-                            'upcoming'  => 'bg-blue-100 text-blue-800',
-                            'completed' => 'bg-gray-100 text-gray-800',
-                        ];
-                        $statusLabels = [
-                            'upcoming'  => 'Mendatang',
-                            'completed' => 'Selesai',
-                        ];
-                        $showTime = $agenda->formatted_time && $agenda->formatted_time !== '00:00';
-                    @endphp
-                    <div class="p-6 transition-shadow duration-300 bg-white border-l-4 border-blue-600 shadow-md rounded-xl hover:shadow-lg">
-                        <div class="flex flex-col items-start justify-between gap-4 sm:flex-row">
-                            <div class="flex-1">
-                                <h3 class="mb-2 text-lg font-bold text-gray-900 font-display">
-                                    {{ $agenda->title }}
-                                </h3>
-
-                                @if($agenda->description)
-                                    <p class="mb-3 text-sm leading-relaxed text-gray-600">
-                                        {{ Str::limit($agenda->description, 150) }}
-                                    </p>
-                                @endif
-
-                                <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                                    <span class="flex items-center gap-2">
-                                        <i class="text-blue-600 fas fa-calendar"></i>
-                                        {{ $agenda->event_date->format('d M Y') }}
-                                    </span>
-
-                                    @if($showTime)
-                                        <span class="flex items-center gap-2">
-                                            <i class="text-blue-600 fas fa-clock"></i>
-                                            {{ $agenda->formatted_time }} WIB
-                                        </span>
-                                    @endif
-
-                                    @if($agenda->location)
-                                        <span class="flex items-center gap-2">
-                                            <i class="text-red-500 fas fa-map-marker-alt"></i>
-                                            {{ $agenda->location }}
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <span class="shrink-0 inline-block px-4 py-2 text-sm rounded-full font-bold whitespace-nowrap
-                                {{ $statusClasses[$agenda->status] ?? 'bg-gray-100 text-gray-800' }}">
-                                {{ $statusLabels[$agenda->status] ?? $agenda->status }}
-                            </span>
-                        </div>
-                    </div>
-                @empty
-                    <div class="p-12 text-center bg-white shadow-sm rounded-xl">
-                        <i class="mb-3 text-3xl text-gray-300 fas fa-calendar-times"></i>
-                        <p class="font-medium text-gray-500">Tidak ada agenda aktif saat ini</p>
-                    </div>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-    {{-- FIX: Hapus CTA PPDB section tengah (sudah ada di Hero & Footer strip) --}}
-    {{-- Diganti dengan section ringan tanpa full-bleed background --}}
-    <section class="pt-4 pb-12 bg-white border-t border-gray-100">
-        <div class="container px-6 mx-auto">
-            <div class="flex flex-col items-center justify-between max-w-3xl gap-6 px-8 py-6 mx-auto sm:flex-row bg-blue-50 rounded-2xl">
-                <div>
-                    <p class="text-lg font-bold leading-tight text-gray-900">Pendaftaran PPDB 2026/2027 Masih Dibuka</p>
-                    <p class="mt-1 text-sm text-gray-500">Segera daftarkan putra-putri Anda sebelum kuota penuh.</p>
-                </div>
-                <a href="{{ route('ppdb') }}"
-                    class="shrink-0 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-7 rounded-xl text-sm shadow-md shadow-blue-200 transition-all hover:-translate-y-0.5 whitespace-nowrap">
-                    <i class="fas fa-graduation-cap"></i>
-                    Daftar Sekarang →
-                </a>
-            </div>
-        </div>
-    </section>
 </div>

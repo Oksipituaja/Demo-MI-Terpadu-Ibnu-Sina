@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-white">
     <!-- Header -->
-    <div class="bg-blue-600 text-white py-12 px-4">
+    <div class="bg-primary text-white py-12 px-4">
         <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl font-bold">Syarat & Ketentuan</h1>
         </div>

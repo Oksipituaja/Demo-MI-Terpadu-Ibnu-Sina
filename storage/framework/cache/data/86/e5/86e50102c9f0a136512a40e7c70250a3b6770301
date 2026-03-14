@@ -1,4 +1,4 @@
-1773516020s:44914:"<!DOCTYPE html>
+1773515996s:51339:"<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -358,120 +358,211 @@
     </header>
 
     <main class="pt-[104px] md:pt-[112px]">
-        <div wire:snapshot="{&quot;data&quot;:[],&quot;memo&quot;:{&quot;id&quot;:&quot;CcaG5pO9ybZXD7FQuA0n&quot;,&quot;name&quot;:&quot;pages.teachers&quot;,&quot;path&quot;:&quot;teachers&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;release&quot;:&quot;a-a-a&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;id&quot;},&quot;checksum&quot;:&quot;ce920630d36dde5e13a47a3dcf72d0841d0e9d94ac1a8000ecdd7c7d4bef2f75&quot;}" wire:effects="[]" wire:id="CcaG5pO9ybZXD7FQuA0n">
-    <!-- Breadcrumb -->
-    <div class="pt-8 pb-8" style="background: linear-gradient(to right, #14532d, #15803d)">
-        <div class="container px-6 mx-auto">
-            <nav class="flex items-center mb-4 space-x-2 text-sm text-white">
-                <a href="http://localhost:8000" class="hover:underline">Home</a>
-                <span>/</span>
-                <span>Guru & Staf</span>
-            </nav>
-            <h1 class="text-4xl font-bold text-white font-display">Tim Pendidik Kami</h1>
-            <p class="mt-2" style="color: #bbf7d0">Guru-guru profesional yang berdedikasi memberikan pendidikan berkualitas</p>
+        <div wire:snapshot="{&quot;data&quot;:{&quot;expanded&quot;:true},&quot;memo&quot;:{&quot;id&quot;:&quot;zmTd4qfPYMAQkZjUdxeG&quot;,&quot;name&quot;:&quot;pages.about&quot;,&quot;path&quot;:&quot;about&quot;,&quot;method&quot;:&quot;GET&quot;,&quot;release&quot;:&quot;a-a-a&quot;,&quot;children&quot;:[],&quot;scripts&quot;:[],&quot;assets&quot;:[],&quot;errors&quot;:[],&quot;locale&quot;:&quot;id&quot;},&quot;checksum&quot;:&quot;2aa95bb4c7beeb9d84d0a613a6fb4458161a7ef96245171026f610cabc07b450&quot;}" wire:effects="[]" wire:id="zmTd4qfPYMAQkZjUdxeG" class="min-h-screen" style="background: #F0F4ED">
+    
+    <!--[if BLOCK]><![endif]-->        <div class="relative overflow-hidden h-96" style="background: linear-gradient(to bottom right, #15803d, #14532d)">
+            <img src="http://localhost:8000/storage/hero/yBlqmrgExRlKP2R3Ftm50fJh2SirXjOW0R1DYnTR.jpg"
+                 alt="MI Terpadu Ibnu Sina"
+                 class="object-cover w-full h-full"
+                 onerror="this.style.display='none'">
+            <div class="absolute inset-0" style="background: linear-gradient(to top, #14532d, transparent, transparent)"></div>
         </div>
-    </div>
+    <!--[if ENDBLOCK]><![endif]-->
+    <div class="max-w-6xl px-4 py-16 mx-auto">
+        <h1 class="mb-12 text-4xl font-bold" style="color: #14532d">Tentang Kami</h1>
 
-    <!-- Teachers Section -->
-    <section class="py-20" style="background: #F0F4ED">
-        <div class="container px-6 mx-auto">
-            <div class="max-w-3xl mx-auto mb-16 text-center">
-                <span class="text-sm font-semibold tracking-wider uppercase" style="color: #15803d">Tim Profesional Kami</span>
-                <h2 class="mt-4 mb-6 text-4xl font-bold font-display" style="color: #14532d">Tenaga Pendidik & Pengajar Berpengalaman</h2>
-                <p class="leading-relaxed text-gray-600">
-                    Guru-guru berpengalaman dan berdedikasi yang siap membimbing setiap siswa mencapai potensi maksimal mereka.
-                </p>
+        <!--[if BLOCK]><![endif]-->            <div id="sambutan" class="relative py-16 my-12 overflow-hidden rounded-xl scroll-mt-32" style="background: linear-gradient(to bottom right, #F0F4ED, #dcfce7, #F0F4ED)">
+                <div class="absolute inset-0 opacity-5">
+                    <div class="absolute top-0 left-0 rounded-full w-96 h-96 blur-3xl" style="background: #15803d"></div>
+                    <div class="absolute bottom-0 right-0 rounded-full w-96 h-96 blur-3xl" style="background: #EAB308"></div>
+                </div>
+
+                <div class="relative z-10 px-8">
+                    <div class="mb-6 text-center">
+                        <span class="text-sm font-semibold tracking-widest uppercase" style="color: #15803d">Sambutan</span>
+                    </div>
+
+                    <h2 class="mb-12 text-3xl font-bold text-center md:text-4xl" style="color: #14532d">
+                        Sambutan Kepala Sekolah
+                    </h2>
+
+                    <div class="grid items-center max-w-5xl gap-12 mx-auto lg:grid-cols-2">
+                        <div class="order-2 space-y-6 lg:order-1">
+                            <div class="text-base leading-relaxed text-gray-700">
+                                <p>Assalamu'alaikum warahmatullahi wabarakatuh.</p>
+<p>Puji syukur kehadirat Allah SWT atas segala nikmat dan karunia-Nya. Kami mengucapkan terima kasih atas kepercayaan yang telah diberikan kepada MIS Terpadu Ibnu Sina.</p>
+<p>MIS Terpadu Ibnu Sina berkomitmen untuk mewujudkan generasi muslim yang berilmu, berkarya, taat beribadah, berakhlaqul karimah, terampil, dan unggul dalam prestasi sesuai dengan visi madrasah kami.</p>
+<p>Dengan dukungan seluruh tenaga pendidik yang profesional dan fasilitas yang memadai, kami siap membimbing peserta didik menuju masa depan yang cerah dan bermartabat.</p>
+<p>Wassalamu'alaikum warahmatullahi wabarakatuh.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-center order-1 lg:order-2">
+                            <div class="relative w-64 h-64 md:w-80 md:h-80">
+                                <div class="absolute inset-0 flex items-center justify-center overflow-hidden bg-gray-200 rounded-full">
+                                    <!--[if BLOCK]><![endif]-->                                        <img src="http://localhost:8000/storage/about/pVWc38X2MAWLlCFmdwncRZqheBJbgAQrxS84SxCg.jpg"
+                                             alt="Sambutan Kepala Sekolah"
+                                             class="object-cover w-full h-full">
+                                    <!--[if ENDBLOCK]><![endif]-->                                </div>
+
+                                <!--[if BLOCK]><![endif]-->                                    <div class="absolute z-20 px-6 py-2 text-white -translate-x-1/2 border-2 border-white rounded-full shadow-lg -bottom-2 left-1/2 whitespace-nowrap" style="background: #15803d">
+                                        <p class="text-sm font-bold tracking-wide md:text-base">
+                                            Kepala Madrasah .Spd
+                                        </p>
+                                    </div>
+                                <!--[if ENDBLOCK]><![endif]-->                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        <!--[if ENDBLOCK]><![endif]-->
+        <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
+        <!--[if BLOCK]><![endif]-->            <!--[if BLOCK]><![endif]-->                <div id="tentang" class="pt-12 mb-16 border-t scroll-mt-32" style="border-color: #15803d26">
+                    <h2 class="mb-6 text-3xl font-bold" style="color: #14532d">Profil Sekolah</h2>
+                    <div class="leading-relaxed prose prose-lg text-gray-700 max-w-none">
+                        <p>MIS TERPADU IBNU SINA merupakan salah satu sekolah jenjang MI berstatus Swasta yang berada di wilayah Kec. Kembang, Kab. Jepara, Jawa Tengah.</p>
+<p>MIS TERPADU IBNU SINA didirikan pada tanggal 28 Januari 2008 dengan Nomor SK Pendirian Kd.11.20/4/PP.03.2/58/2008 yang berada dalam naungan Kementerian Agama.</p>
+<p>Dengan adanya keberadaan MIS TERPADU IBNU SINA, diharapkan dapat memberikan kontribusi dalam mencerdaskan anak bangsa di wilayah Kec. Kembang, Kab. Jepara.</p>
+                    </div>
+                </div>
+            <!--[if ENDBLOCK]><![endif]-->
+            <!--[if BLOCK]><![endif]-->                <div id="visi-misi" class="grid gap-12 pt-12 my-16 border-t md:grid-cols-2 scroll-mt-32" style="border-color: #15803d26">
+                    <!--[if BLOCK]><![endif]-->                        <div class="p-8 rounded-lg" style="background: linear-gradient(to bottom right, #dcfce7, #bbf7d0)">
+                            <h3 class="mb-4 text-2xl font-bold" style="color: #14532d">Visi Madrasah</h3>
+                            <div class="leading-relaxed prose-sm prose text-gray-700 max-w-none"><p>TERWUJUDNYA GENERASI MUSLIM YANG ULAMA' (BERILMU) DAN AMILIN (BERKARYA) SEHINGGA TA'AT DAN RAJIN BERIBADAH, BERAKHLAQUL KARIMAH, TERAMPIL DAN UNGGUL DALAM PRESTASI.</p></div>
+                        </div>
+                    <!--[if ENDBLOCK]><![endif]-->
+                    <!--[if BLOCK]><![endif]-->                    <div class="p-8 rounded-lg" style="background: linear-gradient(to bottom right, #fef9c3, #fef08a)">
+                        <h3 class="mb-4 text-2xl font-bold" style="color: #713f12">Misi Madrasah</h3>
+                        <div class="leading-relaxed prose-sm prose text-gray-700 max-w-none"><ol>
+                <li>Menanamkan aqidah shohihah dan ibadah salimah.</li>
+                <li>Menanamkan akhlaqul karimah dalam kehidupan sehari-hari.</li>
+                <li>Menanamkan jiwa kemandirian sejak dini.</li>
+                <li>Menanamkan sikap kreatif dan inovatif dalam menghadapi permasalahan.</li>
+                <li>Menyiapkan peserta didik untuk menempuh jenjang pendidikan yang lebih tinggi.</li>
+                </ol></div>    
+                        </div>
+                    <!--[if ENDBLOCK]><![endif]-->                </div>
+            <!--[if ENDBLOCK]><![endif]-->
+            <!--[if BLOCK]><![endif]-->                <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                            <!--[if BLOCK]><![endif]-->                    <div class="pt-12 mb-12 border-t" style="border-color: #15803d26">
 
-            <div class="grid gap-8 mb-12 md:grid-cols-2 lg:grid-cols-3">
-                <!--[if BLOCK]><![endif]-->                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Yuni Astuti, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Guru Kelas III</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Laila Rahmawati, S.Pd.I</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Pendidikan Agama Islam</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Wahyu Hidayat, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Guru Kelas IV</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <img src="http://localhost:8000/storage/teachers/WNx87VKxA1KCMOyH2PBW6CJ5ZzPn7oP6kR1o4Y3S.jpg" alt="Dr. Bambang Sutrisno, M.Pd" class="object-cover w-full h-full">
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Dr. Bambang Sutrisno, M.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Kepala Sekolah</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Siti Nurhaliza, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Guru Kelas I</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Ahmad Wijaya, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Matematika</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Dewi Lestari, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Bahasa Indonesia</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Roni Hermawan, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Pendidikan Jasmani</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Rina Kusumawati, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">Guru Kelas II</p>
-                    </div>
-                                    <div class="text-center teacher-card group">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <!--[if BLOCK]><![endif]-->                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            <!--[if ENDBLOCK]><![endif]-->                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 transition font-display" style="color: #14532d">Hendra Prasetyo, S.Pd</h3>
-                        <p class="mb-3 text-lg font-semibold" style="color: #15803d">IPA</p>
-                    </div>
-                <!--[if ENDBLOCK]><![endif]-->            </div>
+                        <!--[if BLOCK]><![endif]-->                            
+                            <h2 class="mb-6 text-2xl font-bold" style="color: #14532d">
+                                Informasi Lengkap MIS TERPADU IBNU SINA
+                            </h2>
 
-            <div class="flex justify-center mt-12">
-                <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
+                            <div class="overflow-hidden border rounded-lg shadow-sm" style="border-color: #15803d26">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <!--[if BLOCK]><![endif]-->                                            <tr class="border-b last:border-0" style="background: #fefefe; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    NPSN
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    60712544
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #F0F4ED; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    Nama Sekolah
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    MIS TERPADU IBNU SINA
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #fefefe; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    Naungan
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    Kementerian Agama
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #F0F4ED; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    Tanggal Berdiri
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    28 Januari 2008
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #fefefe; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    No. SK Pendirian
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    Kd.11.20/4/PP.03.2/58/2008
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #F0F4ED; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    Tanggal Operasional
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    28 Januari 2008
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #fefefe; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    No. SK Operasional
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    kd.11.20/MI/167/08
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #F0F4ED; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    Jenjang Pendidikan
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    MI
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #fefefe; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    Status Sekolah
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    Swasta
+                                                </td>
+                                            </tr>
+                                                                                    <tr class="border-b last:border-0" style="background: #F0F4ED; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
+                                                    Alamat
+                                                </td>
+                                                <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
+                                                <td class="px-4 py-3 text-gray-800 align-top">
+                                                    Jl. Raya Bangsri - Keling KM.4, Dukuh Segawe, Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457
+                                                </td>
+                                            </tr>
+                                        <!--[if ENDBLOCK]><![endif]-->                                    </tbody>
+                                </table>
+                            </div>
+
+                        <!--[if ENDBLOCK]><![endif]-->
+                    </div>
+                <!--[if ENDBLOCK]><![endif]-->                            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->                            <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->            <!--[if ENDBLOCK]><![endif]-->
+            <div class="pt-12 my-12 text-center border-t" style="border-color: #15803d26">
+                <a href="http://localhost:8000/about"
+                   onclick="window.location.href='http://localhost:8000/about'; return false;"
+                   class="inline-flex items-center px-8 py-3 font-semibold text-white transition-all rounded-lg"
+                   style="background: #6b7280;">
+                    <i class="mr-2 fas fa-chevron-up"></i>
+                    Sembunyikan Detail
+                </a>
             </div>
-        </div>
-    </section>
-</div>
+        <!--[if ENDBLOCK]><![endif]-->    </div>
+
+    <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]--></div>
     </main>
 
     <!-- Footer -->

@@ -1,43 +1,40 @@
-<div class="min-h-screen bg-white">
-    <!-- Hero Image -->
+<div class="min-h-screen" style="background: #F0F4ED">
     @php
         $heroImagePath = $heroImage?->image ? asset('storage/' . $heroImage->image) : null;
     @endphp
 
     @if($heroImagePath)
-        <div class="relative overflow-hidden h-96 bg-linear-to-br from-blue-600 to-blue-800">
+        <div class="relative overflow-hidden h-96" style="background: linear-gradient(to bottom right, #15803d, #14532d)">
             <img src="{{ $heroImagePath }}"
                  alt="{{ config('app.name') }}"
                  class="object-cover w-full h-full"
                  onerror="this.style.display='none'">
-            <div class="absolute inset-0 bg-linear-to-t from-blue-900 via-transparent to-transparent"></div>
+            <div class="absolute inset-0" style="background: linear-gradient(to top, #14532d, transparent, transparent)"></div>
         </div>
     @else
-        <div class="flex items-center justify-center bg-linear-to-br from-blue-600 to-blue-800 h-96">
+        <div class="flex items-center justify-center h-96" style="background: linear-gradient(to bottom right, #15803d, #14532d)">
             <div class="text-center text-white">
                 <i class="mb-4 text-6xl fas fa-school opacity-40"></i>
             </div>
         </div>
     @endif
 
-    <!-- Content -->
     <div class="max-w-6xl px-4 py-16 mx-auto">
-        <h1 class="mb-12 text-4xl font-bold text-gray-900">Tentang Kami</h1>
+        <h1 class="mb-12 text-4xl font-bold" style="color: #14532d">Tentang Kami</h1>
 
-        <!-- ===== SAMBUTAN KEPALA SEKOLAH ===== -->
         @if($principalGreeting)
-            <div id="sambutan" class="relative py-16 my-12 overflow-hidden bg-linear-to-br from-blue-50 via-white to-indigo-50 rounded-xl scroll-mt-32">
+            <div id="sambutan" class="relative py-16 my-12 overflow-hidden rounded-xl scroll-mt-32" style="background: linear-gradient(to bottom right, #F0F4ED, #dcfce7, #F0F4ED)">
                 <div class="absolute inset-0 opacity-5">
-                    <div class="absolute top-0 left-0 bg-blue-400 rounded-full w-96 h-96 blur-3xl"></div>
-                    <div class="absolute bottom-0 right-0 bg-yellow-300 rounded-full w-96 h-96 blur-3xl"></div>
+                    <div class="absolute top-0 left-0 rounded-full w-96 h-96 blur-3xl" style="background: #15803d"></div>
+                    <div class="absolute bottom-0 right-0 rounded-full w-96 h-96 blur-3xl" style="background: #EAB308"></div>
                 </div>
 
                 <div class="relative z-10 px-8">
                     <div class="mb-6 text-center">
-                        <span class="text-sm font-semibold tracking-widest text-blue-700 uppercase">Sambutan</span>
+                        <span class="text-sm font-semibold tracking-widest uppercase" style="color: #15803d">Sambutan</span>
                     </div>
 
-                    <h2 class="mb-12 text-3xl font-bold text-center text-gray-900 md:text-4xl">
+                    <h2 class="mb-12 text-3xl font-bold text-center md:text-4xl" style="color: #14532d">
                         {{ $principalGreeting->title ?? 'Sambutan Kepala Sekolah' }}
                     </h2>
 
@@ -64,8 +61,8 @@
                                 </div>
 
                                 @if($principalGreeting->principal_name)
-                                    <div class="absolute z-20 px-6 py-2 text-white -translate-x-1/2 bg-blue-600 border-2 border-white rounded-full shadow-lg -bottom-2 left-1/2 whitespace-nowrap">
-                                        <p class="text-sm font-bold tracking-wide uppercase md:text-base">
+                                    <div class="absolute z-20 px-6 py-2 text-white -translate-x-1/2 border-2 border-white rounded-full shadow-lg -bottom-2 left-1/2 whitespace-nowrap" style="background: #15803d">
+                                        <p class="text-sm font-bold tracking-wide md:text-base">
                                             {{ $principalGreeting->principal_name }}
                                         </p>
                                     </div>
@@ -77,11 +74,11 @@
             </div>
         @endif
 
-        <!-- Tombol Pelajari Lebih Lanjut -->
         @if(!$expanded && $principalGreeting)
             <div class="my-12 text-center">
                 <a href="{{ request()->fullUrlWithQuery(['expanded' => '1']) }}"
-                   class="inline-flex items-center px-8 py-4 font-bold text-white transition-all bg-blue-600 rounded-lg shadow-lg hover:bg-blue-700 hover:shadow-xl">
+                   class="inline-flex items-center px-8 py-4 font-bold text-white transition-all rounded-lg shadow-lg hover:-translate-y-0.5"
+                   style="background: #15803d; box-shadow: 0 4px 16px #15803d33;">
                     <i class="mr-3 fas fa-book"></i>
                     Pelajari Lebih Lanjut
                     <i class="ml-2 fas fa-chevron-down"></i>
@@ -89,45 +86,39 @@
             </div>
         @endif
 
-        <!-- ===== EXPANDED CONTENT ===== -->
         @if($expanded)
-
-            <!-- Profil Sekolah -->
             @if($schoolProfile)
-                <div id="tentang" class="pt-12 mb-16 border-t scroll-mt-32">
-                    <h2 class="mb-6 text-3xl font-bold text-gray-900">{{ $schoolProfile->title }}</h2>
+                <div id="tentang" class="pt-12 mb-16 border-t scroll-mt-32" style="border-color: #15803d26">
+                    <h2 class="mb-6 text-3xl font-bold" style="color: #14532d">{{ $schoolProfile->title }}</h2>
                     <div class="leading-relaxed prose prose-lg text-gray-700 max-w-none">
                         {!! $schoolProfile->content !!}
                     </div>
                 </div>
             @endif
 
-            <!-- Visi & Misi -->
             @if($vision || $mission)
-                <div id="visi-misi" class="grid gap-12 pt-12 my-16 border-t md:grid-cols-2 scroll-mt-32">
+                <div id="visi-misi" class="grid gap-12 pt-12 my-16 border-t md:grid-cols-2 scroll-mt-32" style="border-color: #15803d26">
                     @if($vision)
-                        <div class="p-8 rounded-lg bg-linear-to-br from-blue-50 to-blue-100">
-                            <h3 class="mb-4 text-2xl font-bold text-blue-900">{{ $vision->title }}</h3>
-                            <div class="leading-relaxed text-gray-700">{!! $vision->content !!}</div>
+                        <div class="p-8 rounded-lg" style="background: linear-gradient(to bottom right, #dcfce7, #bbf7d0)">
+                            <h3 class="mb-4 text-2xl font-bold" style="color: #14532d">{{ $vision->title }}</h3>
+                            <div class="leading-relaxed prose-sm prose text-gray-700 max-w-none">{!! $vision->content !!}</div>
                         </div>
                     @endif
 
                     @if($mission)
-                        <div class="p-8 rounded-lg bg-linear-to-br from-green-50 to-green-100">
-                            <h3 class="mb-4 text-2xl font-bold text-green-900">{{ $mission->title }}</h3>
-                            <div class="leading-relaxed text-gray-700">{!! $mission->content !!}</div>
+                    <div class="p-8 rounded-lg" style="background: linear-gradient(to bottom right, #fef9c3, #fef08a)">
+                        <h3 class="mb-4 text-2xl font-bold" style="color: #713f12">{{ $mission->title }}</h3>
+                        <div class="leading-relaxed prose-sm prose text-gray-700 max-w-none">{!! $mission->content !!}</div>    
                         </div>
                     @endif
                 </div>
             @endif
 
-            <!-- Other Sections -->
             @forelse($aboutSections as $section)
                 @if(!in_array($section->key, ['school_profile', 'vision', 'mission', 'hero_image', 'principal_greeting']))
-                    <div class="pt-12 mb-12 border-t">
+                    <div class="pt-12 mb-12 border-t" style="border-color: #15803d26">
 
                         @if($section->key === 'school_info')
-                            {{-- ===== TABEL INFORMASI SEKOLAH ===== --}}
                             @php
                                 $info = json_decode($section->content, true) ?? [];
                                 $rows = [
@@ -144,16 +135,16 @@
                                 ];
                             @endphp
 
-                            <h2 class="mb-6 text-2xl font-bold text-gray-900">
+                            <h2 class="mb-6 text-2xl font-bold" style="color: #14532d">
                                 Informasi Lengkap {{ $info['nama_sekolah'] ?? config('app.name') }}
                             </h2>
 
-                            <div class="overflow-hidden border border-gray-200 rounded-lg shadow-sm">
+                            <div class="overflow-hidden border rounded-lg shadow-sm" style="border-color: #15803d26">
                                 <table class="w-full text-sm">
                                     <tbody>
                                         @foreach($rows as $i => $row)
-                                            <tr class="{{ $i % 2 === 0 ? 'bg-white' : 'bg-gray-50' }} border-b border-gray-100 last:border-0">
-                                                <td class="w-48 px-5 py-3 font-semibold text-gray-700 align-top">
+                                            <tr class="border-b last:border-0" style="{{ $i % 2 === 0 ? 'background: #fefefe' : 'background: #F0F4ED' }}; border-color: #15803d0d">
+                                                <td class="w-48 px-5 py-3 font-semibold align-top" style="color: #15803d">
                                                     {{ $row['label'] }}
                                                 </td>
                                                 <td class="w-4 px-2 py-3 text-gray-500 align-top">:</td>
@@ -167,8 +158,7 @@
                             </div>
 
                         @else
-                            {{-- ===== SECTION BIASA ===== --}}
-                            <h2 class="mb-6 text-2xl font-bold text-gray-900">{{ $section->title }}</h2>
+                            <h2 class="mb-6 text-2xl font-bold" style="color: #14532d">{{ $section->title }}</h2>
                             @if($section->image)
                                 <div class="mb-6 overflow-hidden rounded-lg">
                                     <img src="{{ asset('storage/' . $section->image) }}"
@@ -186,11 +176,11 @@
             @empty
             @endforelse
 
-            <!-- Collapse Button -->
-            <div class="pt-12 my-12 text-center border-t">
+            <div class="pt-12 my-12 text-center border-t" style="border-color: #15803d26">
                 <a href="{{ route('about') }}"
                    onclick="window.location.href='{{ route('about') }}'; return false;"
-                   class="inline-flex items-center px-8 py-3 font-semibold text-white transition-all bg-gray-600 rounded-lg hover:bg-gray-700">
+                   class="inline-flex items-center px-8 py-3 font-semibold text-white transition-all rounded-lg"
+                   style="background: #6b7280;">
                     <i class="mr-2 fas fa-chevron-up"></i>
                     Sembunyikan Detail
                 </a>
@@ -198,7 +188,6 @@
         @endif
     </div>
 
-    {{-- Auto-scroll via URL parameter --}}
     @if(request()->has('section'))
         <script>
             window.addEventListener('load', function () {
