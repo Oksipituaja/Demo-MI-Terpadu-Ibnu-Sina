@@ -4,19 +4,19 @@
 @section('page_subtitle', 'View student registration submissions')
 
 @section('content')
-<div class="flex justify-between items-center mb-6">
+<div class="flex items-center justify-between mb-6">
     <h3 class="text-lg font-semibold text-gray-800">Student Registrations</h3>
 </div>
 
-<div class="bg-white rounded-lg shadow overflow-hidden">
+<div class="overflow-hidden bg-white rounded-lg shadow">
     <table class="w-full">
-        <thead class="bg-gray-50 border-b">
+        <thead class="border-b bg-gray-50">
             <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Student Name</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Parent Email</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Phone</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Date</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Actions</th>
+                <th class="px-6 py-3 text-xs font-medium text-left text-gray-700 uppercase">Student Name</th>
+                <th class="px-6 py-3 text-xs font-medium text-left text-gray-700 uppercase">Parent Email</th>
+                <th class="px-6 py-3 text-xs font-medium text-left text-gray-700 uppercase">Phone</th>
+                <th class="px-6 py-3 text-xs font-medium text-left text-gray-700 uppercase">Date</th>
+                <th class="px-6 py-3 text-xs font-medium text-left text-gray-700 uppercase">Actions</th>
             </tr>
         </thead>
         <tbody class="divide-y">
@@ -26,8 +26,8 @@
                     <td class="px-6 py-4 text-sm text-gray-600">{{ $reg->email ?? '-' }}</td>
                     <td class="px-6 py-4 text-sm text-gray-600">{{ $reg->phone ?? '-' }}</td>
                     <td class="px-6 py-4 text-sm text-gray-600">{{ $reg->created_at->format('M d, Y') }}</td>
-                    <td class="px-6 py-4 text-sm space-x-2">
-                        <a href="javascript:void(0)" onclick="showDetails({{ $reg->id }}, '{{ $reg->student_name }}', '{{ $reg->email }}', '{{ $reg->phone }}', '{{ $reg->parent_name ?? 'N/A' }}', '{{ $reg->parent_phone ?? 'N/A' }}')" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i> View</a>
+                    <td class="px-6 py-4 space-x-2 text-sm">
+                        <a href="javascript:void(0)" onclick="showDetails({{ $reg->id }}, '{{ $reg->student_name }}', '{{ $reg->email }}', '{{ $reg->phone }}', '{{ $reg->guardian_name ?? 'N/A' }}', '{{ $reg->guardian_phone ?? 'N/A' }}')" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i> View</a>
                         <form action="{{ route('admin.registrations.destroy', $reg) }}" method="POST" style="display:inline;" onsubmit="return confirm('Delete this registration?')">
                             @csrf @method('DELETE')
                             <button type="submit" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i> Delete</button>
@@ -44,11 +44,11 @@
 <div class="mt-4">{{ $registrations->links() }}</div>
 
 <!-- Modal for viewing details -->
-<div id="detailsModal" style="display:none" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <h3 class="text-lg font-semibold mb-4">Registration Details</h3>
+<div id="detailsModal" style="display:none" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="w-full max-w-md p-6 mx-4 bg-white rounded-lg">
+        <h3 class="mb-4 text-lg font-semibold">Registration Details</h3>
         <div id="modalContent" class="space-y-2 text-sm"></div>
-        <button onclick="document.getElementById('detailsModal').style.display='none'" class="mt-4 px-4 py-2 bg-gray-300 text-gray-800 rounded">Close</button>
+        <button onclick="document.getElementById('detailsModal').style.display='none'" class="px-4 py-2 mt-4 text-gray-800 bg-gray-300 rounded">Close</button>
     </div>
 </div>
 
