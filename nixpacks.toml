@@ -27,6 +27,7 @@ cmds = [
 
 [phases.build]
 cmds = [
+  "npm ci",
   "npm run build",
   "php artisan config:cache",
   "php artisan route:cache",
