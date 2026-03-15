@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="{{ asset('storage/MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}"
         type="image/x-icon" alt="Logo">
 
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
@@ -515,36 +516,49 @@
     </footer>
 
     <script>
-        const btn = document.getElementById('mobileMenuBtn');
-        const drawer = document.getElementById('mobileDrawer');
-        const overlay = document.getElementById('mobileOverlay');
-        const closeBtn = document.getElementById('closeMobileMenu');
-        const bar1 = document.getElementById('bar1');
-        const bar2 = document.getElementById('bar2');
-        const bar3 = document.getElementById('bar3');
+        function initMobileMenu() {
+            const btn = document.getElementById('mobileMenuBtn');
+            const drawer = document.getElementById('mobileDrawer');
+            const overlay = document.getElementById('mobileOverlay');
+            const closeBtn = document.getElementById('closeMobileMenu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            const bar3 = document.getElementById('bar3');
 
-        function openMenu() {
-            drawer.classList.remove('translate-x-full');
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-            bar1.style.transform = 'translateY(8px) rotate(45deg)';
-            bar2.style.opacity = '0';
-            bar3.style.transform = 'translateY(-8px) rotate(-45deg)';
-            document.body.style.overflow = 'hidden';
+            if (!btn) return;
+
+            function openMenu() {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                bar1.style.transform = 'translateY(8px) rotate(45deg)';
+                bar2.style.opacity = '0';
+                bar3.style.transform = 'translateY(-8px) rotate(-45deg)';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+                bar1.style.transform = '';
+                bar2.style.opacity = '';
+                bar3.style.transform = '';
+                document.body.style.overflow = '';
+            }
+
+            btn.removeEventListener('click', openMenu);
+            closeBtn.removeEventListener('click', closeMenu);
+            overlay.removeEventListener('click', closeMenu);
+
+            btn.addEventListener('click', openMenu);
+            closeBtn.addEventListener('click', closeMenu);
+            overlay.addEventListener('click', closeMenu);
         }
 
-        function closeMenu() {
-            drawer.classList.add('translate-x-full');
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-            bar1.style.transform = '';
-            bar2.style.opacity = '';
-            bar3.style.transform = '';
-            document.body.style.overflow = '';
-        }
-
-        btn.addEventListener('click', openMenu);
-        closeBtn.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
+        document.addEventListener('DOMContentLoaded', initMobileMenu);
+        document.addEventListener('livewire:navigated', initMobileMenu);
     </script>
-</body>
 
+    @livewireScripts
+
+</body>
 </html>

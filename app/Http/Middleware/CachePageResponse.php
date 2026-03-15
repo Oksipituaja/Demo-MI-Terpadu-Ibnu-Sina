@@ -9,10 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CachePageResponse
 {
-    /**
-     * Route prefix yang TIDAK boleh di-cache sama sekali
-     * karena memerlukan autentikasi atau bersifat dinamis
-     */
     private array $noCacheRoutes = [
         '/login',
         '/register',
@@ -20,17 +16,14 @@ class CachePageResponse
         '/forgot-password',
         '/reset-password',
         '/dashboard',
-        '/admin-panel',   
+        '/admin-panel',
         '/admin',
         '/livewire',
+        '/ppdb',        // form pendaftaran — ada CSRF
     ];
 
-    /**
-     * Cache hanya public pages, TIDAK pernah cache protected/auth routes
-     */
     public function handle(Request $request, Closure $next): Response
     {
-       
         if (! $request->isMethod('GET') || auth()->check()) {
             return $next($request);
         }
@@ -45,21 +38,25 @@ class CachePageResponse
         $fullUrl = $path . ($request->getQueryString() ? '?' . $request->getQueryString() : '');
         $cacheKey = 'page.response.' . md5($fullUrl);
 
-        // Ambil dari cache jika ada
         if (Cache::has($cacheKey)) {
             $cached = Cache::get($cacheKey);
-
             return response($cached)
                 ->header('Content-Type', 'text/html; charset=UTF-8')
                 ->header('X-Cache', 'HIT');
         }
 
-        // Generate response dan cache
         $response = $next($request);
 
-        if ($response->isSuccessful() && ! $response->headers->has('X-No-Cache')) {
-            Cache::put($cacheKey, $response->getContent(), 3600);
+        // Jangan cache halaman yang mengandung Livewire component
+        // karena wire:id berisi CSRF token dan state component
+        $content = $response->getContent();
+        $hasLivewire = str_contains($content, 'wire:id') || str_contains($content, 'wire:initial-data');
+
+        if ($response->isSuccessful() && ! $response->headers->has('X-No-Cache') && ! $hasLivewire) {
+            Cache::put($cacheKey, $content, 3600);
             $response->header('X-Cache', 'MISS');
+        } else {
+            $response->header('X-Cache', 'SKIP');
         }
 
         return $response;

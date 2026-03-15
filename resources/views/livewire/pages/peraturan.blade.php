@@ -14,7 +14,7 @@
             </div>
             <h1 class="text-3xl md:text-5xl font-bold text-white mb-3">Peraturan Sekolah</h1>
             <p class="text-red-100 text-base md:text-lg max-w-xl">
-                Tata tertib dan peraturan yang berlaku di <span class="font-semibold text-yellow-300">SD Bangsri</span>
+                Tata tertib dan peraturan yang berlaku di <span class="font-semibold text-yellow-300">MI Terpadu Ibnu Sina</span>
                 untuk menciptakan lingkungan belajar yang tertib, aman, dan kondusif.
             </p>
         </div>
@@ -29,7 +29,7 @@
             </div>
             <div>
                 <span class="text-xs font-bold tracking-widest uppercase text-red-500 block mb-1">Tata Tertib Sekolah</span>
-                <h2 class="text-xl font-bold text-gray-900 mb-1">Peraturan SD Bangsri</h2>
+                <h2 class="text-xl font-bold text-gray-900 mb-1">Peraturan MI Terpadu Ibnu Sina</h2>
                 <p class="text-gray-600 text-sm leading-relaxed">
                     Peraturan ini berlaku bagi seluruh warga sekolah. Kepatuhan terhadap tata tertib merupakan
                     wujud tanggung jawab dan kedisiplinan sebagai bagian dari <span class="font-semibold text-red-700">Profil Pelajar Pancasila</span>.

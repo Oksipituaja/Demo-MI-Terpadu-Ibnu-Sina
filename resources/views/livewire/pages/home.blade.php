@@ -48,7 +48,7 @@
                             <div class="mt-1 text-sm text-gray-600">Guru Profesional</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-3xl font-bold" style="color: #15803d">25+</div>
+                            <div class="text-3xl font-bold" style="color: #15803d">19+</div>
                             <div class="mt-1 text-sm text-gray-600">Tahun Berpengalaman</div>
                         </div>
                     </div>

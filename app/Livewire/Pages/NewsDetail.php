@@ -11,6 +11,11 @@ class NewsDetail extends Component
 {
     public string $slug = '';
 
+    public function mount(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
     public function render()
     {
         $news = NewsModel::where('slug', $this->slug)

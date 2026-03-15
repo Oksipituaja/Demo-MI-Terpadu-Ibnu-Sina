@@ -1,37 +1,37 @@
-<div class="min-h-screen bg-white">
+<div class="min-h-screen" style="background: #F0F4ED">
 
     {{-- Hero --}}
-    <div class="relative overflow-hidden bg-linear-to-br from-blue-700 via-blue-600 to-indigo-700">
+    <div class="relative overflow-hidden" style="background: linear-gradient(to bottom right, #15803d, #166534, #14532d)">
         <div class="absolute inset-0 opacity-10">
-            <div
-                class="absolute top-0 right-0 w-96 h-96 bg-accent rounded-full blur-3xl translate-x-1/2 -translate-y-1/2">
-            </div>
-            <div
-                class="absolute bottom-0 left-0 w-72 h-72 bg-blue-300 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2">
-            </div>
+            <div class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full w-96 h-96 blur-3xl"
+                style="background: #EAB308"></div>
+            <div class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 rounded-full w-72 h-72 blur-3xl"
+                style="background: #86efac"></div>
         </div>
         <div class="relative max-w-4xl px-6 mx-auto py-14 md:py-20">
-            <div class="flex items-center gap-2 mb-4 text-sm text-blue-200">
+            <div class="flex items-center gap-2 mb-4 text-sm" style="color: #86efac">
                 <a href="{{ route('home') }}" class="transition-colors hover:text-white">Beranda</a>
                 <i class="text-xs fas fa-chevron-right"></i>
                 <span class="font-medium text-white">SPMB / PPDB</span>
             </div>
             <h1 class="mb-3 text-3xl font-bold text-white md:text-5xl">Pendaftaran Peserta Didik Baru</h1>
-            <p class="text-base text-blue-100 md:text-lg max-w-xl">
-                Daftarkan putra/putri Anda di <span class="font-semibold text-accent">MI Terpadu Ibnu Sina</span>
+            <p class="max-w-xl text-base md:text-lg" style="color: #bbf7d0">
+                Daftarkan putra/putri Anda di <span class="font-semibold" style="color: #EAB308">MI Terpadu Ibnu
+                    Sina</span>
                 dan jadikan mereka generasi muslim yang berilmu dan berakhlaqul karimah.
             </p>
         </div>
     </div>
 
-    <div class="max-w-4xl px-6 py-14 mx-auto space-y-12">
+    <div class="max-w-4xl px-6 mx-auto space-y-12 py-14">
 
         {{-- Alur Pendaftaran --}}
         <div>
             <div class="mb-8 text-center">
-                <span class="block mb-2 text-xs font-bold tracking-widest text-blue-500 uppercase">Cara Mendaftar</span>
+                <span class="block mb-2 text-xs font-bold tracking-widest uppercase" style="color: #15803d">Cara
+                    Mendaftar</span>
                 <h2 class="text-2xl font-bold text-gray-900">Alur Pendaftaran Online</h2>
-                <div class="w-12 h-1 mx-auto mt-3 bg-accent rounded-full"></div>
+                <div class="w-12 h-1 mx-auto mt-3 rounded-full" style="background: #EAB308"></div>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -40,35 +40,35 @@
                         [
                             'step' => '01',
                             'icon' => 'fa-money-bill-wave',
-                            'color' => 'bg-blue-600',
+                            'bgStyle' => 'background: #15803d',
                             'label' => 'Bayar Pendaftaran',
                             'desc' => 'Transfer Rp 100.000 ke BRI a.n. MI Terpadu Ibnu Sina',
                         ],
                         [
                             'step' => '02',
                             'icon' => 'fa-paper-plane',
-                            'color' => 'bg-secondary',
+                            'bgStyle' => 'background: #2563eb',
                             'label' => 'Konfirmasi',
                             'desc' => 'Kirim bukti ke Ustadz Rizka · 085 290 191 131',
                         ],
                         [
                             'step' => '03',
                             'icon' => 'fa-key',
-                            'color' => 'bg-indigo-600',
+                            'bgStyle' => 'background: #7c3aed',
                             'label' => 'Terima Token',
                             'desc' => 'Dapatkan token & nomor pendaftaran',
                         ],
                         [
                             'step' => '04',
                             'icon' => 'fa-edit',
-                            'color' => 'bg-amber-500',
+                            'bgStyle' => 'background: #EAB308',
                             'label' => 'Isi Formulir',
                             'desc' => 'Login & lengkapi data calon siswa',
                         ],
                         [
                             'step' => '05',
                             'icon' => 'fa-bell',
-                            'color' => 'bg-red-500',
+                            'bgStyle' => 'background: #dc2626',
                             'label' => 'Pengumuman',
                             'desc' => 'Tunggu hasil seleksi & info daftar ulang',
                         ],
@@ -77,8 +77,9 @@
                 @foreach ($alur as $item)
                     <div
                         class="relative flex flex-col items-center p-5 text-center bg-white border border-gray-200 shadow-sm rounded-2xl">
-                        <div class="flex items-center justify-center w-12 h-12 mb-3 rounded-xl {{ $item['color'] }}">
-                            <i class="text-base text-white fas {{ $item['icon'] }}"></i>
+                        <div class="flex items-center justify-center w-12 h-12 mb-3 rounded-xl"
+                            style="{{ $item['bgStyle'] }}">
+                            <i class="text-base fas {{ $item['icon'] }}" style="color: white"></i>
                         </div>
                         <span class="mb-1 text-xs font-black text-gray-300">{{ $item['step'] }}</span>
                         <p class="mb-1 text-sm font-bold text-gray-900">{{ $item['label'] }}</p>
@@ -88,22 +89,23 @@
             </div>
 
             {{-- Info Rekening --}}
-            <div
-                class="flex flex-col items-start gap-4 p-5 mt-5 border sm:flex-row sm:items-center bg-blue-50 border-blue-200 rounded-2xl">
-                <div class="flex items-center justify-center w-12 h-12 bg-blue-600 rounded-xl shrink-0">
+            <div class="flex flex-col items-start gap-4 p-5 mt-5 border sm:flex-row sm:items-center rounded-2xl"
+                style="background: #dcfce7; border-color: #15803d26">
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl shrink-0" style="background: #15803d">
                     <i class="text-lg text-white fas fa-university"></i>
                 </div>
                 <div class="flex-1">
-                    <p class="mb-0.5 text-xs font-bold tracking-widest text-blue-500 uppercase">Rekening Pembayaran</p>
-                    <p class="text-base font-bold text-gray-900">Bank BRI · <span
-                            class="font-mono text-blue-700">5899-01-034638-53-0</span></p>
+                    <p class="mb-0.5 text-xs font-bold tracking-widest uppercase" style="color: #15803d">Rekening
+                        Pembayaran</p>
+                    <p class="text-base font-bold text-gray-900">Bank BRI · <span class="font-mono"
+                            style="color: #15803d">5899-01-034638-53-0</span></p>
                     <p class="text-sm text-gray-600">a.n. <span class="font-semibold">MI Terpadu Ibnu Sina</span> ·
-                        Biaya pendaftaran <span class="font-bold text-blue-700">Rp 100.000</span></p>
+                        Biaya pendaftaran <span class="font-bold" style="color: #15803d">Rp 100.000</span></p>
                 </div>
                 <div class="text-sm text-gray-600">
                     <p class="mb-1 text-xs font-bold text-gray-500">Format konfirmasi:</p>
-                    <code
-                        class="px-3 py-1.5 text-xs font-mono bg-white border border-blue-200 rounded-lg text-blue-800">
+                    <code class="px-3 py-1.5 text-xs font-mono bg-white border rounded-lg"
+                        style="border-color: #15803d26; color: #14532d">
                         Nama pengirim#nama calon siswa
                     </code>
                 </div>
@@ -111,12 +113,12 @@
         </div>
 
         {{-- Persyaratan --}}
-        <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-2xl">
-            <div class="flex items-center gap-3 px-6 py-4 bg-secondary">
+        <div class="overflow-hidden bg-white border shadow-sm rounded-2xl" style="border-color: #15803d26">
+            <div class="flex items-center gap-3 px-6 py-4" style="background: #15803d">
                 <i class="text-white fas fa-clipboard-list"></i>
                 <div>
                     <h3 class="font-bold text-white">Persyaratan Pendaftaran</h3>
-                    <p class="text-xs text-secondary/30">Dokumen yang perlu disiapkan</p>
+                    <p class="text-xs" style="color: #86efac">Dokumen yang perlu disiapkan</p>
                 </div>
             </div>
             @php
@@ -136,8 +138,9 @@
             <div class="px-6 py-2">
                 @foreach ($syarat as $s)
                     <div class="flex items-start gap-4 py-3 {{ !$loop->last ? 'border-b border-gray-100' : '' }}">
-                        <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-secondary/10 shrink-0 mt-0.5">
-                            <i class="text-xs text-secondary fas {{ $s['icon'] }}"></i>
+                        <div class="flex items-center justify-center w-8 h-8 rounded-lg shrink-0 mt-0.5"
+                            style="background: #15803d1a">
+                            <i class="text-xs fas {{ $s['icon'] }}" style="color: #15803d"></i>
                         </div>
                         <span class="text-sm text-gray-700">{{ $s['text'] }}</span>
                     </div>
@@ -147,28 +150,28 @@
 
         {{-- Kontak --}}
         <div class="grid gap-4 sm:grid-cols-2">
-            <div class="flex items-center gap-4 p-5 border border-blue-100 bg-blue-50 rounded-2xl">
-                <div class="flex items-center justify-center w-12 h-12 bg-blue-600 rounded-xl shrink-0">
+            <div class="flex items-center gap-4 p-5 border rounded-2xl"
+                style="background: #dcfce7; border-color: #15803d26">
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl shrink-0" style="background: #15803d">
                     <i class="text-white fas fa-phone"></i>
                 </div>
                 <div>
-                    <p class="mb-0.5 text-xs font-bold tracking-widest text-blue-500 uppercase">Humas</p>
+                    <p class="mb-0.5 text-xs font-bold tracking-widest uppercase" style="color: #15803d">Humas</p>
                     <a href="tel:085383102007"
-                        class="text-base font-bold text-gray-900 hover:text-blue-600 transition-colors">0853 8310
-                        2007</a>
+                        class="text-base font-bold text-gray-900 transition-colors hover:opacity-80">0853 8310 2007</a>
                     <p class="text-xs text-gray-500">Informasi & pertanyaan umum</p>
                 </div>
             </div>
-            <div class="flex items-center gap-4 p-5 border border-secondary/20 bg-secondary/10 rounded-2xl">
-                <div class="flex items-center justify-center w-12 h-12 bg-secondary rounded-xl shrink-0">
+            <div class="flex items-center gap-4 p-5 border rounded-2xl"
+                style="background: #dcfce7; border-color: #15803d26">
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl shrink-0" style="background: #15803d">
                     <i class="text-white fab fa-whatsapp"></i>
                 </div>
                 <div>
-                    <p class="mb-0.5 text-xs font-bold tracking-widest text-secondary uppercase">Konfirmasi Pembayaran
-                    </p>
+                    <p class="mb-0.5 text-xs font-bold tracking-widest uppercase" style="color: #15803d">Konfirmasi
+                        Pembayaran</p>
                     <a href="https://wa.me/6285290191131" target="_blank"
-                        class="text-base font-bold text-gray-900 hover:text-secondary transition-colors">085 290 191
-                        131</a>
+                        class="text-base font-bold text-gray-900 transition-colors hover:opacity-80">085 290 191 131</a>
                     <p class="text-xs text-gray-500">Ustadz Rizka</p>
                 </div>
             </div>
@@ -177,16 +180,18 @@
         {{-- Divider --}}
         <div class="flex items-center gap-4">
             <div class="flex-1 border-t border-gray-200"></div>
-            <span
-                class="px-4 py-1.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 rounded-full uppercase tracking-widest">Formulir
-                Pendaftaran Online</span>
+            <span class="px-4 py-1.5 text-xs font-bold rounded-full uppercase tracking-widest"
+                style="color: #15803d; background: #dcfce7; border: 1px solid #15803d26">
+                Formulir Pendaftaran Online
+            </span>
             <div class="flex-1 border-t border-gray-200"></div>
         </div>
 
         {{-- Form --}}
-        <div class="bg-white border border-gray-200 shadow-sm rounded-2xl overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
-                <h3 class="font-bold text-gray-800"><i class="mr-2 text-blue-600 fas fa-edit"></i>Isi Data Calon Siswa
+        <div class="overflow-hidden bg-white border shadow-sm rounded-2xl" style="border-color: #15803d26">
+            <div class="px-6 py-4 border-b border-gray-100" style="background: #F0F4ED">
+                <h3 class="font-bold text-gray-800">
+                    <i class="mr-2 fas fa-edit" style="color: #15803d"></i>Isi Data Calon Siswa
                 </h3>
                 <p class="mt-0.5 text-xs text-gray-500">Lengkapi semua kolom bertanda * dengan benar</p>
             </div>
@@ -196,10 +201,11 @@
                     <div class="grid gap-5 sm:grid-cols-2">
 
                         <div class="sm:col-span-2">
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Nama Siswa <span
-                                    class="text-red-500">*</span></label>
-                            <input type="text" wire:model="student_name"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
+                                Nama Siswa <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="student_name" name="student_name" wire:model="student_name"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
                                 placeholder="Nama lengkap calon siswa">
                             @error('student_name')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -207,10 +213,11 @@
                         </div>
 
                         <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Email <span
-                                    class="text-red-500">*</span></label>
-                            <input type="email" wire:model="email"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
+                                Email <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" wire:model="email"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
                                 placeholder="email@contoh.com">
                             @error('email')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -218,10 +225,11 @@
                         </div>
 
                         <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Nomor Telepon <span
-                                    class="text-red-500">*</span></label>
-                            <input type="tel" wire:model="phone"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
+                                Nomor Telepon <span class="text-red-500">*</span>
+                            </label>
+                            <input type="tel" id="phone" name="phone" wire:model="phone"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
                                 placeholder="08xxxxxxxxxx">
                             @error('phone')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -229,14 +237,16 @@
                         </div>
 
                         <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Tanggal Lahir <span
-                                    class="text-red-500">*</span></label>
+                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
+                                Tanggal Lahir <span class="text-red-500">*</span>
+                            </label>
                             <div class="relative">
-                                <input type="text" id="birth_date_picker" wire:model="birth_date"
-                                    placeholder="Pilih tanggal lahir" readonly
-                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm cursor-pointer bg-white">
+                                <input type="text" id="birth_date_picker" placeholder="Pilih tanggal lahir"
+                                    autocomplete="off"
+                                    class="w-full px-4 py-2.5 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
+                                    style="cursor: pointer;">
                                 <i
-                                    class="absolute text-gray-400 -translate-y-1/2 fas fa-calendar-alt right-3 top-1/2 pointer-events-none"></i>
+                                    class="absolute text-gray-400 -translate-y-1/2 pointer-events-none fas fa-calendar-alt right-3 top-1/2"></i>
                             </div>
                             @error('birth_date')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -245,8 +255,9 @@
 
                         <div>
                             <label class="block mb-1.5 text-sm font-bold text-gray-700">Sekolah Asal</label>
-                            <input type="text" wire:model="current_school"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            <input type="text" id="current_school" name="current_school"
+                                wire:model="current_school"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
                                 placeholder="TK / RA asal (opsional)">
                             @error('current_school')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -255,8 +266,8 @@
 
                         <div>
                             <label class="block mb-1.5 text-sm font-bold text-gray-700">Nama Wali / Orang Tua</label>
-                            <input type="text" wire:model="guardian_name"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            <input type="text" id="guardian_name" name="guardian_name" wire:model="guardian_name"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
                                 placeholder="Nama ayah/ibu/wali">
                             @error('guardian_name')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -265,8 +276,9 @@
 
                         <div>
                             <label class="block mb-1.5 text-sm font-bold text-gray-700">Nomor Telepon Wali</label>
-                            <input type="tel" wire:model="guardian_phone"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            <input type="tel" id="guardian_phone" name="guardian_phone"
+                                wire:model="guardian_phone"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
                                 placeholder="08xxxxxxxxxx">
                             @error('guardian_phone')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -275,8 +287,8 @@
 
                         <div class="sm:col-span-2">
                             <label class="block mb-1.5 text-sm font-bold text-gray-700">Alamat Lengkap</label>
-                            <textarea wire:model="address" rows="3"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            <textarea id="address" name="address" wire:model="address" rows="3"
+                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
                                 placeholder="Jalan, RT/RW, Desa, Kecamatan, Kabupaten"></textarea>
                             @error('address')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -287,7 +299,8 @@
                     <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                         <p class="text-xs text-gray-400"><span class="text-red-500">*</span> Kolom wajib diisi</p>
                         <button type="submit" wire:loading.attr="disabled"
-                            class="inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl transition-all">
+                            class="inline-flex items-center gap-2 px-6 py-2.5 font-bold text-white text-sm rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed hover:-translate-y-0.5"
+                            style="background: #15803d; box-shadow: 0 4px 12px #15803d33">
                             <i wire:loading.remove wire:target="submit" class="fas fa-paper-plane"></i>
                             <span wire:loading.remove wire:target="submit">Kirim Pendaftaran</span>
                             <span wire:loading wire:target="submit">Loading...</span>
@@ -306,45 +319,41 @@
             x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4"
             style="position:fixed; top:80px; left:50%; transform:translateX(-50%); z-index:9999; width:max-content; max-width:90vw;">
-            <div
-                class="flex items-center gap-3 px-5 py-4 bg-green-600 text-white text-sm font-semibold rounded-2xl shadow-xl">
-                <i class="fas fa-check-circle text-base"></i>
+            <div class="flex items-center gap-3 px-5 py-4 text-sm font-semibold text-white shadow-xl rounded-2xl"
+                style="background: #15803d">
+                <i class="text-base fas fa-check-circle"></i>
                 {{ session('success') }}
             </div>
         </div>
     @endif
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
     <script>
-        document.addEventListener('livewire:navigated', initFlatpickr);
-        document.addEventListener('DOMContentLoaded', initFlatpickr);
-
-        // Re-init setelah form submit & Livewire reset
-        document.addEventListener('livewire:update', () => {
-            setTimeout(() => {
-                const el = document.getElementById('birth_date_picker');
-                if (!el) return;
-                if (el._flatpickr) el._flatpickr.destroy();
-                initFlatpickr();
-            }, 50);
-        });
+        let flatpickrInstance = null;
 
         function initFlatpickr() {
             const el = document.getElementById('birth_date_picker');
-            if (!el || el._flatpickr) return;
+            if (!el) return;
 
-            flatpickr(el, {
-                locale: flatpickr.l10ns.id,
+            if (flatpickrInstance) {
+                flatpickrInstance.destroy();
+                flatpickrInstance = null;
+            }
+
+            flatpickrInstance = flatpickr(el, {
+                locale: window.flatpickrLocaleId || 'default',
                 dateFormat: 'Y-m-d',
                 altInput: true,
                 altFormat: 'd F Y',
                 maxDate: 'today',
+                disableMobile: true,
                 onChange: function(selectedDates, dateStr) {
-                    @this.set('birth_date', dateStr);
+                    @this.set('birth_date', dateStr, false);
                 }
             });
         }
+
+        document.addEventListener('DOMContentLoaded', () => setTimeout(initFlatpickr, 300));
+        document.addEventListener('livewire:initialized', () => setTimeout(initFlatpickr, 300));
+        document.addEventListener('livewire:navigated', () => setTimeout(initFlatpickr, 300));
     </script>
 </div>

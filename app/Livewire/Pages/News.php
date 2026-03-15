@@ -6,7 +6,6 @@ use App\Models\Agenda as AgendaModel;
 use App\Models\News as NewsModel;
 use Carbon\Carbon;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,13 +14,15 @@ class News extends Component
 {
     use WithPagination;
 
-    #[Url]
-    public string $tab = 'berita';
-
-    #[Url]
+    public string $tab    = 'berita';
     public string $search = '';
-
     public string $filter = 'upcoming';
+
+    public function mount(): void
+    {
+        $this->tab    = request()->query('tab', 'berita');
+        $this->search = request()->query('search', '');
+    }
 
     public function updatedSearch(): void
     {

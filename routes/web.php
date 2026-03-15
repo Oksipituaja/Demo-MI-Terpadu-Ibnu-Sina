@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 
+// ===== Public Routes =====
 Route::get('/', Home::class)->name('home');
 Route::get('/about', About::class)->name('about');
 Route::get('/mata-pelajaran', MataPelajaran::class)->name('mata-pelajaran');
@@ -47,7 +48,7 @@ Route::get('/ppdb', PPDB::class)->name('ppdb');
 Route::get('/privacy-policy', Privacy::class)->name('privacy');
 Route::get('/terms-and-conditions', Terms::class)->name('terms');
 
-// Redirect /agenda ke /news?tab=agenda agar link lama tidak 404
+// Redirect /agenda ke /news?tab=agenda
 Route::get('/agenda', function () {
     return redirect()->route('news', ['tab' => 'agenda']);
 })->name('agenda');
@@ -62,7 +63,7 @@ Route::get('/test-429', fn() => abort(429));
 // Debug Route
 Route::get('/debug/agenda', [\App\Http\Controllers\DebugAgendaController::class, 'checkDisplay'])->name('debug.agenda');
 
-// Authentication Routes
+// ===== Authentication Routes =====
 Route::middleware('guest')->group(function () {
     Route::get('/login', function () {
         return view('auth.login');
@@ -83,7 +84,7 @@ Route::middleware('guest')->group(function () {
         return back()
             ->withErrors(['email' => 'Email atau password salah.'])
             ->onlyInput('email');
-    })->name('login.post');
+    })->name('login.post')->middleware('throttle:5,1');
 });
 
 Route::post('/logout', function () {
@@ -97,6 +98,7 @@ Route::post('/logout', function () {
         ->withCookie(Cookie::forget('remember_web_' . sha1('App\Models\User')));
 })->name('logout')->middleware('auth');
 
+// ===== Protected Routes =====
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -105,7 +107,8 @@ Route::middleware('auth')->group(function () {
 
 Route::redirect('/admin', '/admin-panel');
 
-Route::middleware('auth')->prefix('admin-panel')->name('admin.')->group(function () {
+// ===== Admin Panel Routes =====
+Route::middleware(['auth', 'auth.timeout'])->prefix('admin-panel')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('news', NewsController::class);
     Route::resource('teachers', TeacherController::class);

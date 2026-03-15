@@ -18,10 +18,10 @@ class AgendaSeeder extends Seeder
             [
                 'title'       => 'Upacara Hari Pendidikan Nasional',
                 'slug'        => 'upacara-hari-pendidikan-nasional',
-                'description' => 'Upacara bendera dalam rangka memperingati Hari Pendidikan Nasional yang diikuti seluruh siswa, guru, dan staf SD Bangsri.',
+                'description' => 'Upacara bendera dalam rangka memperingati Hari Pendidikan Nasional yang diikuti seluruh siswa, guru, dan staf MI Terpadu Ibnu Sina.',
                 'event_date'  => '2026-05-02',
                 'event_time'  => '07:00:00',
-                'location'    => 'Lapangan Upacara SD Bangsri',
+                'location'    => 'Lapangan Upacara MI Terpadu Ibnu Sina',
                 'status'      => 'upcoming',
             ],
             [
@@ -30,7 +30,7 @@ class AgendaSeeder extends Seeder
                 'description' => 'Pendaftaran siswa baru untuk tahun ajaran 2026/2027. Orang tua dapat mendaftarkan putra-putri secara langsung di sekolah atau melalui sistem online.',
                 'event_date'  => '2026-06-01',
                 'event_time'  => '08:00:00',
-                'location'    => 'Ruang Tata Usaha SD Bangsri',
+                'location'    => 'Ruang Tata Usaha MI Terpadu Ibnu Sina',
                 'status'      => 'upcoming',
             ],
             [
@@ -39,7 +39,7 @@ class AgendaSeeder extends Seeder
                 'description' => 'Pertemuan antara orang tua/wali murid dan guru untuk membahas perkembangan belajar siswa semester genap.',
                 'event_date'  => '2026-05-15',
                 'event_time'  => '09:00:00',
-                'location'    => 'Aula SD Bangsri',
+                'location'    => 'Aula MI Terpadu Ibnu Sina',
                 'status'      => 'upcoming',
             ],
             [
@@ -48,7 +48,7 @@ class AgendaSeeder extends Seeder
                 'description' => 'Pertunjukan seni tahunan yang menampilkan bakat dan kreativitas siswa dalam bidang tari, musik, drama, dan seni rupa.',
                 'event_date'  => '2026-06-20',
                 'event_time'  => '13:00:00',
-                'location'    => 'Aula SD Bangsri',
+                'location'    => 'Aula MI Terpadu Ibnu Sina',
                 'status'      => 'upcoming',
             ],
             [
@@ -57,7 +57,7 @@ class AgendaSeeder extends Seeder
                 'description' => 'Kompetisi olahraga dan permainan antar kelas dalam rangka mengisi waktu setelah Ujian Akhir Semester.',
                 'event_date'  => '2026-06-10',
                 'event_time'  => '07:30:00',
-                'location'    => 'Lapangan Olahraga SD Bangsri',
+                'location'    => 'Lapangan Olahraga MI Terpadu Ibnu Sina',
                 'status'      => 'upcoming',
             ],
             [
@@ -66,16 +66,16 @@ class AgendaSeeder extends Seeder
                 'description' => 'Pelaksanaan Ujian Akhir Semester (UAS) Genap untuk seluruh siswa kelas 1 hingga kelas 6.',
                 'event_date'  => '2026-06-03',
                 'event_time'  => '07:30:00',
-                'location'    => 'Ruang Kelas SD Bangsri',
+                'location'    => 'Ruang Kelas MI Terpadu Ibnu Sina',
                 'status'      => 'upcoming',
             ],
             [
                 'title'       => 'Wisuda dan Perpisahan Kelas 6',
                 'slug'        => 'wisuda-perpisahan-kelas-6-2026',
-                'description' => 'Acara wisuda dan perpisahan siswa kelas 6 yang telah menyelesaikan pendidikan dasar di SD Bangsri.',
+                'description' => 'Acara wisuda dan perpisahan siswa kelas 6 yang telah menyelesaikan pendidikan dasar di MI Terpadu Ibnu Sina.',
                 'event_date'  => '2026-06-25',
                 'event_time'  => '09:00:00',
-                'location'    => 'Aula SD Bangsri',
+                'location'    => 'Aula MI Terpadu Ibnu Sina',
                 'status'      => 'upcoming',
             ],
             [
@@ -84,7 +84,7 @@ class AgendaSeeder extends Seeder
                 'description' => 'Kegiatan pesantren kilat dalam rangka menyambut bulan Ramadhan, diisi dengan ceramah, tadarus, dan buka puasa bersama.',
                 'event_date'  => '2026-03-15',
                 'event_time'  => '08:00:00',
-                'location'    => 'Mushola SD Bangsri',
+                'location'    => 'Mushola MI Terpadu Ibnu Sina',
                 'status'      => 'completed',
             ],
         ];

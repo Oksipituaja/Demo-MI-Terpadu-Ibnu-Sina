@@ -100,9 +100,20 @@ class ManagementAccountController extends Controller
 
     public function destroy(User $managementAccount)
     {
-        $managementAccount->delete();
+        if ($managementAccount->id === auth()->id()) {
+        return back()->withErrors(['error' => 'Tidak dapat menghapus akun sendiri.']);
+    }
 
-        return redirect()->route('admin.management-account.index')
-            ->with('success', 'Pengguna berhasil dihapus!');
+    // Cegah hapus superadmin terakhir
+    if ($managementAccount->role === UserRole::SuperAdmin) {
+        $superAdminCount = User::where('role', UserRole::SuperAdmin)->count();
+        if ($superAdminCount <= 1) {
+            return back()->withErrors(['error' => 'Tidak dapat menghapus Super Admin terakhir.']);
+        }
+    }
+
+    $managementAccount->delete();
+    return redirect()->route('admin.management-account.index')
+        ->with('success', 'Pengguna berhasil dihapus!');
     }
 }

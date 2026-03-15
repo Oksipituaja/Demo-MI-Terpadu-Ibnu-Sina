@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AuthTimeout;
 use App\Http\Middleware\CachePageResponse;
 use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\OptimizeCaching;
@@ -18,7 +19,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(OptimizeCaching::class);
 
         $middleware->alias([
-            'super_admin' => EnsureSuperAdmin::class,
+            'super_admin'  => EnsureSuperAdmin::class,
+            'auth.timeout' => AuthTimeout::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

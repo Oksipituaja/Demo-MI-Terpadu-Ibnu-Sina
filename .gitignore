@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+echo ".env" >> .gitignore
+echo ".env.backup" >> .gitignore
+echo ".env.production" >> .gitignore
+php artisan key:generate

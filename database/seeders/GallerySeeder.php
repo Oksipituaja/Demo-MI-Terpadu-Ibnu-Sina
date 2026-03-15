@@ -46,7 +46,7 @@ class GallerySeeder extends Seeder
             [
                 'title'       => 'Pentas Seni Akhir Tahun',
                 'slug'        => 'pentas-seni-akhir-tahun',
-                'description' => 'Pertunjukan seni tahunan yang menampilkan berbagai penampilan tari, musik, dan drama oleh siswa SD Bangsri.',
+                'description' => 'Pertunjukan seni tahunan yang menampilkan berbagai penampilan tari, musik, dan drama oleh siswa MI Terpadu Ibnu Sina.',
                 'category'    => 'Acara Sekolah',
                 'image'       => null,
             ],
