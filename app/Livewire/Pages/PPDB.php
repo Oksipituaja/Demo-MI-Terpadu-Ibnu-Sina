@@ -21,6 +21,8 @@ class PPDB extends Component
     public string $guardian_name  = '';
     public string $guardian_phone = '';
 
+    public bool $submitted = false;
+
     public function submit()
     {
         $validated = $this->validate([
@@ -36,16 +38,34 @@ class PPDB extends Component
 
         $registration = Registration::create($validated);
 
-        // Kirim notifikasi email ke admin
+        // Kirim notifikasi email ke admin (async agar tidak blocking)
         try {
             Mail::to(config('mail.from.address'))
-                ->send(new NewRegistrationMail($registration));
+                ->queue(new NewRegistrationMail($registration));
         } catch (\Exception $e) {
-            // Gagal kirim email tidak menghentikan proses pendaftaran
-            Log::error('PPDB mail failed: ' . $e->getMessage());
+            // Fallback ke send sync jika queue gagal
+            try {
+                Mail::to(config('mail.from.address'))
+                    ->send(new NewRegistrationMail($registration));
+            } catch (\Exception $e2) {
+                Log::error('PPDB mail failed: ' . $e2->getMessage());
+            }
         }
 
-        $this->reset();
+        // Reset form fields satu per satu, bukan reset() semua
+        // agar flatpickr tidak kehilangan instance
+        $this->student_name   = '';
+        $this->email          = '';
+        $this->phone          = '';
+        $this->birth_date     = '';
+        $this->current_school = '';
+        $this->address        = '';
+        $this->guardian_name  = '';
+        $this->guardian_phone = '';
+        $this->submitted      = true;
+
+        $this->dispatch('form-submitted');
+
         session()->flash('success', 'Pendaftaran berhasil dikirim! Tim kami akan menghubungi Anda segera.');
     }
 

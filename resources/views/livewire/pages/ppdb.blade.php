@@ -355,5 +355,9 @@
         document.addEventListener('DOMContentLoaded', () => setTimeout(initFlatpickr, 300));
         document.addEventListener('livewire:initialized', () => setTimeout(initFlatpickr, 300));
         document.addEventListener('livewire:navigated', () => setTimeout(initFlatpickr, 300));
+
+        // Reinit flatpickr setelah form submitted (Livewire re-render)
+        document.addEventListener('livewire:update', () => setTimeout(initFlatpickr, 100));
+        Livewire.on('form-submitted', () => setTimeout(initFlatpickr, 300));
     </script>
 </div>
