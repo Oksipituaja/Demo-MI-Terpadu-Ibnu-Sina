@@ -21,7 +21,7 @@ nixPkgs = [
 [phases.install]
 cmds = [
   "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer",
-  "composer install --no-dev --no-interaction --prefer-dist --ignore-platform-req=ext-intl --ignore-platform-req=ext-zip",
+  "/usr/local/bin/composer install --no-dev --no-interaction --prefer-dist --ignore-platform-req=ext-intl --ignore-platform-req=ext-zip",
   "npm ci"
 ]
 
@@ -31,7 +31,6 @@ cmds = [
   "php artisan config:cache",
   "php artisan route:cache",
   "php artisan view:cache",
-  "php artisan cache:cache",
   "php artisan optimize:cache"
 ]
 
