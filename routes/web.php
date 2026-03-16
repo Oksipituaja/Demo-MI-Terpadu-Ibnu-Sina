@@ -31,6 +31,15 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cache;
 
+// ===== Storage File Serving (Railway symlink workaround) =====
+Route::get('/storage/{path}', function (string $path) {
+    $fullPath = storage_path('app/public/' . $path);
+    if (!file_exists($fullPath)) {
+        abort(404);
+    }
+    return response()->file($fullPath);
+})->where('path', '.*');
+
 // ===== Public Routes =====
 Route::get('/', Home::class)->name('home');
 Route::get('/about', About::class)->name('about');
