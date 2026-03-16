@@ -29,6 +29,7 @@ use App\Livewire\Pages\Terms;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 
 // ===== Public Routes =====
 Route::get('/', Home::class)->name('home');
@@ -59,6 +60,20 @@ Route::get('/test-404', fn() => abort(404));
 Route::get('/test-500', fn() => abort(500));
 Route::get('/test-419', fn() => abort(419));
 Route::get('/test-429', fn() => abort(429));
+
+Route::get('/debug-cache', function () {
+    $key = 'about.principal_greeting';
+    $cached = Cache::get($key);
+    return response()->json([
+        'cache_store' => config('cache.default'),
+        'cache_path' => storage_path('framework/cache'),
+        'key_exists' => Cache::has($key),
+        'cached_value' => $cached ? [
+            'id' => $cached->id,
+            'image' => $cached->image,
+        ] : null,
+    ]);
+});
 
 Route::get('/debug-storage', function () {
     $path = storage_path('app/public');
