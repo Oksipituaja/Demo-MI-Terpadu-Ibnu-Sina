@@ -84,6 +84,16 @@ Route::get('/debug-cache', function () {
     ]);
 });
 
+Route::get('/debug-path', function () {
+    $file = 'about/53lL4kAO6ZWDSEhXqZZgkzFZLnjPbLMGJ1HgcQfP.jpg';
+    $path = storage_path('app/public/' . $file);
+    return response()->json([
+        'storage_path' => $path,
+        'file_exists' => file_exists($path),
+        'realpath' => realpath(storage_path('app/public')),
+    ]);
+});
+
 Route::get('/debug-storage', function () {
     $path = storage_path('app/public');
     return response()->json([
