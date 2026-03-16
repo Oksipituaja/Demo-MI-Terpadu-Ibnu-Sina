@@ -28,7 +28,7 @@ class NewsController extends Controller
             'slug'           => 'required|string|unique:news',
             'content'        => 'required|string',
             'excerpt'        => 'nullable|string',
-            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',,
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
             'status'         => 'required|in:draft,published',
             'published_at'   => 'nullable|date',
         ]);
@@ -56,7 +56,7 @@ class NewsController extends Controller
             'slug'           => 'required|string|unique:news,slug,' . $news->id,
             'content'        => 'required|string',
             'excerpt'        => 'nullable|string',
-            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',,
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
             'status'         => 'required|in:draft,published',
             'published_at'   => 'nullable|date',
         ]);
