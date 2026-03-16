@@ -96,6 +96,14 @@ Route::get('/debug-storage', function () {
     ]);
 });
 
+Route::get('/debug-files', function () {
+    $base = storage_path('app/public');
+    return response()->json([
+        'about' => is_dir("$base/about") ? scandir("$base/about") : [],
+        'gallery' => is_dir("$base/gallery") ? scandir("$base/gallery") : [],
+    ]);
+});
+
 // Debug Route
 Route::get('/debug/agenda', [\App\Http\Controllers\DebugAgendaController::class, 'checkDisplay'])->name('debug.agenda');
 
