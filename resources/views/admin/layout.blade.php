@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('storage/MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" type="image/x-icon" alt="Logo">
+    <link rel="shortcut icon" href="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" type="image/x-icon" alt="Logo">
     <title>@yield('title', 'Admin Panel - MI Terpadu Ibnu Sina')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>

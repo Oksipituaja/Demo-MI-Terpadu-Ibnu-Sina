@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'MI Terpadu Ibnu Sina') }}</title>
-    <link rel="shortcut icon" href="{{ asset('storage/MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}"
+    <link rel="shortcut icon" href="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}"
         type="image/x-icon" alt="Logo">
 
     @livewireStyles
@@ -173,7 +173,7 @@
 
                 <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0">
                     <div class="flex items-center justify-center rounded-full w-11 h-11">
-                        <img src="{{ asset('storage/MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" alt="Logo">
+                        <img src="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" alt="Logo">
                     </div>
                     <div>
                         <div class="text-lg font-bold leading-tight" style="color: #15803d">
