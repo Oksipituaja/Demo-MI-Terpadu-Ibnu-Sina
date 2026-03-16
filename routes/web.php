@@ -183,13 +183,6 @@ Route::post('/logout', function () {
         ->withCookie(Cookie::forget('remember_web_' . sha1('App\Models\User')));
 })->name('logout')->middleware('auth');
 
-// ===== Protected Routes =====
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-
 Route::redirect('/admin', '/admin-panel');
 
 // ===== Admin Panel Routes =====
