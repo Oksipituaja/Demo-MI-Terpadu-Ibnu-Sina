@@ -37,7 +37,16 @@ Route::get('/files/{path}', function (string $path) {
     if (!file_exists($fullPath)) {
         abort(404);
     }
-    return response()->file($fullPath);
+    $mimeType = mime_content_type($fullPath) ?: 'application/octet-stream';
+    return response()->make(
+        file_get_contents($fullPath),
+        200,
+        [
+            'Content-Type' => $mimeType,
+            'Content-Length' => filesize($fullPath),
+            'Cache-Control' => 'public, max-age=86400',
+        ]
+    );
 })->where('path', '.*');
 
 // ===== Public Routes =====
