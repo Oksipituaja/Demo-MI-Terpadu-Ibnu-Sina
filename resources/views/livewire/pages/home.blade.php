@@ -62,7 +62,7 @@
                         <div
                             class="relative overflow-hidden rounded-4xl shadow-2xl group transition-transform duration-500 hover:scale-[1.02]">
                             @if ($heroImage && $heroImage->image)
-                                <img src="{{ asset('storage/' . $heroImage->image) }}" alt="{{ config('app.name') }}"
+                                <img src="{{ asset('files/' . $heroImage->image) }}" alt="{{ config('app.name') }}"
                                     class="object-cover w-full h-auto aspect-4/5 md:aspect-square"
                                     onerror="this.style.display='none'; document.getElementById('fallback-hero').classList.remove('hidden')">
                             @else
@@ -117,7 +117,7 @@
                                 <div class="relative w-72 h-96 md:w-80 md:h-112.5 rounded-4xl overflow-hidden shadow-2xl border-8"
                                     style="background: #d1fae5; border-color: #F0F4ED;">
                                     @if ($principalGreeting?->image)
-                                        <img src="{{ asset('storage/' . $principalGreeting->image) }}"
+                                        <img src="{{ asset('files/' . $principalGreeting->image) }}"
                                             alt="{{ $principalGreeting->principal_name ?? 'Kepala Sekolah' }}"
                                             class="object-cover w-full h-full">
                                     @else
@@ -197,7 +197,7 @@
                         <div class="flex items-center justify-center w-32 h-32 mx-auto mb-4 overflow-hidden transition-transform duration-300 rounded-full hover:scale-105"
                             style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
                             @if ($teacher->image)
-                                <img src="{{ asset('storage/' . $teacher->image) }}" alt="{{ $teacher->name }}"
+                                <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}"
                                     class="object-cover w-full h-full">
                             @else
                                 <i class="text-5xl text-white fas fa-chalkboard-user"></i>
@@ -250,7 +250,7 @@
                         style="border-color: #d1fae5">
                         <div class="relative h-56 overflow-hidden">
                             @if ($news->featured_image)
-                                <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}"
+                                <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
                                     class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
                             @else
                                 <div class="flex items-center justify-center w-full h-full text-4xl font-bold text-white"

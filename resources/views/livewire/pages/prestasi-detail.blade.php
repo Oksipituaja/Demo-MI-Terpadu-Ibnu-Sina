@@ -31,7 +31,7 @@
             <div class="lg:col-span-2">
                 @if($prestasi->image)
                     <div class="w-full mb-8 overflow-hidden shadow-lg rounded-xl">
-                        <img src="{{ asset('storage/' . $prestasi->image) }}"
+                        <img src="{{ asset('files/' . $prestasi->image) }}"
                             alt="{{ $prestasi->title }}"
                             class="object-cover w-full h-auto">
                     </div>

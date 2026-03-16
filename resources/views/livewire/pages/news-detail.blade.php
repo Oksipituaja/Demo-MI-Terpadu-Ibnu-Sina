@@ -18,7 +18,7 @@
         <div class="flex items-center justify-center mb-8 overflow-hidden rounded-lg h-96"
             style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
             @if ($news->featured_image)
-                <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}"
+                <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
                     class="object-cover w-full h-full">
             @else
                 <div class="flex flex-col items-center justify-center w-full h-full p-4 text-white"

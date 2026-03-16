@@ -58,7 +58,7 @@
                             <div class="relative flex items-center justify-center h-48 overflow-hidden"
                                 style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                                 @if ($item->featured_image)
-                                    <img src="{{ asset('storage/' . $item->featured_image) }}" alt="{{ $item->title }}"
+                                    <img src="{{ asset('files/' . $item->featured_image) }}" alt="{{ $item->title }}"
                                         loading="lazy"
                                         class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
                                 @else

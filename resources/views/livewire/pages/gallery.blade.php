@@ -36,7 +36,7 @@
                         <div class="relative flex items-center justify-center h-64 overflow-hidden rounded-xl"
                             style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                             @if ($item->image)
-                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}"
+                                <img src="{{ asset('files/' . $item->image) }}" alt="{{ $item->title }}"
                                     class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                     loading="lazy">
                             @else

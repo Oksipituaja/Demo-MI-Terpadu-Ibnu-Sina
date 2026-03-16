@@ -11,7 +11,7 @@
         <div class="flex items-center justify-center mb-12 overflow-hidden rounded-lg h-96"
             style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
             @if($gallery->image)
-                <img src="{{ asset('storage/' . $gallery->image) }}"
+                <img src="{{ asset('files/' . $gallery->image) }}"
                      alt="{{ $gallery->title }}"
                      class="object-cover w-full h-full">
             @else
@@ -48,7 +48,7 @@
                             <div class="relative flex items-center justify-center h-48 overflow-hidden transition rounded-lg"
                                 style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                                 @if($related->image)
-                                    <img src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->title }}"
+                                    <img src="{{ asset('files/' . $related->image) }}" alt="{{ $related->title }}"
                                         class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
                                 @else
                                     <i class="text-4xl fas fa-images opacity-30" style="color: #15803d"></i>

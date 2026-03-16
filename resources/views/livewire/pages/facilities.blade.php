@@ -21,7 +21,7 @@
                         <div class="relative flex items-center justify-center h-56 overflow-hidden"
                             style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                             @if($facility->image)
-                                <img src="{{ asset('storage/' . $facility->image) }}"
+                                <img src="{{ asset('files/' . $facility->image) }}"
                                     alt="{{ $facility->name }}"
                                     class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
                             @else
