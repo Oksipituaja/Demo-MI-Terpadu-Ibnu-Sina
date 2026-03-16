@@ -21,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
+        // Override storage URL untuk Railway (no symlink workaround)
+        if (app()->isProduction() && !is_link(public_path('storage'))) {
+            config(['filesystems.disks.public.url' => config('app.url') . '/files']);
+        }
+
         // Prevent N+1 query issues
         Model::preventLazyLoading(! app()->isProduction());
 

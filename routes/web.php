@@ -32,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cache;
 
 // ===== Storage File Serving (Railway symlink workaround) =====
-Route::get('/storage/{path}', function (string $path) {
+Route::get('/files/{path}', function (string $path) {
     $fullPath = storage_path('app/public/' . $path);
     if (!file_exists($fullPath)) {
         abort(404);
