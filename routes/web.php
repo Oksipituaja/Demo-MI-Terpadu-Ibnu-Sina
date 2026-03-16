@@ -70,6 +70,28 @@ Route::get('/test-500', fn() => abort(500));
 Route::get('/test-419', fn() => abort(419));
 Route::get('/test-429', fn() => abort(429));
 
+Route::get('/debug-link', function () {
+    $result = [];
+    
+    // Cek apakah symlink ada
+    $result['link_exists'] = file_exists(public_path('storage'));
+    $result['is_link'] = is_link(public_path('storage'));
+    
+    // Coba buat symlink sekarang
+    try {
+        \Artisan::call('storage:link');
+        $result['artisan_output'] = \Artisan::output();
+    } catch (\Exception $e) {
+        $result['artisan_error'] = $e->getMessage();
+    }
+    
+    // Cek lagi setelah artisan
+    $result['link_exists_after'] = file_exists(public_path('storage'));
+    $result['is_link_after'] = is_link(public_path('storage'));
+    
+    return response()->json($result);
+});
+
 Route::get('/debug-cache', function () {
     $key = 'about.principal_greeting';
     $cached = Cache::get($key);
