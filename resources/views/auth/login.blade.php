@@ -258,7 +258,7 @@
             <p class="bismillah">بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيْمِ</p>
 
             <div class="school-identity">
-                <img src="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}"
+                <img src="{{ asset('storage/MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}"
                      alt="Logo MI Terpadu Ibnu Sina"
                      class="school-logo"
                      onerror="this.style.display='none'">
