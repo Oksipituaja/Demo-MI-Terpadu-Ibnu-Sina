@@ -557,7 +557,7 @@
         document.addEventListener('DOMContentLoaded', initMobileMenu);
         document.addEventListener('livewire:navigated', initMobileMenu);
     </script>
-
+    @stack('scripts')
     @livewireScripts
 
 </body>

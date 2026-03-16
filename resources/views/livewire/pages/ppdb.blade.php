@@ -49,7 +49,7 @@
                             'icon' => 'fa-paper-plane',
                             'bgStyle' => 'background: #2563eb',
                             'label' => 'Konfirmasi',
-                            'desc' => 'Kirim bukti ke Ustadz Rizka · 085 290 191 131',
+                            'desc' => 'Kirim bukti ke Example Name · 081 234 567 890',
                         ],
                         [
                             'step' => '03',
@@ -157,7 +157,7 @@
                 </div>
                 <div>
                     <p class="mb-0.5 text-xs font-bold tracking-widest uppercase" style="color: #15803d">Humas</p>
-                    <a href="tel:085383102007"
+                    <a href="tel:081234567890"
                         class="text-base font-bold text-gray-900 transition-colors hover:opacity-80">0853 8310 2007</a>
                     <p class="text-xs text-gray-500">Informasi & pertanyaan umum</p>
                 </div>
@@ -327,37 +327,41 @@
         </div>
     @endif
 
-    <script>
-        let flatpickrInstance = null;
+    @push('scripts')
+        <script>
+            document.addEventListener('livewire:initialized', () => {
+                function initFlatpickr() {
+                    const el = document.getElementById('birth_date_picker');
+                    if (!el) return;
 
-        function initFlatpickr() {
-            const el = document.getElementById('birth_date_picker');
-            if (!el) return;
+                    if (window._flatpickrInstance) {
+                        window._flatpickrInstance.destroy();
+                        window._flatpickrInstance = null;
+                    }
 
-            if (flatpickrInstance) {
-                flatpickrInstance.destroy();
-                flatpickrInstance = null;
-            }
-
-            flatpickrInstance = flatpickr(el, {
-                locale: window.flatpickrLocaleId || 'default',
-                dateFormat: 'Y-m-d',
-                altInput: true,
-                altFormat: 'd F Y',
-                maxDate: 'today',
-                disableMobile: true,
-                onChange: function(selectedDates, dateStr) {
-                    @this.set('birth_date', dateStr, false);
+                    window._flatpickrInstance = flatpickr(el, {
+                        locale: window.flatpickrLocaleId || 'default',
+                        dateFormat: 'Y-m-d',
+                        altInput: true,
+                        altFormat: 'd F Y',
+                        maxDate: 'today',
+                        disableMobile: true,
+                        onChange: function(selectedDates, dateStr) {
+                            @this.set('birth_date', dateStr, false);
+                        }
+                    });
                 }
+
+                initFlatpickr();
+
+                Livewire.on('form-submitted', () => {
+                    setTimeout(initFlatpickr, 300);
+                });
+
+                document.addEventListener('livewire:update', () => {
+                    setTimeout(initFlatpickr, 100);
+                });
             });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => setTimeout(initFlatpickr, 300));
-        document.addEventListener('livewire:initialized', () => setTimeout(initFlatpickr, 300));
-        document.addEventListener('livewire:navigated', () => setTimeout(initFlatpickr, 300));
-
-        // Reinit flatpickr setelah form submitted (Livewire re-render)
-        document.addEventListener('livewire:update', () => setTimeout(initFlatpickr, 100));
-        Livewire.on('form-submitted', () => setTimeout(initFlatpickr, 300));
-    </script>
+        </script>
+    @endpush
 </div>

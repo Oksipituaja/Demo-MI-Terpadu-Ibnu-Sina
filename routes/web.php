@@ -60,6 +60,18 @@ Route::get('/test-500', fn() => abort(500));
 Route::get('/test-419', fn() => abort(419));
 Route::get('/test-429', fn() => abort(429));
 
+Route::get('/debug-storage', function () {
+    $path = storage_path('app/public');
+    return response()->json([
+        'path' => $path,
+        'exists' => is_dir($path),
+        'writable' => is_writable($path),
+        'files' => is_dir($path) ? scandir($path) : [],
+        'public_storage' => public_path('storage'),
+        'link_exists' => is_link(public_path('storage')),
+    ]);
+});
+
 // Debug Route
 Route::get('/debug/agenda', [\App\Http\Controllers\DebugAgendaController::class, 'checkDisplay'])->name('debug.agenda');
 
