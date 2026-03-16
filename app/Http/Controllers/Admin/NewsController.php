@@ -3,91 +3,83 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
-use App\Models\User;
+use App\Models\Facility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
-class NewsController extends Controller
+class FacilityController extends Controller
 {
     public function index(): View
     {
-        $news = News::with('user')
-            ->latest('created_at')
-            ->paginate(15);
-
-        return view('admin.news.index', compact('news'));
+        $facilities = Facility::latest()->paginate(15);
+        return view('admin.facilities.index', compact('facilities'));
     }
 
     public function create(): View
     {
-        $users = User::all();
-
-        return view('admin.news.create', compact('users'));
+        return view('admin.facilities.create');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:news',
-            'excerpt' => 'required|string',
-            'content' => 'required|string',
-            'status' => 'required|in:draft,published',
-            'published_at' => 'nullable|date',
-            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|unique:facilities',
+            'description' => 'nullable|string',
+            'icon' => 'nullable|string',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'kondisi' => 'required|in:tersedia,perbaikan,belum_ada,akan_ada',
         ]);
 
-        if ($request->hasFile('featured_image')) {
-            $validated['featured_image'] = $request->file('featured_image')->store('news', 'public');
+        if ($request->hasFile('image')) {
+            $validated['image'] = $request->file('image')->store('facilities', 'public');
         }
 
-        $validated['user_id'] = auth()->id();
+        Facility::create($validated);
+        Cache::forget('home.all_facilities');
 
-        News::create($validated);
-
-        return redirect()->route('admin.news.index')->with('success', 'News article created successfully!');
+        return redirect()->route('admin.facilities.index')->with('success', 'Facility added successfully!');
     }
 
-    public function edit(News $news): View
+    public function edit(Facility $facility): View
     {
-        $users = User::all();
-
-        return view('admin.news.edit', compact('news', 'users'));
+        return view('admin.facilities.edit', compact('facility'));
     }
 
-    public function update(News $news, Request $request)
+    public function update(Request $request, Facility $facility)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:news,slug,'.$news->id,
-            'excerpt' => 'required|string',
-            'content' => 'required|string',
-            'status' => 'required|in:draft,published',
-            'published_at' => 'nullable|date',
-            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
+            'name' => 'required|string|max:255',
+            'slug' => 'required|string|unique:facilities,slug,' . $facility->id,
+            'description' => 'nullable|string',
+            'icon' => 'nullable|string',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'kondisi' => 'required|in:tersedia,perbaikan,belum_ada,akan_ada',
         ]);
 
-        if ($request->hasFile('featured_image')) {
-            // Check if old image exists before deleting
-            if ($news->featured_image && \Storage::disk('public')->exists($news->featured_image)) {
-                \Storage::disk('public')->delete($news->featured_image);
+        if ($request->hasFile('image')) {
+            if ($facility->image && Storage::disk('public')->exists($facility->image)) {
+                Storage::disk('public')->delete($facility->image);
             }
-            $validated['featured_image'] = $request->file('featured_image')->store('news', 'public');
+            $validated['image'] = $request->file('image')->store('facilities', 'public');
         }
 
-        $news->update($validated);
+        $facility->update($validated);
+        Cache::forget('home.all_facilities');
 
-        return redirect()->route('admin.news.index')->with('success', 'News article updated successfully!');
+        return redirect()->route('admin.facilities.index')->with('success', 'Facility updated successfully!');
     }
 
-    public function destroy(News $news)
+    public function destroy(Facility $facility)
     {
-        if ($news->featured_image && \Storage::disk('public')->exists($news->featured_image)) {
-            \Storage::disk('public')->delete($news->featured_image);
+        if ($facility->image && Storage::disk('public')->exists($facility->image)) {
+            Storage::disk('public')->delete($facility->image);
         }
-        $news->delete();
+        $facility->delete();
+        Cache::forget('home.all_facilities');
 
-        return redirect()->route('admin.news.index')->with('success', 'News article deleted successfully!');
+        return redirect()->route('admin.facilities.index')->with('success', 'Facility deleted successfully!');
     }
 }

@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
     public function index(): View
     {
         $teachers = Teacher::latest()->paginate(15);
-
         return view('admin.teachers.index', compact('teachers'));
     }
 
@@ -38,6 +39,7 @@ class TeacherController extends Controller
         }
 
         Teacher::create($validated);
+        Cache::forget('home.featured_teachers');
 
         return redirect()->route('admin.teachers.index')->with('success', 'Teacher added successfully!');
     }
@@ -51,8 +53,8 @@ class TeacherController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:teachers,slug,'.$teacher->id,
-            'email' => 'required|email|unique:teachers,email,'.$teacher->id,
+            'slug' => 'required|string|unique:teachers,slug,' . $teacher->id,
+            'email' => 'required|email|unique:teachers,email,' . $teacher->id,
             'phone' => 'nullable|string',
             'subject' => 'nullable|string',
             'bio' => 'nullable|string',
@@ -60,24 +62,25 @@ class TeacherController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Check if old image exists before deleting
-            if ($teacher->image && \Storage::disk('public')->exists($teacher->image)) {
-                \Storage::disk('public')->delete($teacher->image);
+            if ($teacher->image && Storage::disk('public')->exists($teacher->image)) {
+                Storage::disk('public')->delete($teacher->image);
             }
             $validated['image'] = $request->file('image')->store('teachers', 'public');
         }
 
         $teacher->update($validated);
+        Cache::forget('home.featured_teachers');
 
         return redirect()->route('admin.teachers.index')->with('success', 'Teacher updated successfully!');
     }
 
     public function destroy(Teacher $teacher)
     {
-        if ($teacher->image && \Storage::disk('public')->exists($teacher->image)) {
-            \Storage::disk('public')->delete($teacher->image);
+        if ($teacher->image && Storage::disk('public')->exists($teacher->image)) {
+            Storage::disk('public')->delete($teacher->image);
         }
         $teacher->delete();
+        Cache::forget('home.featured_teachers');
 
         return redirect()->route('admin.teachers.index')->with('success', 'Teacher deleted successfully!');
     }
