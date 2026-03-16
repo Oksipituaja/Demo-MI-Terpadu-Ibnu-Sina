@@ -29,7 +29,7 @@
                     <td class="px-6 py-4 text-sm text-gray-600"><code class="bg-gray-100 px-2 py-1 rounded">{{ $about->key }}</code></td>
                     <td class="px-6 py-4 text-sm text-gray-600">
                         @if($about->image)
-                            <img src="{{ asset('storage/' . $about->image) }}" alt="{{ $about->title }}" class="h-16 rounded object-cover">
+                            <img src="{{ asset('files/' . $about->image) }}" alt="{{ $about->title }}" class="h-16 rounded object-cover">
                         @else
                             <span class="text-gray-400">-</span>
                         @endif

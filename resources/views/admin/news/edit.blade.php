@@ -78,7 +78,7 @@
                 @if($news->featured_image)
                     <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                         <p class="text-xs font-medium text-gray-600 mb-2">Gambar Saat Ini</p>
-                        <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}"
+                        <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
                             class="max-w-sm h-40 object-cover rounded">
                     </div>
                 @endif

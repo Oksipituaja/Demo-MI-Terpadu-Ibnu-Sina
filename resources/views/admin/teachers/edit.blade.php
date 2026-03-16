@@ -35,7 +35,7 @@
             @if($teacher->image)
                 <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                     <p class="text-xs font-medium text-gray-600 mb-2">Foto Saat Ini</p>
-                    <img src="{{ asset('storage/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="max-w-sm h-40 object-cover rounded">
+                    <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="max-w-sm h-40 object-cover rounded">
                 </div>
             @endif
             <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition" id="dropZone">

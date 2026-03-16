@@ -58,7 +58,7 @@
             @if($gallery->image)
                 <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                     <p class="text-xs font-medium text-gray-600 mb-2">Gambar Saat Ini</p>
-                    <img src="{{ asset('storage/' . $gallery->image) }}" alt="{{ $gallery->title }}"
+                    <img src="{{ asset('files/' . $gallery->image) }}" alt="{{ $gallery->title }}"
                         class="max-w-sm h-40 object-cover rounded">
                 </div>
             @endif

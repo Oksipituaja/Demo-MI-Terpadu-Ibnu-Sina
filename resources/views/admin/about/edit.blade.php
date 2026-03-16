@@ -131,7 +131,7 @@
                 @if ($about->image)
                     <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
                         <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
-                        <img src="{{ asset('storage/' . $about->image) }}" alt="{{ $about->title }}"
+                        <img src="{{ asset('files/' . $about->image) }}" alt="{{ $about->title }}"
                             class="object-cover h-40 max-w-sm rounded"
                             onerror="this.closest('div').innerHTML='<p class=\'text-xs text-red-500\'>File gambar tidak ditemukan</p>'">
                     </div>
