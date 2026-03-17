@@ -79,6 +79,8 @@ Route::get('/test-500', fn() => abort(500));
 Route::get('/test-419', fn() => abort(419));
 Route::get('/test-429', fn() => abort(429));
 
+
+
 Route::get('/debug-link', function () {
     $result = [];
     
@@ -86,7 +88,6 @@ Route::get('/debug-link', function () {
     $result['link_exists'] = file_exists(public_path('storage'));
     $result['is_link'] = is_link(public_path('storage'));
     
-    // Coba buat symlink sekarang
     try {
         \Artisan::call('storage:link');
         $result['artisan_output'] = \Artisan::output();
@@ -94,7 +95,6 @@ Route::get('/debug-link', function () {
         $result['artisan_error'] = $e->getMessage();
     }
     
-    // Cek lagi setelah artisan
     $result['link_exists_after'] = file_exists(public_path('storage'));
     $result['is_link_after'] = is_link(public_path('storage'));
     
@@ -147,6 +147,20 @@ Route::get('/debug-files', function () {
 
 // Debug Route
 Route::get('/debug/agenda', [\App\Http\Controllers\DebugAgendaController::class, 'checkDisplay'])->name('debug.agenda');
+
+// Debug Route for News
+Route::get('/debug-news', function () {
+    try {
+        $news = \App\Models\News::with('user')->latest()->paginate(15);
+        return response()->json(['count' => $news->total(), 'ok' => true]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'file'  => $e->getFile(),
+            'line'  => $e->getLine(),
+        ]);
+    }
+})->middleware('auth');
 
 // ===== Authentication Routes =====
 Route::middleware('guest')->group(function () {
