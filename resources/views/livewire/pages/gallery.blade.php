@@ -56,7 +56,6 @@
 
                     @foreach ($categories as $cat)
                         <button wire:click="$set('category', @js($cat))"
-                            x-show="expanded || {{ $loop->index }} < 5"
                             class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
                             style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                             {{ ucfirst($cat) }}
@@ -67,8 +66,6 @@
                         <button @click="expanded = !expanded"
                             class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
                             style="background: #f0fdf4; color: #15803d; border: 1.5px dashed #15803d">
-                            <span x-show="!expanded">+{{ count($categories) - 5 }} lainnya</span>
-                            <span x-show="expanded">Sembunyikan</span>
                         </button>
                     @endif
                 </div>
