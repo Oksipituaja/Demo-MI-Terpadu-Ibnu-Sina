@@ -79,7 +79,12 @@ Route::get('/test-500', fn() => abort(500));
 Route::get('/test-419', fn() => abort(419));
 Route::get('/test-429', fn() => abort(429));
 
-
+Route::get('/debug-log', function () {
+    $logFile = storage_path('logs/laravel.log');
+    if (!file_exists($logFile)) return 'No log file';
+    $lines = array_slice(file($logFile), -50);
+    return response('<pre>' . implode('', $lines) . '</pre>');
+});
 
 Route::get('/debug-link', function () {
     $result = [];
