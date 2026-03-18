@@ -45,20 +45,28 @@
                 </div>
             </div>
 
-            {{-- Desktop: tabs --}}
-            <div class="flex-wrap justify-center hidden gap-2 mb-16 sm:flex">
-                <button wire:click="$set('category', '')"
-                    class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
-                    style="{{ $category === '' ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
-                    Semua
-                </button>
-                @foreach ($categories as $cat)
-                    <button wire:click="$set('category', @js($cat))"
-                        class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
-                        style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
-                        {{ ucfirst($cat) }}
+            {{-- Desktop: scroll horizontal --}}
+            <div class="hidden gap-2 pb-2 mb-16 overflow-x-auto sm:flex"
+                style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+                <style>
+                    .tab-scroll::-webkit-scrollbar {
+                        display: none;
+                    }
+                </style>
+                <div class="flex gap-2 mx-auto tab-scroll">
+                    <button wire:click="$set('category', '')"
+                        class="flex-shrink-0 px-5 py-2 text-sm font-semibold transition-all rounded-full"
+                        style="{{ $category === '' ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
+                        Semua
                     </button>
-                @endforeach
+                    @foreach ($categories as $cat)
+                        <button wire:click="$set('category', @js($cat))"
+                            class="flex-shrink-0 px-5 py-2 text-sm font-semibold transition-all rounded-full"
+                            style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
+                            {{ ucfirst($cat) }}
+                        </button>
+                    @endforeach
+                </div>
             </div>
 
             <div class="grid gap-6 mb-12 md:grid-cols-2 lg:grid-cols-3"
