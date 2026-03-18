@@ -54,9 +54,9 @@
                         Semua
                     </button>
 
-                    @foreach ($categories as $index => $cat)
+                    @foreach ($categories as $cat)
                         <button wire:click="$set('category', @js($cat))"
-                            x-show="expanded || {{ $index }} < 5"
+                            x-show="expanded || {{ $loop->index }} < 5"
                             class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
                             style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                             {{ ucfirst($cat) }}
