@@ -7931,3 +7931,5 @@ Did you mean this?
 [2026-03-18 15:35:38] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (475.82ms)  
 [2026-03-18 15:36:00] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (451.52ms)  
 [2026-03-18 15:36:05] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (309.31ms)  
+[2026-03-18 15:46:45] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (1244.62ms)  
+[2026-03-18 15:47:17] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (243.83ms)  

@@ -21,6 +21,6 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.2.0",
         "flatpickr": "^4.6.13",
-        "tinymce": "^8.3.2"
+        "tinymce": "^6.8.6"
     }
 }
