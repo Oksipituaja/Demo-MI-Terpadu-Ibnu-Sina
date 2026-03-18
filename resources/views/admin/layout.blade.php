@@ -1,88 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" type="image/x-icon" alt="Logo">
+    <link rel="shortcut icon" href="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" type="image/x-icon">
     <title>@yield('title', 'Admin Panel - MI Terpadu Ibnu Sina')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        .flatpickr-calendar { z-index: 9999; }
+        .flatpickr-calendar { z-index: 9999 !important; }
     </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
+
         <!-- Sidebar -->
         <div class="w-64 text-white bg-gray-900">
             <div class="p-6 border-b border-gray-800">
-                <h1 class="text-xl font-bold">MI Terpadu Ibnu Sina Admin</h1>
-                <p class="text-xs text-gray-400">Management System</p>
+                <h1 class="text-xl font-bold">MI Terpadu Ibnu Sina</h1>
+                <p class="text-xs text-gray-400">Panel Admin</p>
             </div>
 
-            <nav class="p-4 space-y-2">
-                <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                    <i class="mr-2 fas fa-chart-line"></i> Dashboard
+            <nav class="p-4 space-y-1">
+                <a href="{{ route('admin.dashboard') }}"
+                    class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                    <i class="w-5 mr-2 fas fa-chart-line"></i> Dashboard
                 </a>
 
                 <div class="pt-4 border-t border-gray-800">
-                    <p class="px-4 mb-3 text-xs font-semibold text-gray-500 uppercase">Content Management</p>
+                    <p class="px-4 mb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">Kelola Konten</p>
 
-                    <a href="{{ route('admin.news.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.news.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-newspaper"></i> News & Articles
+                    <a href="{{ route('admin.news.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.news.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-newspaper"></i> Berita & Artikel
                     </a>
-
-                    <a href="{{ route('admin.teachers.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.teachers.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-chalkboard-user"></i> Teachers
+                    <a href="{{ route('admin.teachers.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.teachers.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-chalkboard-user"></i> Data Guru
                     </a>
-
-                    <a href="{{ route('admin.galleries.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.galleries.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-images"></i> Gallery
+                    <a href="{{ route('admin.galleries.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.galleries.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-images"></i> Galeri Foto
                     </a>
-
-                    <a href="{{ route('admin.agendas.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.agendas.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-calendar"></i> Agenda
+                    <a href="{{ route('admin.agendas.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.agendas.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-calendar"></i> Agenda Kegiatan
                     </a>
-
-                    <a href="{{ route('admin.facilities.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.facilities.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-building"></i> Facilities
+                    <a href="{{ route('admin.facilities.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.facilities.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-building"></i> Fasilitas
                     </a>
-
-                    <a href="{{ route('admin.about.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.about.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-info-circle"></i> About
+                    <a href="{{ route('admin.about.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.about.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-info-circle"></i> Tentang Sekolah
                     </a>
-
-                    <a href="{{ route('admin.prestasis.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.prestasi.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-trophy"></i> Prestasi                    </a>
-
-                    <a href="{{ route('admin.registrations.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-user-check"></i> Registrations
+                    <a href="{{ route('admin.prestasis.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.prestasi.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-trophy"></i> Prestasi Siswa
+                    </a>
+                    <a href="{{ route('admin.registrations.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-user-check"></i> Pendaftaran Siswa
                     </a>
                 </div>
 
                 <div class="pt-4 border-t border-gray-800">
-                    <p class="px-4 mb-3 text-xs font-semibold text-gray-500 uppercase">System Management</p>
-
-                    <a href="{{ route('admin.management-account.index') }}" class="block px-4 py-2 rounded {{ request()->routeIs('admin.management-account.*') ? 'bg-blue-600' : 'hover:bg-gray-800' }}">
-                        <i class="mr-2 fas fa-users-cog"></i> Account Management
+                    <p class="px-4 mb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">Sistem</p>
+                    <a href="{{ route('admin.management-account.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.management-account.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-users-cog"></i> Manajemen Akun
                     </a>
                 </div>
             </nav>
 
-            <div class="absolute bottom-0 left-0 right-0 w-64 p-4 bg-gray-800 border-t border-gray-800">
-                <div class="flex items-center mb-4">
-                    <div class="flex items-center justify-center w-10 h-10 bg-blue-600 rounded-full">
-                        <i class="text-white fas fa-user"></i>
+            <!-- User info & logout -->
+            <div class="absolute bottom-0 left-0 right-0 w-64 p-4 bg-gray-800 border-t border-gray-700">
+                <div class="flex items-center mb-3">
+                    <div class="flex items-center justify-center w-10 h-10 text-sm font-semibold text-white bg-blue-600 rounded-full shrink-0">
+                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                     </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-semibold">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-gray-400">Admin</p>
+                    <div class="ml-3 overflow-hidden">
+                        <p class="text-sm font-semibold text-white truncate">{{ Auth::user()->name }}</p>
+                        <p class="text-xs text-gray-400">{{ Auth::user()->role?->label() ?? 'Admin' }}</p>
                     </div>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
-                    <button type="submit" class="w-full px-4 py-2 text-sm text-left bg-red-600 rounded hover:bg-red-700">
-                        <i class="mr-2 fas fa-sign-out-alt"></i> Logout
+                    <button type="submit"
+                        class="flex items-center w-full px-4 py-2 text-sm text-left text-white bg-red-600 rounded-lg hover:bg-red-700">
+                        <i class="mr-2 fas fa-sign-out-alt"></i> Keluar
                     </button>
                 </form>
             </div>
@@ -90,34 +96,87 @@
 
         <!-- Main Content -->
         <div class="flex flex-col flex-1 overflow-hidden">
+
             <!-- Top Bar -->
             <div class="p-4 bg-white border-b border-gray-200 shadow-sm">
                 <h2 class="text-2xl font-bold text-gray-800">@yield('page_title', 'Dashboard')</h2>
-                <p class="text-sm text-gray-600">@yield('page_subtitle', 'Manage your school content')</p>
+                <p class="text-sm text-gray-600">@yield('page_subtitle', 'Kelola konten website sekolah')</p>
             </div>
 
             <!-- Content Area -->
             <div class="flex-1 p-6 overflow-auto">
+
+                {{-- Error validasi --}}
                 @if($errors->any())
-                    <div class="p-4 mb-4 text-red-800 border border-red-200 rounded bg-red-50">
-                        <p class="mb-2 font-semibold">{{ count($errors) }} Error(s)</p>
-                        <ul class="text-sm list-disc list-inside">
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div id="flash-errors"
+                        class="flex items-start justify-between gap-3 px-4 py-3 mb-4 text-red-800 border border-red-200 rounded-lg bg-red-50">
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-exclamation-circle text-red-600 mt-0.5"></i>
+                            <div>
+                                <p class="mb-1 text-sm font-semibold">{{ count($errors) }} kesalahan ditemukan:</p>
+                                <ul class="text-sm list-disc list-inside space-y-0.5">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        <button onclick="document.getElementById('flash-errors').remove()"
+                            class="ml-2 text-lg leading-none text-red-400 hover:text-red-600 shrink-0">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 @endif
 
+                {{-- Pesan sukses --}}
                 @if(session('success'))
-                    <div class="p-4 mb-4 text-green-800 border border-green-200 rounded bg-green-50">
-                        {{ session('success') }}
+                    <div id="flash-success"
+                        class="flex items-center justify-between gap-3 px-4 py-3 mb-4 text-green-800 border border-green-200 rounded-lg bg-green-50">
+                        <div class="flex items-center gap-2">
+                            <i class="text-green-600 fas fa-check-circle"></i>
+                            <span class="text-sm font-medium">{{ session('success') }}</span>
+                        </div>
+                        <button onclick="document.getElementById('flash-success').remove()"
+                            class="ml-4 text-lg leading-none text-green-500 hover:text-green-700 shrink-0">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                @endif
+
+                {{-- Pesan error (manual session) --}}
+                @if(session('error'))
+                    <div id="flash-error"
+                        class="flex items-center justify-between gap-3 px-4 py-3 mb-4 text-red-800 border border-red-200 rounded-lg bg-red-50">
+                        <div class="flex items-center gap-2">
+                            <i class="text-red-600 fas fa-times-circle"></i>
+                            <span class="text-sm font-medium">{{ session('error') }}</span>
+                        </div>
+                        <button onclick="document.getElementById('flash-error').remove()"
+                            class="ml-4 text-lg leading-none text-red-500 hover:text-red-700 shrink-0">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 @endif
 
                 @yield('content')
+
             </div>
         </div>
     </div>
+
+    <script>
+        setTimeout(function() {
+            ['flash-success', 'flash-error'].forEach(function(id) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.transition = 'opacity 0.5s ease';
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 500);
+                }
+            });
+        }, 4000);
+    </script>
+
+    @stack('scripts')
 </body>
 </html>

@@ -1,71 +1,89 @@
 @extends('admin.layout')
 
-@section('page_title', 'Gallery')
-@section('page_subtitle', 'Kelola galeri foto sekolah')
+@section('page_title', 'Galeri Foto')
+@section('page_subtitle', 'Kelola foto dan album sekolah')
 
 @section('content')
-<div class="flex justify-between items-center mb-6">
-    <h3 class="text-lg font-semibold text-gray-800">Semua Galeri</h3>
+
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h3 class="text-lg font-semibold text-gray-800">Daftar Galeri</h3>
+        <p class="text-sm text-gray-500">Total {{ $galleries->total() }} item</p>
+    </div>
     <a href="{{ route('admin.galleries.create') }}"
-        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium">
-        <i class="fas fa-plus mr-2"></i> Add Gallery
+        class="flex items-center gap-2 px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+        <i class="fas fa-plus"></i> Tambah Foto
     </a>
 </div>
 
-<div class="bg-white rounded-lg shadow overflow-hidden">
-    <table class="w-full">
-        <thead class="bg-gray-50 border-b">
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Image</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Title</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Kategori</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Deskripsi</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase">Actions</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y">
-            @forelse($galleries as $gallery)
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4">
-                        @if($gallery->image)
-                            <img src="{{ asset('files/' . $gallery->image) }}"
-                                alt="{{ $gallery->title }}"
-                                class="w-16 h-12 object-cover rounded-lg">
-                        @else
-                            <div class="w-16 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-images text-blue-400"></i>
-                            </div>
-                        @endif
-                    </td>
-                    <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $gallery->title }}</td>
-                    <td class="px-6 py-4 text-sm">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
-                            {{ $gallery->category }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-600">{{ Str::limit($gallery->description, 50) ?? '-' }}</td>
-                    <td class="px-6 py-4 text-sm space-x-2">
-                        <a href="{{ route('admin.galleries.edit', $gallery) }}"
-                            class="text-blue-600 hover:text-blue-800">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
-                        <form action="{{ route('admin.galleries.destroy', $gallery) }}" method="POST"
-                            style="display:inline;" onsubmit="return confirm('Hapus galeri ini?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-800">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
+<div class="overflow-hidden bg-white rounded-lg shadow">
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="border-b border-gray-200 bg-gray-50">
                 <tr>
-                    <td colspan="5" class="px-6 py-8 text-center text-gray-500">Belum ada galeri.</td>
+                    <th class="px-6 py-3 text-xs font-semibold text-left text-gray-600 uppercase">Judul</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-left text-gray-600 uppercase">Kategori</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-left text-gray-600 uppercase">Deskripsi</th>
+                    <th class="px-6 py-3 text-xs font-semibold text-left text-gray-600 uppercase">Aksi</th>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @forelse($galleries as $gallery)
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                @if($gallery->image)
+                                    <img src="{{ asset('files/' . $gallery->image) }}" alt="{{ $gallery->title }}"
+                                        class="object-cover w-10 h-10 rounded-lg shrink-0">
+                                @else
+                                    <div class="flex items-center justify-center w-10 h-10 bg-purple-100 rounded-lg shrink-0">
+                                        <i class="text-purple-400 fas fa-image"></i>
+                                    </div>
+                                @endif
+                                <span class="text-sm font-medium text-gray-900">{{ $gallery->title }}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                                {{ $gallery->category ?? '—' }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-600">
+                            {{ Str::limit($gallery->description, 60) ?: '—' }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <a href="{{ route('admin.galleries.edit', $gallery) }}"
+                                    class="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form action="{{ route('admin.galleries.destroy', $gallery) }}" method="POST"
+                                    onsubmit="return confirm('Hapus foto \'{{ addslashes($gallery->title) }}\'?\n\nData yang dihapus tidak dapat dikembalikan.')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="flex items-center gap-1 text-sm text-red-500 hover:text-red-700">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="px-6 py-16 text-center">
+                            <i class="mb-3 text-4xl text-gray-300 fas fa-images"></i>
+                            <p class="text-gray-500">Belum ada foto di galeri.</p>
+                            <a href="{{ route('admin.galleries.create') }}"
+                                class="inline-flex items-center gap-2 px-4 py-2 mt-4 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-plus"></i> Tambah Foto Pertama
+                            </a>
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<div class="mt-4">{{ $galleries->links() }}</div>
+<div class="mt-6">{{ $galleries->links() }}</div>
+
 @endsection

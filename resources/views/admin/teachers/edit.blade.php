@@ -1,114 +1,140 @@
 @extends('admin.layout')
 
-@section('page_title', 'Edit Teacher')
+@section('page_title', 'Edit Guru')
+@section('page_subtitle', 'Perbarui informasi guru')
 
 @section('content')
-<div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-6">
-    <form action="{{ route('admin.teachers.update', $teacher) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-        @csrf @method('PUT')
+    <div class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
+        <form action="{{ route('admin.teachers.update', $teacher) }}" method="POST" enctype="multipart/form-data"
+            class="space-y-5">
+            @csrf @method('PUT')
 
-        <div><label class="block text-sm font-medium mb-1">Name</label>
-            <input type="text" name="name" value="{{ old('name', $teacher->name) }}" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-            @error('name') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
+            <input type="hidden" name="slug" value="{{ old('slug', $teacher->slug) }}">
 
-        <div><label class="block text-sm font-medium mb-1">Slug</label>
-            <input type="text" name="slug" value="{{ old('slug', $teacher->slug) }}" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-            @error('slug') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
-
-        <div><label class="block text-sm font-medium mb-1">Email</label>
-            <input type="email" name="email" value="{{ old('email', $teacher->email) }}" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-            @error('email') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
-
-        <div><label class="block text-sm font-medium mb-1">Phone</label>
-            <input type="text" name="phone" value="{{ old('phone', $teacher->phone) }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <div><label class="block text-sm font-medium mb-1">Subject</label>
-            <input type="text" name="subject" value="{{ old('subject', $teacher->subject) }}" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-        </div>
-
-        <div>
-            <label class="block text-sm font-medium mb-1">Photo</label>
-            @if($teacher->image)
-                <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <p class="text-xs font-medium text-gray-600 mb-2">Foto Saat Ini</p>
-                    <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="max-w-sm h-40 object-cover rounded">
-                </div>
-            @endif
-            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition" id="dropZone">
-                <input type="file" id="image" name="image" accept="image/*" class="hidden">
-                <div>
-                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
-                    <p class="text-gray-600">Drag & drop atau <button type="button" class="text-blue-600 hover:text-blue-700 font-medium" onclick="document.getElementById('image').click()">pilih file</button></p>
-                    <p class="text-xs text-gray-500 mt-2">JPG, PNG (Max 5MB)</p>
-                </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Nama Lengkap</label>
+                <input type="text" name="name" value="{{ old('name', $teacher->name) }}" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                @error('name')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
-            <div id="imagePreview" class="hidden mt-4">
-                <p class="text-xs font-medium text-gray-600 mb-2">Pratinjau Foto Baru</p>
-                <img id="previewImg" src="" alt="Preview" class="max-w-sm h-40 object-cover rounded-lg">
-                <p id="fileName" class="text-xs text-gray-600 mt-2"></p>
-            </div>
-            @error('image') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
 
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" value="{{ old('email', $teacher->email) }}" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                @error('email')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">
+                    No. Telepon
+                    <span class="ml-1 text-xs text-gray-400">(opsional)</span>
+                </label>
+                <input type="text" name="phone" value="{{ old('phone', $teacher->phone) }}"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">
+                    Jabatan/Mapel
+                </label>
+                <input type="text" name="subject" value="{{ old('subject', $teacher->subject) }}"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Foto</label>
+                @if ($teacher->image)
+                    <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <p class="mb-2 text-xs font-medium text-gray-600">Foto Saat Ini</p>
+                        <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}"
+                            class="object-cover h-40 max-w-sm rounded-lg">
+                    </div>
+                @endif
+                <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
+                    id="dropZone">
+                    <input type="file" id="image" name="image" accept="image/*" class="hidden">
+                    <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
+                    <p class="text-gray-600">Seret & letakkan atau
+                        <button type="button" class="font-medium text-blue-600 hover:text-blue-700"
+                            onclick="document.getElementById('image').click()">pilih file</button>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">JPG, PNG (Maks. 5MB)</p>
+                </div>
+                <div id="imagePreview" class="hidden mt-4">
+                    <p class="mb-2 text-xs font-medium text-gray-600">Pratinjau Foto Baru</p>
+                    <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
+                    <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
+                </div>
+                @error('image')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex gap-3 pt-4 border-t">
+                @include('components.admin-submit-btn', [
+                    'label' => 'Simpan Perubahan',
+                    'loading' => 'Menyimpan...',
+                ])
+                <a href="{{ route('admin.teachers.index') }}"
+                    class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
+                    <i class="mr-2 fas fa-times"></i> Batal
+                </a>
+            </div>
+        </form>
+    </div>
+
+    @push('scripts')
         <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropZone = document.getElementById('dropZone');
-            const fileInput = document.getElementById('image');
-            const imagePreview = document.getElementById('imagePreview');
-            const previewImg = document.getElementById('previewImg');
-            const fileName = document.getElementById('fileName');
-            const maxSize = 5 * 1024 * 1024; // 5MB
+            document.addEventListener('DOMContentLoaded', function() {
+                const dropZone = document.getElementById('dropZone');
+                const fileInput = document.getElementById('image');
+                const imagePreview = document.getElementById('imagePreview');
+                const previewImg = document.getElementById('previewImg');
+                const fileName = document.getElementById('fileName');
+                const maxSize = 5 * 1024 * 1024;
 
-            function handleFile(file) {
-                if (!file.type.startsWith('image/')) {
-                    alert('Please select an image file');
-                    return;
+                function handleFile(file) {
+                    if (!file.type.startsWith('image/')) {
+                        alert('Pilih file gambar yang valid');
+                        return;
+                    }
+                    if (file.size > maxSize) {
+                        alert('Ukuran file maksimal 5MB');
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = e => {
+                        previewImg.src = e.target.result;
+                        fileName.textContent = `File: ${file.name} (${(file.size/1024).toFixed(2)} KB)`;
+                        imagePreview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
                 }
-                if (file.size > maxSize) {
-                    alert('File size must be less than 5MB');
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    fileName.textContent = `File: ${file.name} (${(file.size/1024).toFixed(2)} KB)`;
-                    imagePreview.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
 
-            fileInput.addEventListener('change', function(e) {
-                if (e.target.files[0]) handleFile(e.target.files[0]);
+                fileInput.addEventListener('change', e => {
+                    if (e.target.files[0]) handleFile(e.target.files[0]);
+                });
+                dropZone.addEventListener('click', () => fileInput.click());
+                dropZone.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    dropZone.classList.add('border-blue-500', 'bg-blue-50');
+                });
+                dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
+                'bg-blue-50'));
+                dropZone.addEventListener('drop', e => {
+                    e.preventDefault();
+                    dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+                    if (e.dataTransfer.files[0]) {
+                        fileInput.files = e.dataTransfer.files;
+                        handleFile(e.dataTransfer.files[0]);
+                    }
+                });
             });
-
-            dropZone.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                dropZone.classList.add('border-blue-500', 'bg-blue-50');
-            });
-
-            dropZone.addEventListener('dragleave', function() {
-                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-            });
-
-            dropZone.addEventListener('drop', function(e) {
-                e.preventDefault();
-                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-                if (e.dataTransfer.files[0]) {
-                    fileInput.files = e.dataTransfer.files;
-                    handleFile(e.dataTransfer.files[0]);
-                }
-            });
-        });
         </script>
-
-        <div class="flex gap-3 pt-4 border-t">
-            @include('components.admin-submit-btn', ['label' => 'Save', 'loading' => 'Saving...'])
-            <a href="{{ route('admin.teachers.index') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg">Cancel</a>
-        </div>
-    </form>
-</div>
+    @endpush
 @endsection

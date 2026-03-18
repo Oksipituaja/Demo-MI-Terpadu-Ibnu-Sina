@@ -1,114 +1,156 @@
 @extends('admin.layout')
 
-@section('page_title', 'Edit Event')
+@section('page_title', 'Edit Kegiatan')
+@section('page_subtitle', 'Perbarui informasi agenda kegiatan')
 
 @section('content')
-<div class="max-w-2xl mx-auto bg-white rounded-lg shadow p-6">
-    <form action="{{ route('admin.agendas.update', $agenda) }}" method="POST" class="space-y-4">
-        @csrf @method('PUT')
+    <div class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
+        <form action="{{ route('admin.agendas.update', $agenda) }}" method="POST" class="space-y-5">
+            @csrf @method('PUT')
 
-        <div>
-            <label class="block text-sm font-medium mb-1">Title</label>
-            <input type="text" name="title" id="agendaTitle" value="{{ old('title', $agenda->title) }}" required
-                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-            @error('title') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
+            <input type="hidden" name="slug" value="{{ old('slug', $agenda->slug) }}">
 
-        <div>
-            <label class="block text-sm font-medium mb-1">
-                Slug
-                <span class="ml-1 text-xs text-yellow-600">⚠ Hati-hati mengubah slug</span>
-            </label>
-            <div class="flex gap-2">
-                <input type="text" name="slug" id="agendaSlug" value="{{ old('slug', $agenda->slug) }}" required
-                    class="flex-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50">
-                <button type="button" id="btn-reset-slug"
-                    class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg text-xs font-medium transition">
-                    <i class="fas fa-sync-alt mr-1"></i> Generate dari Title
-                </button>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Judul Kegiatan</label>
+                <input type="text" name="title" id="agendaTitle" value="{{ old('title', $agenda->title) }}" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                @error('title')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
-            @error('slug') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
 
-        <div>
-            <label class="block text-sm font-medium mb-1">Tanggal & Waktu Kegiatan</label>
-            <div class="flex gap-2">
-                <input type="text" id="eventDateDisplay" readonly
-                    class="flex-1 px-3 py-2 border rounded-lg bg-white cursor-pointer focus:ring-2 focus:ring-blue-500">
-                <input type="hidden" name="event_date" id="event_date_input"
-                    value="{{ old('event_date', $agenda->event_date_time) }}">
-                <button type="button" onclick="document.getElementById('eventDateDisplay').click()"
-                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-                    <i class="fas fa-calendar"></i>
-                </button>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Tanggal & Waktu Kegiatan</label>
+                <div class="flex gap-2">
+                    <div id="eventDateDisplay"
+                        class="flex-1 px-4 py-2 text-sm border border-gray-300 rounded-lg select-none bg-gray-50 {{ old('event_date', $agenda->event_date_time) ? 'text-gray-800' : 'text-gray-400' }}">
+                        @if (old('event_date', $agenda->event_date_time))
+                            {{ \Carbon\Carbon::parse(old('event_date', $agenda->event_date_time))->translatedFormat('d M Y, H:i') }}
+                            WIB
+                        @else
+                            Belum dipilih
+                        @endif
+                    </div>
+                    <input type="hidden" name="event_date" id="event_date_input"
+                        value="{{ old('event_date', $agenda->event_date_time) }}">
+                    <button type="button" id="btn-pick-date"
+                        class="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 shrink-0">
+                        <i class="mr-1 fas fa-calendar"></i> Pilih
+                    </button>
+                </div>
+                @error('event_date')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
-            @error('event_date') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
 
-        <div>
-            <label class="block text-sm font-medium mb-1">Status</label>
-            <select name="status" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                <option value="upcoming"  {{ old('status', $agenda->status) === 'upcoming'  ? 'selected' : '' }}>Mendatang</option>
-                <option value="ongoing"   {{ old('status', $agenda->status) === 'ongoing'   ? 'selected' : '' }}>Sedang Berlangsung</option>
-                <option value="completed" {{ old('status', $agenda->status) === 'completed' ? 'selected' : '' }}>Selesai</option>
-            </select>
-            @error('status') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
-        </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Status</label>
+                <select name="status"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                    <option value="upcoming" {{ old('status', $agenda->status) === 'upcoming' ? 'selected' : '' }}>
+                        Mendatang</option>
+                    <option value="ongoing" {{ old('status', $agenda->status) === 'ongoing' ? 'selected' : '' }}>Sedang
+                        Berlangsung</option>
+                    <option value="completed" {{ old('status', $agenda->status) === 'completed' ? 'selected' : '' }}>
+                        Selesai</option>
+                </select>
+                @error('status')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium mb-1">Lokasi</label>
-            <input type="text" name="location" value="{{ old('location', $agenda->location) }}"
-                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-        </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">
+                    Lokasi
+                    <span class="ml-1 text-xs text-gray-400">(opsional)</span>
+                </label>
+                <input type="text" name="location" value="{{ old('location', $agenda->location) }}"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium mb-1">Deskripsi</label>
-            <textarea name="description" rows="4"
-                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">{{ old('description', $agenda->description) }}</textarea>
-        </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">
+                    Deskripsi
+                    <span class="ml-1 text-xs text-gray-400">(opsional)</span>
+                </label>
+                <textarea name="description" rows="4"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">{{ old('description', $agenda->description) }}</textarea>
+            </div>
 
-        <div class="flex gap-3 pt-4 border-t">
-            @include('components.admin-submit-btn', ['label' => 'Update', 'loading' => 'Updating...'])
-            <a href="{{ route('admin.agendas.index') }}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg">Cancel</a>
-        </div>
-    </form>
-</div>
+            <div class="flex gap-3 pt-4 border-t">
+                @include('components.admin-submit-btn', [
+                    'label' => 'Simpan Perubahan',
+                    'loading' => 'Menyimpan...',
+                ])
+                <a href="{{ route('admin.agendas.index') }}"
+                    class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
+                    <i class="mr-2 fas fa-times"></i> Batal
+                </a>
+            </div>
+        </form>
+    </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // ── SLUG (edit: hanya via tombol) ──────────────────────────────────
-    var titleInput = document.getElementById('agendaTitle');
-    var slugInput  = document.getElementById('agendaSlug');
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
 
-    function generateSlug(text) {
-        return text.toLowerCase().trim()
-            .replace(/[àáâãäå]/g, 'a').replace(/[èéêë]/g, 'e')
-            .replace(/[ìíîï]/g, 'i').replace(/[òóôõö]/g, 'o')
-            .replace(/[ùúûü]/g, 'u')
-            .replace(/[^a-z0-9\s-]/g, '')
-            .replace(/[\s-]+/g, '-')
-            .replace(/^-+|-+$/g, '');
-    }
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                const display = document.getElementById('eventDateDisplay');
+                const hiddenInput = document.getElementById('event_date_input');
+                const btnPickDate = document.getElementById('btn-pick-date');
 
-    document.getElementById('btn-reset-slug').addEventListener('click', function () {
-        if (confirm('Generate ulang slug dari title?\nURL lama bisa tidak berfungsi!')) {
-            slugInput.value = generateSlug(titleInput.value);
-        }
-    });
+                const fpContainer = document.createElement('div');
+                fpContainer.style.cssText = 'position:fixed;z-index:99999;display:none;';
+                document.body.appendChild(fpContainer);
 
-    // ── FLATPICKR — load nilai existing dari hidden input ──────────────
-    var existingValue = document.getElementById('event_date_input').value;
+                const fp = flatpickr(fpContainer, {
+                    enableTime: true,
+                    dateFormat: 'Y-m-d H:i',
+                    time_24hr: true,
+                    disableMobile: true,
+                    locale: window.flatpickrLocaleId,
+                    defaultDate: hiddenInput.value || null,
+                    onChange: function(selectedDates) {
+                        if (selectedDates[0]) {
+                            const d = selectedDates[0];
+                            hiddenInput.value = d.getFullYear() + '-' +
+                                String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                                String(d.getDate()).padStart(2, '0') + ' ' +
+                                String(d.getHours()).padStart(2, '0') + ':' +
+                                String(d.getMinutes()).padStart(2, '0');
+                            display.textContent = String(d.getDate()).padStart(2, '0') + ' ' +
+                                months[d.getMonth()] + ' ' + d.getFullYear() + ', ' +
+                                String(d.getHours()).padStart(2, '0') + ':' +
+                                String(d.getMinutes()).padStart(2, '0') + ' WIB';
+                            display.classList.remove('text-gray-400');
+                            display.classList.add('text-gray-800');
+                        }
+                    },
+                    onClose: function() {
+                        fpContainer.style.display = 'none';
+                    }
+                });
 
-    flatpickr('#eventDateDisplay', {
-        enableTime: true,
-        dateFormat: 'Y-m-d H:i',
-        time_24hr: true,
-        locale: { firstDayOfWeek: 1 },
-        defaultDate: existingValue || null,
-        onChange: function (selectedDates, dateStr) {
-            document.getElementById('event_date_input').value = dateStr;
-        }
-    });
-});
-</script>
+                btnPickDate.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const rect = btnPickDate.getBoundingClientRect();
+                    fpContainer.style.cssText =
+                        `position:fixed;z-index:99999;top:${rect.bottom+8}px;left:${rect.left}px;display:block;`;
+                    fp.open();
+                });
+
+                document.addEventListener('click', function(e) {
+                    const cal = document.querySelector('.flatpickr-calendar');
+                    if (
+                        !fpContainer.contains(e.target) &&
+                        !(cal && cal.contains(e.target)) &&
+                        e.target.id !== 'btn-pick-date'
+                    ) {
+                        fp.close();
+                        fpContainer.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    @endpush
 @endsection
