@@ -14,15 +14,15 @@
     <section id="gallery" class="py-20" style="background: #F0F4ED">
         <div class="container px-6 mx-auto">
 
-            {{-- Mobile: dropdown --}}
-            <div class="block mb-16 sm:hidden">
+            {{-- Mobile & Tablet: dropdown --}}
+            <div class="block mb-16 lg:hidden">
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open"
                         class="flex items-center justify-between w-full px-5 py-3 font-semibold rounded-full"
                         style="background: #15803d; color: white">
                         <span>{{ $category ? ucfirst($category) : 'Semua Kategori' }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" :class="{ 'rotate-180': open }" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 ml-2 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
@@ -45,30 +45,20 @@
                 </div>
             </div>
 
-            {{-- Desktop: tabs dengan collapse --}}
-            <div class="hidden mb-16 sm:block">
-                <div class="flex flex-wrap justify-center gap-2">
-                    <button wire:click="$set('category', '')"
+            {{-- Desktop: tabs --}}
+            <div class="flex-wrap justify-center hidden gap-2 mb-16 lg:flex">
+                <button wire:click="$set('category', '')"
+                    class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
+                    style="{{ $category === '' ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
+                    Semua
+                </button>
+                @foreach ($categories as $cat)
+                    <button wire:click="$set('category', @js($cat))"
                         class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
-                        style="{{ $category === '' ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
-                        Semua
+                        style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
+                        {{ ucfirst($cat) }}
                     </button>
-
-                    @foreach ($categories as $cat)
-                        <button wire:click="$set('category', @js($cat))"
-                            class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
-                            style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
-                            {{ ucfirst($cat) }}
-                        </button>
-                    @endforeach
-
-                    @if (count($categories) > 5)
-                        <button @click="expanded = !expanded"
-                            class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
-                            style="background: #f0fdf4; color: #15803d; border: 1.5px dashed #15803d">
-                        </button>
-                    @endif
-                </div>
+                @endforeach
             </div>
 
             <div class="grid gap-6 mb-12 md:grid-cols-2 lg:grid-cols-3"
@@ -90,10 +80,8 @@
                                         style="color: #15803d80">Foto Segera Hadir</span>
                                 </div>
                             @endif
-                            <div
-                                class="absolute inset-0 flex items-end justify-start p-4 transition-colors duration-300 bg-black/0 group-hover:bg-black/40">
-                                <span
-                                    class="text-sm font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100 line-clamp-2">
+                            <div class="absolute inset-0 flex items-end justify-start p-4 transition-colors duration-300 bg-black/0 group-hover:bg-black/40">
+                                <span class="text-sm font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100 line-clamp-2">
                                     {{ $item->title }}
                                 </span>
                             </div>
