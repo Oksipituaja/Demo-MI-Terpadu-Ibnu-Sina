@@ -7853,3 +7853,76 @@ Did you mean this?
 [2026-03-18 09:04:45] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (249.9ms)  
 [2026-03-18 09:04:47] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (237.11ms)  
 [2026-03-18 09:04:50] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (250.11ms)  
+[2026-03-18 15:16:10] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (1311.98ms)  
+[2026-03-18 15:16:12] local.WARNING: Slow Query: select `id`, `name`, `slug`, `description`, `image`, `icon` from `facilities` (133.15ms)  
+[2026-03-18 15:16:13] local.WARNING: Slow Query: select `id`, `name`, `subject`, `image`, `slug` from `teachers` limit 3 (235.77ms)  
+[2026-03-18 15:16:13] local.WARNING: Slow Query: select `id`, `title`, `description`, `event_date`, `event_time`, `location`, `status`, `slug` from `agendas` where `status` in (?, ?) order by 
+                    CASE WHEN event_date >= ? THEN 0 ELSE 1 END,
+                    CASE WHEN event_date >= ? THEN event_date ELSE NULL END ASC,
+                    event_date DESC
+                 limit 4 (298ms)  
+[2026-03-18 15:16:13] local.WARNING: Slow Query: select * from `prestasis` where `status` = ? order by 
+                    CASE 
+                        WHEN category LIKE '%Juara 1%' THEN 1
+                        WHEN category LIKE '%Juara 2%' THEN 2
+                        WHEN category LIKE '%Juara 3%' THEN 3
+                        WHEN category LIKE '%Harapan 1%' THEN 4
+                        WHEN category LIKE '%Harapan 2%' THEN 5
+                        WHEN category LIKE '%Harapan 3%' THEN 6
+                        WHEN category LIKE '%Harapan%' THEN 7
+                        ELSE 99
+                    END,
+                    achievement_date DESC
+                 limit 3 (267.44ms)  
+[2026-03-18 15:16:14] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (412.65ms)  
+[2026-03-18 15:16:14] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (345.68ms)  
+[2026-03-18 15:16:14] local.WARNING: Slow Query: insert into `sessions` (`payload`, `last_activity`, `user_id`, `ip_address`, `user_agent`, `id`) values (?, ?, ?, ?, ?, ?) (270.95ms)  
+[2026-03-18 15:16:17] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (271.96ms)  
+[2026-03-18 15:16:20] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (446.49ms)  
+[2026-03-18 15:16:20] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (147.54ms)  
+[2026-03-18 15:16:21] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (233.42ms)  
+[2026-03-18 15:16:25] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (289.56ms)  
+[2026-03-18 15:16:27] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (241.55ms)  
+[2026-03-18 15:16:27] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (277.39ms)  
+[2026-03-18 15:16:29] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (248.56ms)  
+[2026-03-18 15:16:33] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (235.08ms)  
+[2026-03-18 15:16:36] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (112.2ms)  
+[2026-03-18 15:16:36] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (130.88ms)  
+[2026-03-18 15:16:37] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (272.61ms)  
+[2026-03-18 15:16:40] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (432.98ms)  
+[2026-03-18 15:16:40] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (156.37ms)  
+[2026-03-18 15:16:42] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (282ms)  
+[2026-03-18 15:16:45] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (686.77ms)  
+[2026-03-18 15:16:45] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (584.06ms)  
+[2026-03-18 15:16:48] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (1571.6ms)  
+[2026-03-18 15:16:51] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (287.64ms)  
+[2026-03-18 15:16:51] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (145.55ms)  
+[2026-03-18 15:16:54] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (1374.44ms)  
+[2026-03-18 15:16:56] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (136.38ms)  
+[2026-03-18 15:16:56] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (124.21ms)  
+[2026-03-18 15:16:58] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (892.61ms)  
+[2026-03-18 15:17:03] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (619.99ms)  
+[2026-03-18 15:17:05] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (136.11ms)  
+[2026-03-18 15:17:05] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (134.72ms)  
+[2026-03-18 15:17:06] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (454.6ms)  
+[2026-03-18 15:17:10] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (227.53ms)  
+[2026-03-18 15:17:14] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (386.8ms)  
+[2026-03-18 15:17:17] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (371.71ms)  
+[2026-03-18 15:17:17] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (303.71ms)  
+[2026-03-18 15:17:36] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (497.62ms)  
+[2026-03-18 15:17:39] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (373.57ms)  
+[2026-03-18 15:17:44] local.WARNING: Slow Query: delete from `sessions` where `id` = ? (343.33ms)  
+[2026-03-18 15:17:44] local.WARNING: Slow Query: update `users` set `last_login` = ?, `users`.`updated_at` = ? where `id` = ? (124.72ms)  
+[2026-03-18 15:17:44] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (109.95ms)  
+[2026-03-18 15:17:45] local.WARNING: Slow Query: insert into `sessions` (`payload`, `last_activity`, `user_id`, `ip_address`, `user_agent`, `id`) values (?, ?, ?, ?, ?, ?) (118.16ms)  
+[2026-03-18 15:17:47] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (417.46ms)  
+[2026-03-18 15:17:57] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (361.62ms)  
+[2026-03-18 15:17:59] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (157.47ms)  
+[2026-03-18 15:17:59] local.WARNING: Slow Query: select count(*) as aggregate from `news` (143.09ms)  
+[2026-03-18 15:17:59] local.WARNING: Slow Query: select * from `news` order by `created_at` desc limit 15 offset 0 (154.62ms)  
+[2026-03-18 15:18:00] local.WARNING: Slow Query: select * from `users` where `users`.`id` in (1) (332.43ms)  
+[2026-03-18 15:18:01] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (234.88ms)  
+[2026-03-18 15:18:06] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (419.69ms)  
+[2026-03-18 15:18:08] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (136.89ms)  
+[2026-03-18 15:18:09] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (127.09ms)  
+[2026-03-18 15:18:11] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (585.93ms)  
