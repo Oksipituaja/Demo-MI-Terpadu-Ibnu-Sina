@@ -46,7 +46,7 @@
             </div>
 
             {{-- Desktop: tabs dengan collapse --}}
-            <div class="hidden mb-16 sm:block" x-data="{ expanded: false }">
+            <div class="hidden mb-16 sm:block">
                 <div class="flex flex-wrap justify-center gap-2">
                     <button wire:click="$set('category', '')"
                         class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
