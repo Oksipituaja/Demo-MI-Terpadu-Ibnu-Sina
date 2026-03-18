@@ -45,27 +45,32 @@
                 </div>
             </div>
 
-            {{-- Desktop: scroll horizontal --}}
-            <div class="hidden gap-2 pb-2 mb-16 overflow-x-auto sm:flex"
-                style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
-                <style>
-                    .tab-scroll::-webkit-scrollbar {
-                        display: none;
-                    }
-                </style>
-                <div class="flex gap-2 mx-auto tab-scroll">
+            {{-- Desktop: tabs dengan collapse --}}
+            <div class="hidden mb-16 sm:block" x-data="{ expanded: false }">
+                <div class="flex flex-wrap justify-center gap-2">
                     <button wire:click="$set('category', '')"
-                        class="flex-shrink-0 px-5 py-2 text-sm font-semibold transition-all rounded-full"
+                        class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
                         style="{{ $category === '' ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                         Semua
                     </button>
-                    @foreach ($categories as $cat)
+
+                    @foreach ($categories as $index => $cat)
                         <button wire:click="$set('category', @js($cat))"
-                            class="flex-shrink-0 px-5 py-2 text-sm font-semibold transition-all rounded-full"
+                            x-show="expanded || {{ $index }} < 5"
+                            class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
                             style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                             {{ ucfirst($cat) }}
                         </button>
                     @endforeach
+
+                    @if (count($categories) > 5)
+                        <button @click="expanded = !expanded"
+                            class="px-5 py-2 text-sm font-semibold transition-all rounded-full"
+                            style="background: #f0fdf4; color: #15803d; border: 1.5px dashed #15803d">
+                            <span x-show="!expanded">+{{ count($categories) - 5 }} lainnya</span>
+                            <span x-show="expanded">Sembunyikan</span>
+                        </button>
+                    @endif
                 </div>
             </div>
 
