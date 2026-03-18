@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
     plugins: [
@@ -8,6 +9,14 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
+        }),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: 'node_modules/tinymce/skins',
+                    dest: 'tinymce',
+                },
+            ],
         }),
     ],
     build: {
@@ -18,6 +27,7 @@ export default defineConfig({
             output: {
                 manualChunks: {
                     'vendor': ['axios'],
+                    'tinymce': ['tinymce'],
                 },
                 chunkFileNames: 'assets/chunk-[hash].js',
                 entryFileNames: 'assets/[name]-[hash].js',
@@ -25,7 +35,7 @@ export default defineConfig({
             },
         },
         reportCompressedSize: true,
-        chunkSizeWarningLimit: 500,
+        chunkSizeWarningLimit: 1000,
     },
     server: {
         watch: {

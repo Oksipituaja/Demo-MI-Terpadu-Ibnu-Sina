@@ -5,106 +5,105 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="p-6 bg-white rounded-lg shadow">
         <form action="{{ route('admin.news.update', $news) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
             @method('PUT')
 
             <div>
-                <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label for="title" class="block mb-1 text-sm font-medium text-gray-700">Title</label>
                 <input type="text" id="title" name="title" value="{{ old('title', $news->title) }}" required
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                @error('title') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                @error('title') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div>
-                <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">
+                <label for="slug" class="block mb-1 text-sm font-medium text-gray-700">
                     Slug
-                    <span class="ml-2 text-xs text-yellow-600 font-normal">⚠ Hati-hati mengubah slug — bisa memutus link yang sudah ada</span>
+                    <span class="ml-2 text-xs font-normal text-yellow-600">⚠ Hati-hati mengubah slug — bisa memutus link yang sudah ada</span>
                 </label>
                 <div class="flex gap-2">
                     <input type="text" id="slug" name="slug" value="{{ old('slug', $news->slug) }}" required
                         class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50">
                     <button type="button" id="btn-regenerate-slug"
-                        class="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg text-xs font-medium transition">
-                        <i class="fas fa-sync-alt mr-1"></i> Generate dari Title
+                        class="px-3 py-2 text-xs font-medium text-gray-600 transition bg-gray-100 rounded-lg hover:bg-gray-200">
+                        <i class="mr-1 fas fa-sync-alt"></i> Generate dari Title
                     </button>
                 </div>
-                @error('slug') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                @error('slug') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div>
-                <label for="excerpt" class="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
-                <textarea id="excerpt" name="excerpt" rows="3" required
+                <label for="excerpt" class="block mb-1 text-sm font-medium text-gray-700">Excerpt</label>
+                <textarea id="excerpt" name="excerpt" rows="3"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('excerpt', $news->excerpt) }}</textarea>
-                @error('excerpt') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                @error('excerpt') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div>
-                <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                <textarea id="content" name="content" rows="8" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('content', $news->content) }}</textarea>
-                @error('content') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                <label for="content" class="block mb-1 text-sm font-medium text-gray-700">Content</label>
+                <textarea id="content" name="content">{{ old('content', $news->content) }}</textarea>
+                @error('content') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <label for="status" class="block mb-1 text-sm font-medium text-gray-700">Status</label>
                     <select id="status" name="status" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="draft" {{ old('status', $news->status) === 'draft' ? 'selected' : '' }}>Draft</option>
                         <option value="published" {{ old('status', $news->status) === 'published' ? 'selected' : '' }}>Published</option>
                     </select>
-                    @error('status') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    @error('status') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                    <label for="published_at" class="block text-sm font-medium text-gray-700 mb-1">Publish Date</label>
+                    <label for="published_at" class="block mb-1 text-sm font-medium text-gray-700">Publish Date</label>
                     <div class="flex gap-2">
                         <input type="text" id="publishDate" placeholder="Click to select date & time" readonly
-                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg bg-white cursor-pointer">
+                            class="flex-1 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer">
                         <input type="hidden" name="published_at" id="published_at_input"
                             value="{{ old('published_at', $news->published_at?->format('Y-m-d H:i')) }}">
-                        <button type="button" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
+                        <button type="button" class="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                             onclick="document.getElementById('publishDate').click()">
-                            <i class="fas fa-calendar mr-2"></i> Pick
+                            <i class="mr-2 fas fa-calendar"></i> Pick
                         </button>
                     </div>
-                    @error('published_at') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    @error('published_at') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
             </div>
 
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Featured Image</label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Featured Image</label>
                 @if($news->featured_image)
-                    <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        <p class="text-xs font-medium text-gray-600 mb-2">Gambar Saat Ini</p>
+                    <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
+                        <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
                         <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
-                            class="max-w-sm h-40 object-cover rounded">
+                            class="object-cover h-40 max-w-sm rounded">
                     </div>
                 @endif
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition" id="dropZone">
+                <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50" id="dropZone">
                     <input type="file" id="featured_image" name="featured_image" accept="image/*" class="hidden">
                     <div>
-                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                        <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
                         <p class="text-gray-600">Drag & drop atau
-                            <button type="button" class="text-blue-600 hover:text-blue-700 font-medium"
+                            <button type="button" class="font-medium text-blue-600 hover:text-blue-700"
                                 onclick="document.getElementById('featured_image').click()">pilih file</button>
                         </p>
-                        <p class="text-xs text-gray-500 mt-2">JPG, PNG (Max 2MB)</p>
+                        <p class="mt-2 text-xs text-gray-500">JPG, PNG (Max 2MB)</p>
                     </div>
                 </div>
                 <div id="imagePreview" class="hidden mt-4">
-                    <p class="text-xs font-medium text-gray-600 mb-2">Pratinjau Gambar Baru</p>
-                    <img id="previewImg" src="" alt="Preview" class="max-w-sm h-40 object-cover rounded-lg">
-                    <p id="fileName" class="text-xs text-gray-600 mt-2"></p>
+                    <p class="mb-2 text-xs font-medium text-gray-600">Pratinjau Gambar Baru</p>
+                    <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
+                    <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
                 </div>
-                @error('featured_image') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                @error('featured_image') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="flex gap-3 pt-4 border-t">
                 @include('components.admin-submit-btn', ['label' => 'Update Article', 'loading' => 'Updating...'])
-                <a href="{{ route('admin.news.index') }}" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium">
-                    <i class="fas fa-times mr-2"></i> Cancel
+                <a href="{{ route('admin.news.index') }}" class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
+                    <i class="mr-2 fas fa-times"></i> Cancel
                 </a>
             </div>
         </form>
@@ -113,7 +112,22 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // ── SLUG (edit: hanya via tombol, tidak auto-update) ───────────────
+    // ── TINYMCE ────────────────────────────────────────────────────────
+    tinymce.init({
+        selector: '#content',
+        height: 400,
+        menubar: false,
+        plugins: 'lists link autolink',
+        toolbar: 'undo redo | bold italic underline | bullist numlist | link | removeformat',
+        skin_url: '/build/tinymce/skins/ui/oxide',
+        content_css: '/build/tinymce/skins/content/default/content.min.css',
+        content_style: 'body { font-family: sans-serif; font-size: 14px; line-height: 1.6; }',
+        setup: function(editor) {
+            editor.on('change', function() { editor.save(); });
+        }
+    });
+
+    // ── SLUG ──────────────────────────────────────────────────────────
     const titleInput = document.getElementById('title');
     const slugInput  = document.getElementById('slug');
 
@@ -126,8 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .replace(/[\s-]+/g,'-').replace(/^-+|-+$/g,'');
     }
 
-    // Halaman edit: slug tidak auto-update agar URL lama tidak putus
-    // Hanya generate jika user klik tombol secara sadar
     document.getElementById('btn-regenerate-slug').addEventListener('click', function () {
         if (confirm('Generate ulang slug dari title?\nPeringatan: URL lama bisa tidak berfungsi!')) {
             slugInput.value = generateSlug(titleInput.value);
@@ -144,12 +156,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ── IMAGE UPLOAD ───────────────────────────────────────────────────
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('featured_image');
+    const dropZone    = document.getElementById('dropZone');
+    const fileInput   = document.getElementById('featured_image');
     const imagePreview = document.getElementById('imagePreview');
-    const previewImg = document.getElementById('previewImg');
-    const fileName = document.getElementById('fileName');
-    const maxSize = 2 * 1024 * 1024;
+    const previewImg  = document.getElementById('previewImg');
+    const fileName    = document.getElementById('fileName');
+    const maxSize     = 2 * 1024 * 1024;
 
     function handleFile(file) {
         if (!file.type.startsWith('image/')) { alert('Please select an image file'); return; }
