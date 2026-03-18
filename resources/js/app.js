@@ -11,8 +11,6 @@ import 'tinymce/plugins/autolink';
 import 'tinymce/plugins/image';
 import 'tinymce/plugins/table';
 import 'tinymce/plugins/codesample';
-import 'tinymce/plugins/hr';
-import 'tinymce/plugins/pagebreak';
 
 window.flatpickr = flatpickr;
 window.flatpickrLocaleId = Indonesian;

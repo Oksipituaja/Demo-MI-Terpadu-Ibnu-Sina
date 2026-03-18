@@ -3,6 +3,10 @@
     "file": "assets/chunk-42ANG6Sg.js",
     "name": "vendor"
   },
+  "_chunk-do7vJaab.js": {
+    "file": "assets/chunk-do7vJaab.js",
+    "name": "tinymce"
+  },
   "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2": {
     "file": "assets/fa-brands-400-BP5tdqmh.woff2",
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-brands-400.woff2"
@@ -20,7 +24,7 @@
     "src": "node_modules/@fortawesome/fontawesome-free/webfonts/fa-v4compatibility.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BEER0HU_.css",
+    "file": "assets/app-CD5wSx-I.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -29,12 +33,13 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Dfu2NiOt.js",
+    "file": "assets/app-Dqyj3PDh.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_chunk-42ANG6Sg.js"
+      "_chunk-42ANG6Sg.js",
+      "_chunk-do7vJaab.js"
     ]
   }
 }

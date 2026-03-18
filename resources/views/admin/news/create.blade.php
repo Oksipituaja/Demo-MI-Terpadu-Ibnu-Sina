@@ -133,10 +133,10 @@
                 selector: '#content',
                 height: 450,
                 menubar: false,
-                plugins: 'lists link autolink image table codesample hr pagebreak',
+                plugins: 'lists link autolink image table codesample',
                 toolbar: [
                     'undo redo | bold italic underline strikethrough | forecolor backcolor',
-                    'h1 h2 h3 | bullist numlist | outdent indent | blockquote hr',
+                    'h1 h2 h3 | bullist numlist | outdent indent | blockquote',
                     'link image table codesample | alignleft aligncenter alignright alignjustify | removeformat'
                 ],
                 toolbar_mode: 'wrap',
@@ -220,7 +220,7 @@
                 dropZone.classList.add('border-blue-500', 'bg-blue-50');
             });
             dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
-            'bg-blue-50'));
+                'bg-blue-50'));
             dropZone.addEventListener('drop', e => {
                 e.preventDefault();
                 dropZone.classList.remove('border-blue-500', 'bg-blue-50');

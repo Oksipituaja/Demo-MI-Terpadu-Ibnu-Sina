@@ -7926,3 +7926,8 @@ Did you mean this?
 [2026-03-18 15:18:08] local.WARNING: Slow Query: select * from `users` where `id` = ? limit 1 (136.89ms)  
 [2026-03-18 15:18:09] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (127.09ms)  
 [2026-03-18 15:18:11] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (585.93ms)  
+[2026-03-18 15:35:34] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (361.8ms)  
+[2026-03-18 15:35:36] local.WARNING: Slow Query: update `sessions` set `payload` = ?, `last_activity` = ?, `user_id` = ?, `ip_address` = ?, `user_agent` = ? where `id` = ? (172.24ms)  
+[2026-03-18 15:35:38] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (475.82ms)  
+[2026-03-18 15:36:00] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (451.52ms)  
+[2026-03-18 15:36:05] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (309.31ms)  
