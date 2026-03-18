@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class GalleryController extends Controller
@@ -32,7 +34,6 @@ class GalleryController extends Controller
             'slug'        => 'required|string|unique:galleries,slug|max:255',
             'description' => 'nullable|string',
             'category'    => 'required|string|max:100',
-            // ✅ image nullable — tidak wajib saat create
             'image'       => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
@@ -41,12 +42,12 @@ class GalleryController extends Controller
         }
 
         Gallery::create($validated);
+        Cache::forget('gallery.all_categories');
 
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Galeri berhasil ditambahkan.');
     }
 
-    // ✅ BUG FIX: Request dulu, baru model
     public function update(Request $request, Gallery $gallery)
     {
         $validated = $request->validate([
@@ -58,13 +59,14 @@ class GalleryController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
-                \Storage::disk('public')->delete($gallery->image);
+            if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
+                Storage::disk('public')->delete($gallery->image);
             }
             $validated['image'] = $request->file('image')->store('gallery', 'public');
         }
 
         $gallery->update($validated);
+        Cache::forget('gallery.all_categories');
 
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Galeri berhasil diperbarui.');
@@ -72,10 +74,11 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
-            \Storage::disk('public')->delete($gallery->image);
+        if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
+            Storage::disk('public')->delete($gallery->image);
         }
         $gallery->delete();
+        Cache::forget('gallery.all_categories');
 
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Galeri berhasil dihapus.');

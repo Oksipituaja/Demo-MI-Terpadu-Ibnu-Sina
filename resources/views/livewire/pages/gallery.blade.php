@@ -13,15 +13,16 @@
 
     <section id="gallery" class="py-20" style="background: #F0F4ED">
         <div class="container px-6 mx-auto">
-            <div class="flex flex-wrap justify-center gap-3 mb-16">
+            <div class="flex gap-3 pb-2 mb-16 overflow-x-auto scrollbar-hide snap-x"
+                style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
                 <button wire:click="$set('category', '')"
-                    class="px-6 py-2 font-semibold transition-all rounded-full"
+                    class="flex-shrink-0 px-6 py-2 font-semibold transition-all rounded-full snap-start"
                     style="{{ $category === '' ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                     Semua
                 </button>
                 @foreach ($categories as $cat)
                     <button wire:click="$set('category', @js($cat))"
-                        class="px-6 py-2 font-semibold transition-all rounded-full"
+                        class="flex-shrink-0 px-6 py-2 font-semibold transition-all rounded-full snap-start"
                         style="{{ $category === $cat ? 'background: #15803d; color: white' : 'background: #dcfce7; color: #15803d' }}">
                         {{ ucfirst($cat) }}
                     </button>
@@ -43,17 +44,21 @@
                                 <div class="flex flex-col items-center justify-center w-full h-full gap-2 transition"
                                     style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                                     <i class="text-5xl transition fas fa-images" style="color: #15803d40"></i>
-                                    <span class="text-xs font-medium tracking-widest uppercase" style="color: #15803d80">Foto Segera Hadir</span>
+                                    <span class="text-xs font-medium tracking-widest uppercase"
+                                        style="color: #15803d80">Foto Segera Hadir</span>
                                 </div>
                             @endif
-                            <div class="absolute inset-0 flex items-end justify-start p-4 transition-colors duration-300 bg-black/0 group-hover:bg-black/40">
-                                <span class="text-sm font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100 line-clamp-2">
+                            <div
+                                class="absolute inset-0 flex items-end justify-start p-4 transition-colors duration-300 bg-black/0 group-hover:bg-black/40">
+                                <span
+                                    class="text-sm font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100 line-clamp-2">
                                     {{ $item->title }}
                                 </span>
                             </div>
                         </div>
                         <div class="mt-3">
-                            <h3 class="font-bold text-gray-900 transition line-clamp-1" style="hover: color: #15803d">{{ $item->title }}</h3>
+                            <h3 class="font-bold text-gray-900 transition line-clamp-1" style="hover: color: #15803d">
+                                {{ $item->title }}</h3>
                             <span class="inline-block mt-1 text-xs font-semibold px-2 py-0.5 rounded-full"
                                 style="color: #15803d; background: #dcfce7">
                                 {{ ucfirst($item->category) }}
@@ -61,7 +66,8 @@
                         </div>
                     </a>
                 @empty
-                    <div class="p-12 text-center col-span-full rounded-xl" style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
+                    <div class="p-12 text-center col-span-full rounded-xl"
+                        style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                         <i class="mb-4 text-5xl fas fa-images" style="color: #15803d40"></i>
                         <p class="text-lg font-semibold text-gray-600">Tidak ada galeri untuk kategori ini</p>
                         <p class="mt-2 text-sm text-gray-500">Silakan pilih kategori lain</p>
@@ -75,7 +81,8 @@
         </div>
     </section>
 
-    <section class="relative py-20 overflow-hidden text-white" style="background: linear-gradient(to right, #15803d, #166534)">
+    <section class="relative py-20 overflow-hidden text-white"
+        style="background: linear-gradient(to right, #15803d, #166534)">
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-0 left-0 bg-white rounded-full w-96 h-96 blur-3xl"></div>
         </div>
@@ -87,7 +94,7 @@
             <a href="{{ route('ppdb') }}"
                 class="inline-block px-8 py-4 font-bold transition-all shadow-lg rounded-xl hover:-translate-y-1"
                 style="background: #EAB308; color: #14532d;">
-                Daftar PPDB 2026/2027 <span class="ml-2">→</span>
+                Daftar SPMB 2026/2027 <span class="ml-2">→</span>
             </a>
         </div>
     </section>

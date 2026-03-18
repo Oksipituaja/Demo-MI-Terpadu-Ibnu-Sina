@@ -153,7 +153,7 @@
                         <i class="fas fa-envelope"></i> info&#64;miterpaduibnusina.sch.id
                     </span>
                     <div class="flex items-center gap-3 pl-3 ml-2 border-l" style="border-color: #15803d80">
-                        <a href="https://www.facebook.com/mitiskembangjepara/" class="transition-colors hover:text-yellow-300">
+                        <a href="https://www.facebook.com/mi.terpaduibnusina/" class="transition-colors hover:text-yellow-300">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                         <a href="https://www.instagram.com/mi_terpadu_ibnu_sina" class="transition-colors hover:text-yellow-300">
@@ -383,7 +383,7 @@
                         Madrasah Ibtidaiyah yang berkomitmen mencetak generasi unggul, berakhlak mulia, dan berdaya saing melalui pendidikan Islami yang berkualitas.
                     </p>
                     <div class="flex gap-2">
-                        <a href="https://www.facebook.com/mitiskembangjepara/" title="Facebook"
+                        <a href="https://www.facebook.com/mi.terpaduibnusina/" title="Facebook"
                             class="w-9 h-9 rounded-xl flex items-center justify-center transition-all hover:-translate-y-0.5"
                             style="background: #15803d26; color: #4ade80">
                             <i class="text-xs fab fa-facebook-f"></i>
