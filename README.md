@@ -1,4 +1,4 @@
-# 🎓 SD Bangsri School - Laravel Portal
+# 🎓 MI Terpadu Ibnu Sina - Laravel Portal
 
 Modern school website portal built with **Laravel 12**, **Filament Admin Panel**, **TALL Stack** frontend, **Laravel Breeze** authentication, and **Octane** performance optimization.
 
@@ -383,7 +383,7 @@ routes/
 ### Environment Setup
 Create `.env` from `.env.example` and configure:
 ```env
-APP_NAME="SD Bangsri School"
+APP_NAME="MI Terpadu Ibnu Sina"
 APP_DEBUG=false (production)
 DB_CONNECTION=sqlite (or mysql)
 CACHE_STORE=redis
