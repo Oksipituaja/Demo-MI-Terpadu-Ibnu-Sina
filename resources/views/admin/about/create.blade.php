@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <div>
+        <div id="contentWrapper">
             <label class="block mb-1 text-sm font-medium text-gray-700">Konten</label>
             <textarea name="content" id="contentField" rows="6">{{ old('content') }}</textarea>
             @error('content') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
@@ -143,9 +143,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const principalNameField = document.getElementById('principalNameField');
     const imageField         = document.getElementById('imageField');
     const schoolInfoFields   = document.getElementById('schoolInfoFields');
+    const contentWrapper     = document.getElementById('contentWrapper');
     const contentField       = document.getElementById('contentField');
     const noImageKeys        = ['school_profile', 'mission', 'vision', 'school_info'];
-    const noEditorKeys       = ['school_info'];
 
     let editorInstance = null;
 
@@ -206,15 +206,12 @@ document.addEventListener('DOMContentLoaded', function () {
         principalNameField.classList.toggle('hidden', key !== 'principal_greeting');
         imageField.classList.toggle('hidden', noImageKeys.includes(key));
         schoolInfoFields.classList.toggle('hidden', key !== 'school_info');
+        contentWrapper.classList.toggle('hidden', key === 'school_info');
 
         if (key === 'school_info') {
             destroyEditor();
             buildSchoolInfoJson();
-            contentField.setAttribute('readonly', true);
-            contentField.classList.add('bg-gray-50', 'text-gray-500', 'text-xs');
         } else {
-            contentField.removeAttribute('readonly');
-            contentField.classList.remove('bg-gray-50', 'text-gray-500', 'text-xs');
             if (key !== '') initEditor();
             else destroyEditor();
         }

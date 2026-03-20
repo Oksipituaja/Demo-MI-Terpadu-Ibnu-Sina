@@ -97,13 +97,16 @@
             </div>
         </div>
 
-        <div>
+        <div id="contentWrapper" class="{{ $about->key === 'school_info' ? 'hidden' : '' }}">
             <label class="block mb-1 text-sm font-medium text-gray-700">Konten</label>
-            <textarea name="content" id="contentField" rows="6"
-                class="{{ $about->key === 'school_info' ? 'bg-gray-50 text-gray-500 text-xs' : '' }}"
-                {{ $about->key === 'school_info' ? 'readonly' : '' }}>{{ old('content', $about->content) }}</textarea>
+            <textarea name="content" id="contentField" rows="6">{{ old('content', $about->content) }}</textarea>
             @error('content') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
         </div>
+
+        {{-- Hidden textarea untuk school_info agar value tetap terkirim saat submit --}}
+        @if($about->key === 'school_info')
+            <textarea name="content" id="contentField" class="hidden">{{ old('content', $about->content) }}</textarea>
+        @endif
 
         <div id="imageField" class="{{ in_array($about->key, ['school_profile', 'mission', 'vision', 'school_info']) ? 'hidden' : '' }}">
             <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
@@ -146,9 +149,8 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const currentKey       = '{{ $about->key }}';
-    const contentField     = document.getElementById('contentField');
-    const schoolInfoFields = document.getElementById('schoolInfoFields');
+    const currentKey   = '{{ $about->key }}';
+    const contentField = document.getElementById('contentField');
 
     function buildSchoolInfoJson() {
         const data = {
@@ -171,7 +173,6 @@ document.addEventListener('DOMContentLoaded', function () {
             input.addEventListener('input', buildSchoolInfoJson);
         });
     } else {
-        // Init TinyMCE untuk semua tipe selain school_info
         tinymce.init({
             selector: '#contentField',
             license_key: 'gpl',
@@ -194,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ── IMAGE UPLOAD ───────────────────────────────────────────────────
-    const dropZone     = document.getElementById('dropZone');
+    const dropZone = document.getElementById('dropZone');
     if (dropZone) {
         const fileInput    = document.getElementById('image');
         const imagePreview = document.getElementById('imagePreview');
