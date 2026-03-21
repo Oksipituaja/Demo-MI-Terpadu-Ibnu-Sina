@@ -83,10 +83,10 @@
             display: flex;
             align-items: center;
             gap: 4px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #14532d;
-            padding: 6px 4px;
+            padding: 6px 3px;
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
             text-decoration: none;
@@ -125,11 +125,37 @@
             padding: 8px 16px 4px;
         }
 
-        .mobile-accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .mobile-accordion-content.open { max-height: 500px; }
-        .mobile-accordion-btn { cursor: pointer; }
-        .mobile-accordion-btn .acc-chevron { transition: transform 0.2s; }
-        .mobile-accordion-btn.open .acc-chevron { transform: rotate(180deg); }
+        /* Top bar responsive — wrap gracefully */
+        .topbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .topbar-address {
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .topbar-address span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 
@@ -138,31 +164,39 @@
     <header class="fixed top-0 z-50 w-full">
 
         <!-- Top Bar -->
-        <div class="hidden py-2 text-white md:block" style="background: #15803d">
-            <div class="container flex items-center justify-between px-6 mx-auto text-xs font-medium">
-                <div class="flex items-center gap-6">
-                    <span class="flex items-center gap-2">
-                        <i class="fas fa-map-marker-alt" style="color: #86efac"></i>
-                        Jl. Raya Bangsri - Keling KM.4, Dukuh Segawe, Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457
-                    </span>
-                </div>
-                <div class="flex items-center gap-5">
-                    <a href="tel:0225947234" class="flex items-center gap-2 transition-colors hover:text-yellow-300">
-                        <i class="fas fa-phone"></i> (123) 4567-8901
-                    </a>
-                    <span class="flex items-center gap-2">
-                        <i class="fas fa-envelope"></i> info&#64;miterpaduibnusina.sch.id
-                    </span>
-                    <div class="flex items-center gap-3 pl-3 ml-2 border-l" style="border-color: #15803d80">
-                        <a href="https://www.facebook.com/mi.terpaduibnusina/" class="transition-colors hover:text-yellow-300">
-                            <i class="fab fa-facebook-f"></i>
+        <div class="hidden py-1.5 text-white md:block" style="background: #15803d">
+            <div class="container px-4 mx-auto xl:px-6">
+                <div class="topbar-inner">
+                    <!-- Alamat — dipotong kalau sempit -->
+                    <div class="topbar-address">
+                        <i class="fas fa-map-marker-alt shrink-0" style="color: #86efac; font-size:11px"></i>
+                        <span>Jl. Raya Bangsri - Keling KM.4, Dukuh Segawe, Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457</span>
+                    </div>
+                    <!-- Kontak & Sosmed -->
+                    <div class="topbar-right">
+                        <a href="tel:0225947234"
+                            class="items-center hidden gap-1.5 transition-colors hover:text-yellow-300 lg:flex">
+                            <i class="fas fa-phone" style="font-size:10px"></i>
+                            <span>(123) 4567-8901</span>
                         </a>
-                        <a href="https://www.instagram.com/mi_terpadu_ibnu_sina" class="transition-colors hover:text-yellow-300">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@mitismedia5043" class="transition-colors hover:text-yellow-300">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                        <span class="items-center hidden gap-1.5 xl:flex">
+                            <i class="fas fa-envelope" style="font-size:10px"></i>
+                            <span>info&#64;miterpaduibnusina.sch.id</span>
+                        </span>
+                        <div class="flex items-center gap-2.5 pl-2.5 border-l" style="border-color: #15803d80">
+                            <a href="https://www.facebook.com/mi.terpaduibnusina/"
+                                class="transition-colors hover:text-yellow-300">
+                                <i class="fab fa-facebook-f" style="font-size:11px"></i>
+                            </a>
+                            <a href="https://www.instagram.com/mi_terpadu_ibnu_sina"
+                                class="transition-colors hover:text-yellow-300">
+                                <i class="fab fa-instagram" style="font-size:11px"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@mitismedia5043"
+                                class="transition-colors hover:text-yellow-300">
+                                <i class="fab fa-youtube" style="font-size:11px"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,21 +204,24 @@
 
         <!-- Main Nav -->
         <nav class="border-b shadow-md" style="background: #F0F4ED; border-color: #15803d26">
-            <div class="container flex items-center justify-between gap-6 px-6 mx-auto" style="height:72px">
+            <div class="container flex items-center justify-between gap-3 px-4 mx-auto xl:px-6" style="height:66px">
 
-                <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-3 shrink-0">
-                    <div class="flex items-center justify-center rounded-full w-11 h-11">
-                        <img src="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>" alt="Logo">
-                    </div>
-                    <div>
-                        <div class="text-lg font-bold leading-tight" style="color: #15803d">
-                            <?php echo e(config('app.name', 'MI Terpadu Ibnu Sina')); ?></div>
-                        <div class="text-[10px] font-semibold tracking-widest uppercase" style="color: #15803d80">Madrasah Ibtidaiyah</div>
+                <!-- Logo -->
+                <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2.5 shrink-0">
+                    <img src="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>"
+                        alt="Logo" class="object-contain w-10 h-10">
+                    <div class="hidden sm:block">
+                        <div class="text-sm font-bold leading-tight" style="color: #15803d">
+                            MI Terpadu Ibnu Sina
+                        </div>
+                        <div class="text-[9px] font-semibold tracking-widest uppercase" style="color: #15803d80">
+                            Madrasah Ibtidaiyah
+                        </div>
                     </div>
                 </a>
 
-                <!-- Desktop Nav -->
-                <ul class="items-center hidden gap-1 lg:flex">
+                <!-- Desktop Nav — tampil mulai lg -->
+                <ul class="items-center hidden gap-0.5 lg:flex">
                     <li>
                         <a href="<?php echo e(route('home')); ?>" class="nav-link">
                             <i class="text-xs fas fa-home"></i> Beranda
@@ -252,26 +289,40 @@
                     </li>
                 </ul>
 
-                <!-- CTA Buttons -->
-                <div class="items-center hidden gap-3 lg:flex shrink-0">
+                <!-- CTA + Burger -->
+                <div class="flex items-center gap-2 shrink-0">
+
+                    <!-- CTA desktop -->
+                    <div class="items-center hidden gap-2 lg:flex">
+                        <a href="<?php echo e(route('ppdb')); ?>"
+                            class="flex items-center gap-1.5 text-white font-bold py-2 px-3 rounded-xl text-xs xl:text-sm xl:px-4 transition-all hover:-translate-y-0.5"
+                            style="background: #15803d; box-shadow: 0 4px 12px #15803d33;">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>SPMB</span>
+                        </a>
+                        <a href="<?php echo e(route('home')); ?>#kontak"
+                            class="flex items-center gap-1.5 font-bold py-2 px-3 rounded-xl text-xs xl:text-sm xl:px-4 transition-all hover:-translate-y-0.5"
+                            style="background: #EAB308; color: #14532d; box-shadow: 0 4px 12px #EAB30833;">
+                            <i class="fas fa-envelope"></i>
+                            <span class="hidden xl:inline">Hubungi</span>
+                        </a>
+                    </div>
+
+                    <!-- SPMB mobile -->
                     <a href="<?php echo e(route('ppdb')); ?>"
-                        class="flex items-center gap-2 text-white font-bold py-2.5 px-5 rounded-xl text-sm transition-all hover:-translate-y-0.5"
-                        style="background: #15803d; box-shadow: 0 4px 12px #15803d33;">
+                        class="flex lg:hidden items-center gap-1.5 text-white font-bold py-2 px-3 rounded-xl text-xs shrink-0"
+                        style="background: #15803d;">
                         <i class="fas fa-graduation-cap"></i> SPMB
                     </a>
-                    <a href="<?php echo e(route('home')); ?>#kontak"
-                        class="flex items-center gap-2 font-bold py-2.5 px-5 rounded-xl text-sm transition-all hover:-translate-y-0.5"
-                        style="background: #EAB308; color: #14532d; box-shadow: 0 4px 12px #EAB30833;">
-                        <i class="fas fa-envelope"></i> Hubungi
-                    </a>
-                </div>
 
-                <!-- Mobile Burger -->
-                <button id="mobileMenuBtn" class="lg:hidden flex flex-col gap-1.5 p-2 rounded-lg transition">
-                    <span class="w-6 h-0.5 rounded transition-all" id="bar1" style="background: #15803d"></span>
-                    <span class="w-6 h-0.5 rounded transition-all" id="bar2" style="background: #15803d"></span>
-                    <span class="w-6 h-0.5 rounded transition-all" id="bar3" style="background: #15803d"></span>
-                </button>
+                    <!-- Burger -->
+                    <button id="mobileMenuBtn"
+                        class="flex flex-col gap-1.5 p-2 rounded-lg transition lg:hidden">
+                        <span class="w-6 h-0.5 rounded transition-all" id="bar1" style="background: #15803d"></span>
+                        <span class="w-6 h-0.5 rounded transition-all" id="bar2" style="background: #15803d"></span>
+                        <span class="w-6 h-0.5 rounded transition-all" id="bar3" style="background: #15803d"></span>
+                    </button>
+                </div>
             </div>
         </nav>
 
@@ -287,11 +338,9 @@
             <div class="p-5">
                 <div class="flex items-center justify-between pb-4 mb-6 border-b" style="border-color: #15803d26">
                     <div class="flex items-center gap-3">
-                        <div class="flex items-center justify-center rounded-full w-9 h-9"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            <span class="text-sm font-bold text-white">MI</span>
-                        </div>
-                        <span class="font-bold" style="color: #15803d"><?php echo e(config('app.name')); ?></span>
+                        <img src="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>"
+                            alt="Logo" class="object-contain w-8 h-8">
+                        <span class="text-sm font-bold" style="color: #15803d"><?php echo e(config('app.name')); ?></span>
                     </div>
                     <button id="closeMobileMenu"
                         class="flex items-center justify-center w-8 h-8 text-xl transition rounded-lg"
@@ -360,7 +409,7 @@
 
     </header>
 
-    <main class="pt-[104px] md:pt-[112px]">
+    <main class="pt-[66px] md:pt-[102px]">
         <?php echo e($slot); ?>
 
     </main>
