@@ -1,617 +1,452 @@
 <!DOCTYPE html>
 <html lang="<?php echo e(str_replace('_', '-', app()->getLocale())); ?>">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <title><?php echo e(config('app.name', 'MI Terpadu Ibnu Sina')); ?></title>
-    <link rel="shortcut icon" href="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>"
-        type="image/x-icon" alt="Logo">
+    <link rel="shortcut icon" href="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>" type="image/x-icon">
 
     <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::styles(); ?>
 
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <style>
         * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        html { scroll-behavior: smooth; }
 
-        .has-dropdown { position: relative; }
+        /* ── Topbar ── */
+        .topbar { background: #14532d; display: none; align-items: center; height: 38px; }
+        @media(min-width:768px){ .topbar { display: flex; } }
 
-        .dropdown-menu {
+        /* ── Dropdown ── */
+        .has-dd { position: relative; height: 100%; display: flex; align-items: center; }
+
+        .dd-menu {
             position: absolute;
-            top: calc(100% + 8px);
+            top: calc(100% + 1px);
             left: 50%;
-            transform: translateX(-50%);
-            min-width: 200px;
-            background: #F0F4ED;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(21,128,61,0.12), 0 2px 8px rgba(21,128,61,0.08);
-            border: 1px solid rgba(21,128,61,0.1);
+            transform: translateX(-50%) translateY(-6px);
+            min-width: 220px;
+            background: #fff;
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 0 0 1px rgba(21,128,61,.09), 0 16px 40px -8px rgba(0,0,0,.14);
             opacity: 0;
             visibility: hidden;
-            transform: translateX(-50%) translateY(-8px);
-            transition: all 0.2s ease;
-            z-index: 100;
-            padding: 6px;
+            transition: opacity .17s, transform .17s, visibility .17s;
+            z-index: 200;
         }
-
-        .has-dropdown:hover .dropdown-menu,
-        .has-dropdown:focus-within .dropdown-menu {
+        .dd-menu::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 10px; height: 10px;
+            background: #fff;
+            border-top: 1px solid rgba(21,128,61,.09);
+            border-left: 1px solid rgba(21,128,61,.09);
+        }
+        .has-dd:hover .dd-menu,
+        .has-dd:focus-within .dd-menu {
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
         }
 
-        .dropdown-menu::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            left: 50%;
-            width: 12px;
-            height: 12px;
-            background: #F0F4ED;
-            border-left: 1px solid rgba(21,128,61,0.1);
-            border-top: 1px solid rgba(21,128,61,0.1);
-            transform: translateX(-50%) rotate(45deg);
-        }
-
-        .dropdown-item {
+        .dd-item {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            color: #14532d;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.15s;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-
-        .dropdown-item:hover { background: #15803d1a; color: #15803d; }
-        .dropdown-item i { width: 16px; color: #15803d99; font-size: 13px; }
-        .dropdown-item:hover i { color: #15803d; }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 4px;
+            padding: 9px 11px;
+            border-radius: 9px;
             font-size: 13px;
-            font-weight: 600;
-            color: #14532d;
-            padding: 6px 3px;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
+            font-weight: 500;
+            color: #374151;
             text-decoration: none;
-            white-space: nowrap;
+            transition: background .13s, color .13s;
         }
-
-        .nav-link:hover, .nav-link.active {
-            color: #15803d;
-            border-bottom-color: #EAB308;
-        }
-
-        .nav-link .chevron { font-size: 10px; transition: transform 0.2s; }
-        .has-dropdown:hover .nav-link .chevron { transform: rotate(180deg); }
-
-        .mobile-nav-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            color: #14532d;
-            font-weight: 600;
-            font-size: 15px;
-            text-decoration: none;
-            transition: all 0.15s;
-        }
-
-        .mobile-nav-link:hover { background: #15803d1a; color: #15803d; }
-
-        .mobile-section-title {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #15803d99;
-            padding: 8px 16px 4px;
-        }
-
-        /* Top bar responsive — wrap gracefully */
-        .topbar-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .topbar-address {
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            min-width: 0;
-            flex: 1;
-        }
-
-        .topbar-address span {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 11px;
+        .dd-item:hover { background: rgba(21,128,61,.07); color: #15803d; }
+        .dd-ic {
+            width: 28px; height: 28px;
+            border-radius: 7px;
+            background: rgba(21,128,61,.07);
+            display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
+        .dd-ic i { font-size: 11px; color: #15803d; opacity: .65; }
+        .dd-item:hover .dd-ic { background: rgba(21,128,61,.14); }
+        .dd-item:hover .dd-ic i { opacity: 1; }
+
+        /* chevron rotate */
+        .has-dd:hover .ch, .has-dd:focus-within .ch { transform: rotate(180deg); }
+        .ch { transition: transform .2s; font-size: 9px; opacity: .45; margin-left: 2px; }
+
+        /* ── Mobile drawer ── */
+        #overlay {
+            position: fixed; inset: 0; z-index: 400;
+            background: rgba(0,0,0,.42); backdrop-filter: blur(3px);
+            opacity: 0; pointer-events: none; transition: opacity .24s;
+        }
+        #overlay.on { opacity: 1; pointer-events: auto; }
+        #drawer {
+            position: fixed; top: 0; right: 0; z-index: 500;
+            width: 288px; height: 100%;
+            background: #fff;
+            box-shadow: -10px 0 40px rgba(0,0,0,.11);
+            transform: translateX(100%);
+            transition: transform .28s cubic-bezier(.4,0,.2,1);
+            overflow-y: auto;
+        }
+        #drawer.on { transform: translateX(0); }
+
+        .drw-link {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; border-radius: 9px;
+            font-size: 14px; font-weight: 600; color: #374151;
+            text-decoration: none; transition: background .13s, color .13s;
+        }
+        .drw-link:hover { background: rgba(21,128,61,.07); color: #15803d; }
+        .drw-link i { width: 16px; text-align: center; font-size: 12px; color: #86efac; flex-shrink: 0; }
+        .drw-link:hover i { color: #15803d; }
+        .drw-sec {
+            font-size: 10px; font-weight: 800;
+            text-transform: uppercase; letter-spacing: .14em;
+            color: #86efac; padding: 10px 12px 3px;
+        }
+
+        /* burger anim */
+        #b1,#b2,#b3 { transition: transform .28s, opacity .2s; }
     </style>
 </head>
 
-<body class="antialiased" style="background: #F0F4ED">
+<body class="antialiased bg-[#F0F4ED]">
 
-    <header class="fixed top-0 z-50 w-full">
+<header class="fixed top-0 left-0 right-0 z-50">
 
-        <!-- Top Bar -->
-        <div class="hidden py-1.5 text-white md:block" style="background: #15803d">
-            <div class="container px-4 mx-auto xl:px-6">
-                <div class="topbar-inner">
-                    <!-- Alamat — dipotong kalau sempit -->
-                    <div class="topbar-address">
-                        <i class="fas fa-map-marker-alt shrink-0" style="color: #86efac; font-size:11px"></i>
-                        <span>Jl. Raya Bangsri - Keling KM.4, Dukuh Segawe, Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457</span>
-                    </div>
-                    <!-- Kontak & Sosmed -->
-                    <div class="topbar-right">
-                        <a href="tel:0225947234"
-                            class="items-center hidden gap-1.5 transition-colors hover:text-yellow-300 lg:flex">
-                            <i class="fas fa-phone" style="font-size:10px"></i>
-                            <span>(123) 4567-8901</span>
-                        </a>
-                        <span class="items-center hidden gap-1.5 xl:flex">
-                            <i class="fas fa-envelope" style="font-size:10px"></i>
-                            <span>info&#64;miterpaduibnusina.sch.id</span>
-                        </span>
-                        <div class="flex items-center gap-2.5 pl-2.5 border-l" style="border-color: #15803d80">
-                            <a href="https://www.facebook.com/mi.terpaduibnusina/"
-                                class="transition-colors hover:text-yellow-300">
-                                <i class="fab fa-facebook-f" style="font-size:11px"></i>
-                            </a>
-                            <a href="https://www.instagram.com/mi_terpadu_ibnu_sina"
-                                class="transition-colors hover:text-yellow-300">
-                                <i class="fab fa-instagram" style="font-size:11px"></i>
-                            </a>
-                            <a href="https://www.youtube.com/@mitismedia5043"
-                                class="transition-colors hover:text-yellow-300">
-                                <i class="fab fa-youtube" style="font-size:11px"></i>
-                            </a>
-                        </div>
-                    </div>
+    
+    <div class="topbar">
+        <div class="flex items-center justify-between w-full max-w-screen-xl gap-4 px-6 mx-auto">
+            <div class="flex items-center flex-1 min-w-0 gap-2 overflow-hidden text-xs text-white/70">
+                <i class="fas fa-map-marker-alt text-[#86efac] flex-shrink-0 text-[10px]"></i>
+                <span class="truncate">Jl. Raya Bangsri - Keling KM.4, Dukuh Segawe, Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457</span>
+            </div>
+            <div class="flex items-center flex-shrink-0 gap-4">
+                <a href="tel:0225947234" class="hidden lg:flex items-center gap-1.5 text-white/70 hover:text-white text-xs transition-colors">
+                    <i class="fas fa-phone text-[#86efac] text-[10px]"></i>
+                    <span>(123) 4567-8901</span>
+                </a>
+                <a href="mailto:info@miterpaduibnusina.sch.id" class="hidden xl:flex items-center gap-1.5 text-white/70 hover:text-white text-xs transition-colors">
+                    <i class="fas fa-envelope text-[#86efac] text-[10px]"></i>
+                    <span>info&#64;miterpaduibnusina.sch.id</span>
+                </a>
+                <div class="w-px h-3.5 bg-white/15"></div>
+                <div class="flex items-center gap-3">
+                    <a href="https://www.facebook.com/mi.terpaduibnusina/" target="_blank" rel="noopener" class="text-white/55 hover:text-[#EAB308] text-xs transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/mi_terpadu_ibnu_sina" target="_blank" rel="noopener" class="text-white/55 hover:text-[#EAB308] text-xs transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/@mitismedia5043" target="_blank" rel="noopener" class="text-white/55 hover:text-[#EAB308] text-xs transition-colors"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Main Nav -->
-        <nav class="border-b shadow-md" style="background: #F0F4ED; border-color: #15803d26">
-            <div class="container flex items-center justify-between gap-3 px-4 mx-auto xl:px-6" style="height:66px">
+    
+    <nav class="h-[68px] bg-white border-b border-[#15803d]/10 shadow-sm">
+        <div class="flex items-center justify-between h-full max-w-screen-xl gap-4 px-6 mx-auto">
 
-                <!-- Logo -->
-                <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2.5 shrink-0">
-                    <img src="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>"
-                        alt="Logo" class="object-contain w-10 h-10">
-                    <div class="hidden sm:block">
-                        <div class="text-sm font-bold leading-tight" style="color: #15803d">
-                            MI Terpadu Ibnu Sina
-                        </div>
-                        <div class="text-[9px] font-semibold tracking-widest uppercase" style="color: #15803d80">
-                            Madrasah Ibtidaiyah
-                        </div>
+            
+            <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2.5 flex-shrink-0">
+                <img src="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>" alt="Logo" class="object-contain w-10 h-10">
+                <div class="hidden sm:block">
+                    <div class="text-[14.5px] font-extrabold text-[#15803d] leading-tight tracking-tight">MI Terpadu Ibnu Sina</div>
+                    <div class="text-[9px] font-bold tracking-[.16em] uppercase text-[#86efac] mt-0.5">Madrasah Ibtidaiyah</div>
+                </div>
+            </a>
+
+            
+            <ul class="items-center hidden h-full gap-1 p-0 m-0 list-none lg:flex">
+                <li class="flex items-center h-full">
+                    <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] font-semibold text-gray-600 hover:text-[#15803d] hover:bg-[#15803d]/[.07] rounded-lg transition-all">
+                        <i class="fas fa-home text-[11px] opacity-55"></i> Beranda
+                    </a>
+                </li>
+
+                <li class="h-full has-dd">
+                    <span class="flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] font-semibold text-gray-600 hover:text-[#15803d] hover:bg-[#15803d]/[.07] rounded-lg transition-all cursor-pointer select-none">
+                        <i class="fas fa-school text-[11px] opacity-55"></i> Profil <i class="fas fa-chevron-down ch"></i>
+                    </span>
+                    <div class="dd-menu">
+                        <a href="<?php echo e(route('about')); ?>?section=sambutan" class="dd-item"><span class="dd-ic"><i class="fas fa-user-tie"></i></span> Sambutan Kepala Sekolah</a>
+                        <a href="<?php echo e(route('about')); ?>?section=visi-misi&expanded=1" class="dd-item"><span class="dd-ic"><i class="fas fa-bullseye"></i></span> Visi & Misi</a>
+                        <a href="<?php echo e(route('about')); ?>?section=tentang&expanded=1" class="dd-item"><span class="dd-ic"><i class="fas fa-info-circle"></i></span> Tentang Kami</a>
+                        <a href="<?php echo e(route('teachers')); ?>" class="dd-item"><span class="dd-ic"><i class="fas fa-chalkboard-teacher"></i></span> Tenaga Pendidik</a>
                     </div>
+                </li>
+
+                <li class="h-full has-dd">
+                    <span class="flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] font-semibold text-gray-600 hover:text-[#15803d] hover:bg-[#15803d]/[.07] rounded-lg transition-all cursor-pointer select-none">
+                        <i class="fas fa-book-open text-[11px] opacity-55"></i> Akademik <i class="fas fa-chevron-down ch"></i>
+                    </span>
+                    <div class="dd-menu">
+                        <a href="<?php echo e(route('mata-pelajaran')); ?>" class="dd-item"><span class="dd-ic"><i class="fas fa-book"></i></span> Mata Pelajaran</a>
+                        <a href="<?php echo e(route('peraturan')); ?>" class="dd-item"><span class="dd-ic"><i class="fas fa-gavel"></i></span> Peraturan Sekolah</a>
+                        <a href="<?php echo e(route('news')); ?>" class="dd-item"><span class="dd-ic"><i class="fas fa-newspaper"></i></span> Berita & Pengumuman</a>
+                        <a href="<?php echo e(route('prestasi.index')); ?>" class="dd-item"><span class="dd-ic"><i class="fas fa-trophy"></i></span> Prestasi</a>
+                        <a href="<?php echo e(route('facilities')); ?>" class="dd-item"><span class="dd-ic"><i class="fas fa-building"></i></span> Fasilitas</a>
+                    </div>
+                </li>
+
+                <li class="h-full has-dd">
+                    <span class="flex items-center gap-1.5 px-3 py-1.5 text-[13.5px] font-semibold text-gray-600 hover:text-[#15803d] hover:bg-[#15803d]/[.07] rounded-lg transition-all cursor-pointer select-none">
+                        <i class="fas fa-calendar-alt text-[11px] opacity-55"></i> Kegiatan <i class="fas fa-chevron-down ch"></i>
+                    </span>
+                    <div class="dd-menu">
+                        <a href="<?php echo e(route('news')); ?>?tab=agenda" class="dd-item"><span class="dd-ic"><i class="fas fa-calendar-check"></i></span> Agenda Kegiatan</a>
+                        <a href="<?php echo e(route('gallery')); ?>" class="dd-item"><span class="dd-ic"><i class="fas fa-images"></i></span> Galeri</a>
+                    </div>
+                </li>
+            </ul>
+
+            
+            <div class="flex items-center flex-shrink-0 gap-2">
+                <div class="items-center hidden gap-2 lg:flex">
+                    <a href="<?php echo e(route('ppdb')); ?>"
+                        class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-bold text-white rounded-xl transition-all hover:-translate-y-0.5"
+                        style="background:#15803d;box-shadow:0 3px 12px rgba(21,128,61,.32)">
+                        <i class="text-xs fas fa-graduation-cap"></i> SPMB
+                    </a>
+                    <a href="<?php echo e(route('home')); ?>#kontak"
+                        class="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-bold rounded-xl transition-all hover:-translate-y-0.5"
+                        style="background:#EAB308;color:#14532d;box-shadow:0 3px 12px rgba(234,179,8,.28)">
+                        <i class="text-xs fas fa-envelope"></i>
+                        <span class="hidden xl:inline">Hubungi Kami</span>
+                    </a>
+                </div>
+
+                <a href="<?php echo e(route('ppdb')); ?>"
+                    class="flex lg:hidden items-center gap-1.5 px-3 py-2 text-xs font-bold text-white rounded-lg"
+                    style="background:#15803d">
+                    <i class="fas fa-graduation-cap"></i> SPMB
                 </a>
 
-                <!-- Desktop Nav — tampil mulai lg -->
-                <ul class="items-center hidden gap-0.5 lg:flex">
+                <button id="burgerBtn" class="flex lg:hidden flex-col justify-center gap-[5px] w-9 h-9 p-2 rounded-lg hover:bg-[#15803d]/[.07] transition-colors" aria-label="Menu">
+                    <span id="b1" class="block w-full h-0.5 rounded bg-[#15803d]"></span>
+                    <span id="b2" class="block w-full h-0.5 rounded bg-[#15803d]"></span>
+                    <span id="b3" class="block w-full h-0.5 rounded bg-[#15803d]"></span>
+                </button>
+            </div>
+
+        </div>
+    </nav>
+</header>
+
+
+<div id="overlay"></div>
+<div id="drawer">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-[#15803d]/10">
+        <a href="<?php echo e(route('home')); ?>" class="flex items-center gap-2.5 no-underline">
+            <img src="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>" alt="Logo" class="object-contain w-8 h-8">
+            <span class="text-sm font-extrabold text-[#15803d]"><?php echo e(config('app.name')); ?></span>
+        </a>
+        <button id="drawerClose" class="flex items-center justify-center w-8 h-8 text-lg text-gray-500 transition-colors bg-gray-100 rounded-lg hover:bg-red-100 hover:text-red-500">×</button>
+    </div>
+    <div class="p-3">
+        <a href="<?php echo e(route('home')); ?>" class="drw-link"><i class="fas fa-home"></i> Beranda</a>
+
+        <p class="drw-sec">Profil</p>
+        <a href="<?php echo e(route('about')); ?>?section=sambutan" class="drw-link"><i class="fas fa-user-tie"></i> Sambutan Kepala Sekolah</a>
+        <a href="<?php echo e(route('about')); ?>?section=visi-misi&expanded=1" class="drw-link"><i class="fas fa-bullseye"></i> Visi & Misi</a>
+        <a href="<?php echo e(route('about')); ?>?section=tentang&expanded=1" class="drw-link"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+        <a href="<?php echo e(route('teachers')); ?>" class="drw-link"><i class="fas fa-chalkboard-teacher"></i> Tenaga Pendidik</a>
+
+        <p class="drw-sec">Akademik</p>
+        <a href="<?php echo e(route('mata-pelajaran')); ?>" class="drw-link"><i class="fas fa-book"></i> Mata Pelajaran</a>
+        <a href="<?php echo e(route('peraturan')); ?>" class="drw-link"><i class="fas fa-gavel"></i> Peraturan Sekolah</a>
+        <a href="<?php echo e(route('news')); ?>" class="drw-link"><i class="fas fa-newspaper"></i> Berita & Pengumuman</a>
+        <a href="<?php echo e(route('prestasi.index')); ?>" class="drw-link"><i class="fas fa-trophy"></i> Prestasi</a>
+        <a href="<?php echo e(route('facilities')); ?>" class="drw-link"><i class="fas fa-building"></i> Fasilitas</a>
+
+        <p class="drw-sec">Kegiatan</p>
+        <a href="<?php echo e(route('news')); ?>?tab=agenda" class="drw-link"><i class="fas fa-calendar-check"></i> Agenda Kegiatan</a>
+        <a href="<?php echo e(route('gallery')); ?>" class="drw-link"><i class="fas fa-images"></i> Galeri</a>
+
+        <div class="flex flex-col gap-3 pt-4 mt-3 border-t border-[#15803d]/10">
+            <a href="<?php echo e(route('ppdb')); ?>" class="flex items-center justify-center gap-2 py-3 text-sm font-bold text-white rounded-xl" style="background:#15803d">
+                <i class="fas fa-graduation-cap"></i> SPMB / PPDB
+            </a>
+            <a href="<?php echo e(route('home')); ?>#kontak" class="flex items-center justify-center gap-2 py-3 text-sm font-bold rounded-xl" style="background:#EAB308;color:#14532d">
+                <i class="fas fa-envelope"></i> Hubungi Kami
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<main class="pt-[68px] md:pt-[106px]">
+    <?php echo e($slot); ?>
+
+</main>
+
+
+<footer id="kontak" class="bg-[#0c2318] text-gray-400">
+    <div class="max-w-screen-xl px-6 pb-10 mx-auto pt-14">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/[.05]">
+
+            
+            <div>
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="flex items-center justify-center flex-shrink-0 w-11 h-11 rounded-xl" style="background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 4px 14px rgba(21,128,61,.4)">
+                        <span class="text-xs font-black tracking-tight text-white">MI</span>
+                    </div>
+                    <div>
+                        <div class="text-sm font-bold leading-tight text-white"><?php echo e(config('app.name')); ?></div>
+                        <div class="text-[10px] font-bold text-[#4ade80] tracking-wide">Madrasah Ibtidaiyah</div>
+                    </div>
+                </div>
+                <p class="mb-5 text-sm leading-relaxed text-gray-500">Madrasah Ibtidaiyah yang berkomitmen mencetak generasi unggul, berakhlak mulia, dan berdaya saing melalui pendidikan Islami yang berkualitas.</p>
+                <div class="flex gap-2">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = [
+                        ['fab fa-facebook-f','https://www.facebook.com/mi.terpaduibnusina/'],
+                        ['fab fa-instagram','https://www.instagram.com/mi_terpadu_ibnu_sina'],
+                        ['fab fa-youtube','https://www.youtube.com/@mitismedia5043'],
+                    ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$ic,$url]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <a href="<?php echo e($url); ?>" target="_blank" rel="noopener"
+                        class="w-9 h-9 rounded-xl flex items-center justify-center text-[#4ade80] text-xs transition-all hover:-translate-y-0.5"
+                        style="background:rgba(21,128,61,.17)">
+                        <i class="<?php echo e($ic); ?>"></i>
+                    </a>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                </div>
+            </div>
+
+            
+            <div>
+                <h4 class="text-[10px] font-extrabold uppercase tracking-[.14em] text-[#4ade80]/50 mb-5">Halaman</h4>
+                <ul class="space-y-2.5 list-none p-0">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = [
+                        ['home','Beranda'],['about','Tentang Kami'],['teachers','Tenaga Pendidik'],
+                        ['mata-pelajaran','Mata Pelajaran'],['peraturan','Peraturan Sekolah'],
+                        ['prestasi.index','Prestasi'],['facilities','Fasilitas'],['gallery','Galeri'],
+                    ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$r,$l]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li>
-                        <a href="<?php echo e(route('home')); ?>" class="nav-link">
-                            <i class="text-xs fas fa-home"></i> Beranda
-                        </a>
-                    </li>
+                        <a href="<?php echo e(route($r)); ?>" class="flex items-center gap-2 text-sm text-gray-400 no-underline transition-colors hover:text-white">
+                            <i class="fas fa-chevron-right text-[9px] text-[#15803d]/50"></i> <?php echo e($l); ?>
 
-                    <li class="has-dropdown">
-                        <a href="#" class="nav-link">
-                            <i class="text-xs fas fa-user-circle"></i> Profil
-                            <i class="fas fa-chevron-down chevron"></i>
                         </a>
-                        <div class="dropdown-menu">
-                            <a href="<?php echo e(route('about')); ?>?section=sambutan" class="dropdown-item">
-                                <i class="fas fa-user-tie"></i> Sambutan Kepala Sekolah
-                            </a>
-                            <a href="<?php echo e(route('about')); ?>?section=visi-misi&expanded=1" class="dropdown-item">
-                                <i class="fas fa-bullseye"></i> Visi & Misi
-                            </a>
-                            <a href="<?php echo e(route('about')); ?>?section=tentang&expanded=1" class="dropdown-item">
-                                <i class="fas fa-info-circle"></i> Tentang Kami
-                            </a>
-                            <a href="<?php echo e(route('teachers')); ?>" class="dropdown-item">
-                                <i class="fas fa-chalkboard-teacher"></i> Tenaga Pendidik
-                            </a>
-                        </div>
                     </li>
-
-                    <li class="has-dropdown">
-                        <a href="#" class="nav-link">
-                            <i class="text-xs fas fa-book-open"></i> Akademik
-                            <i class="fas fa-chevron-down chevron"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="<?php echo e(route('mata-pelajaran')); ?>" class="dropdown-item">
-                                <i class="fas fa-book"></i> Mata Pelajaran
-                            </a>
-                            <a href="<?php echo e(route('peraturan')); ?>" class="dropdown-item">
-                                <i class="fas fa-gavel"></i> Peraturan Sekolah
-                            </a>
-                            <a href="<?php echo e(route('news')); ?>" class="dropdown-item">
-                                <i class="fas fa-newspaper"></i> Berita & Pengumuman
-                            </a>
-                            <a href="<?php echo e(route('prestasi.index')); ?>" class="dropdown-item">
-                                <i class="fas fa-trophy"></i> Prestasi
-                            </a>
-                            <a href="<?php echo e(route('facilities')); ?>" class="dropdown-item">
-                                <i class="fas fa-building"></i> Fasilitas
-                            </a>
-                        </div>
-                    </li>
-
-                    <li class="has-dropdown">
-                        <a href="#" class="nav-link">
-                            <i class="text-xs fas fa-calendar-alt"></i> Kegiatan
-                            <i class="fas fa-chevron-down chevron"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="<?php echo e(route('news')); ?>?tab=agenda" class="dropdown-item">
-                                <i class="fas fa-calendar-check"></i> Agenda Kegiatan
-                            </a>
-                            <a href="<?php echo e(route('gallery')); ?>" class="dropdown-item">
-                                <i class="fas fa-images"></i> Galeri
-                            </a>
-                        </div>
-                    </li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </ul>
-
-                <!-- CTA + Burger -->
-                <div class="flex items-center gap-2 shrink-0">
-
-                    <!-- CTA desktop -->
-                    <div class="items-center hidden gap-2 lg:flex">
-                        <a href="<?php echo e(route('ppdb')); ?>"
-                            class="flex items-center gap-1.5 text-white font-bold py-2 px-3 rounded-xl text-xs xl:text-sm xl:px-4 transition-all hover:-translate-y-0.5"
-                            style="background: #15803d; box-shadow: 0 4px 12px #15803d33;">
-                            <i class="fas fa-graduation-cap"></i>
-                            <span>SPMB</span>
-                        </a>
-                        <a href="<?php echo e(route('home')); ?>#kontak"
-                            class="flex items-center gap-1.5 font-bold py-2 px-3 rounded-xl text-xs xl:text-sm xl:px-4 transition-all hover:-translate-y-0.5"
-                            style="background: #EAB308; color: #14532d; box-shadow: 0 4px 12px #EAB30833;">
-                            <i class="fas fa-envelope"></i>
-                            <span class="hidden xl:inline">Hubungi</span>
-                        </a>
-                    </div>
-
-                    <!-- SPMB mobile -->
-                    <a href="<?php echo e(route('ppdb')); ?>"
-                        class="flex lg:hidden items-center gap-1.5 text-white font-bold py-2 px-3 rounded-xl text-xs shrink-0"
-                        style="background: #15803d;">
-                        <i class="fas fa-graduation-cap"></i> SPMB
-                    </a>
-
-                    <!-- Burger -->
-                    <button id="mobileMenuBtn"
-                        class="flex flex-col gap-1.5 p-2 rounded-lg transition lg:hidden">
-                        <span class="w-6 h-0.5 rounded transition-all" id="bar1" style="background: #15803d"></span>
-                        <span class="w-6 h-0.5 rounded transition-all" id="bar2" style="background: #15803d"></span>
-                        <span class="w-6 h-0.5 rounded transition-all" id="bar3" style="background: #15803d"></span>
-                    </button>
-                </div>
             </div>
-        </nav>
 
-        <!-- Mobile Overlay -->
-        <div id="mobileOverlay"
-            class="fixed inset-0 z-40 transition-opacity duration-300 opacity-0 pointer-events-none lg:hidden bg-black/40 backdrop-blur-sm">
-        </div>
-
-        <!-- Mobile Drawer -->
-        <div id="mobileDrawer"
-            class="fixed top-0 right-0 z-50 h-full overflow-y-auto transition-transform duration-300 transform translate-x-full shadow-2xl lg:hidden w-80"
-            style="background: #F0F4ED">
-            <div class="p-5">
-                <div class="flex items-center justify-between pb-4 mb-6 border-b" style="border-color: #15803d26">
-                    <div class="flex items-center gap-3">
-                        <img src="<?php echo e(asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png')); ?>"
-                            alt="Logo" class="object-contain w-8 h-8">
-                        <span class="text-sm font-bold" style="color: #15803d"><?php echo e(config('app.name')); ?></span>
-                    </div>
-                    <button id="closeMobileMenu"
-                        class="flex items-center justify-center w-8 h-8 text-xl transition rounded-lg"
-                        style="color: #15803d">×</button>
-                </div>
-
-                <nav class="space-y-1">
-                    <a href="<?php echo e(route('home')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-home" style="color: #15803d"></i> Beranda
-                    </a>
-
-                    <div class="mobile-section-title">Profil</div>
-                    <a href="<?php echo e(route('about')); ?>?section=sambutan" class="mobile-nav-link">
-                        <i class="w-5 fas fa-user-tie" style="color: #15803d"></i> Sambutan Kepala Sekolah
-                    </a>
-                    <a href="<?php echo e(route('about')); ?>?section=visi-misi&expanded=1" class="mobile-nav-link">
-                        <i class="w-5 fas fa-bullseye" style="color: #15803d"></i> Visi & Misi
-                    </a>
-                    <a href="<?php echo e(route('about')); ?>?section=tentang&expanded=1" class="mobile-nav-link">
-                        <i class="w-5 fas fa-info-circle" style="color: #15803d"></i> Tentang Kami
-                    </a>
-                    <a href="<?php echo e(route('teachers')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-chalkboard-teacher" style="color: #15803d"></i> Tenaga Pendidik
-                    </a>
-
-                    <div class="mobile-section-title">Akademik</div>
-                    <a href="<?php echo e(route('mata-pelajaran')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-book" style="color: #15803d"></i> Mata Pelajaran
-                    </a>
-                    <a href="<?php echo e(route('peraturan')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-gavel" style="color: #15803d"></i> Peraturan Sekolah
-                    </a>
-                    <a href="<?php echo e(route('news')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-newspaper" style="color: #15803d"></i> Berita & Pengumuman
-                    </a>
-                    <a href="<?php echo e(route('prestasi.index')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-trophy" style="color: #15803d"></i> Prestasi
-                    </a>
-                    <a href="<?php echo e(route('facilities')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-building" style="color: #15803d"></i> Fasilitas
-                    </a>
-
-                    <div class="mobile-section-title">Kegiatan</div>
-                    <a href="<?php echo e(route('news')); ?>?tab=agenda" class="mobile-nav-link">
-                        <i class="w-5 fas fa-calendar-check" style="color: #15803d"></i> Agenda Kegiatan
-                    </a>
-                    <a href="<?php echo e(route('gallery')); ?>" class="mobile-nav-link">
-                        <i class="w-5 fas fa-images" style="color: #15803d"></i> Galeri
-                    </a>
-
-                    <div class="flex flex-col gap-3 pt-4 mt-4 border-t" style="border-color: #15803d26">
-                        <a href="<?php echo e(route('ppdb')); ?>"
-                            class="flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white transition rounded-xl"
-                            style="background: #15803d">
-                            <i class="fas fa-graduation-cap"></i> SPMB / PPDB
-                        </a>
-                        <a href="<?php echo e(route('home')); ?>#kontak"
-                            class="flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold transition rounded-xl"
-                            style="background: #EAB308; color: #14532d">
-                            <i class="fas fa-envelope"></i> Hubungi Kami
-                        </a>
-                    </div>
-                </nav>
-            </div>
-        </div>
-
-    </header>
-
-    <main class="pt-[66px] md:pt-[102px]">
-        <?php echo e($slot); ?>
-
-    </main>
-
-    <!-- Footer -->
-    <footer id="kontak" style="background: #0f2d1a; color: #9ca3af">
-        <div class="max-w-6xl px-6 pb-10 mx-auto pt-14">
-            <div class="grid grid-cols-1 gap-10 pb-12 border-b sm:grid-cols-2 lg:grid-cols-4" style="border-color: #ffffff0d">
-
-                <div class="lg:col-span-1">
-                    <div class="flex items-center gap-3 mb-5">
-                        <div class="flex items-center justify-center shadow-lg w-11 h-11 rounded-xl"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e); box-shadow: 0 4px 12px #15803d66">
-                            <span class="text-sm font-black tracking-tight text-white">MI</span>
+            
+            <div>
+                <h4 class="text-[10px] font-extrabold uppercase tracking-[.14em] text-[#4ade80]/50 mb-5">Kontak</h4>
+                <div class="space-y-3.5 mb-4">
+                    <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = [
+                        ['fa-phone','Telepon','tel:02259471234','(022) 5947-1234'],
+                        ['fa-envelope','Email','mailto:info@miterpaduibnusina.sch.id','info&#64;miterpaduibnusina.sch.id'],
+                    ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$ic,$lbl,$href,$val]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="flex items-start gap-2.5">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background:rgba(21,128,61,.17)">
+                            <i class="fas <?php echo e($ic); ?> text-[10px] text-[#4ade80]"></i>
                         </div>
                         <div>
-                            <div class="text-sm font-bold leading-tight text-white"><?php echo e(config('app.name')); ?></div>
-                            <div class="text-xs font-medium" style="color: #4ade80">Madrasah Ibtidaiyah</div>
+                            <p class="text-[10px] text-gray-500 mb-0.5"><?php echo e($lbl); ?></p>
+                            <a href="<?php echo e($href); ?>" class="text-sm font-semibold text-gray-300 no-underline transition-colors hover:text-white"><?php echo $val; ?></a>
                         </div>
                     </div>
-                    <p class="mb-6 text-sm leading-relaxed" style="color: #6b7280">
-                        Madrasah Ibtidaiyah yang berkomitmen mencetak generasi unggul, berakhlak mulia, dan berdaya saing melalui pendidikan Islami yang berkualitas.
-                    </p>
-                    <div class="flex gap-2">
-                        <a href="https://www.facebook.com/mi.terpaduibnusina/" title="Facebook"
-                            class="w-9 h-9 rounded-xl flex items-center justify-center transition-all hover:-translate-y-0.5"
-                            style="background: #15803d26; color: #4ade80">
-                            <i class="text-xs fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/mi_terpadu_ibnu_sina" title="Instagram"
-                            class="w-9 h-9 rounded-xl flex items-center justify-center transition-all hover:-translate-y-0.5"
-                            style="background: #15803d26; color: #4ade80">
-                            <i class="text-xs fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@mitismedia5043" title="YouTube"
-                            class="w-9 h-9 rounded-xl flex items-center justify-center transition-all hover:-translate-y-0.5"
-                            style="background: #15803d26; color: #4ade80">
-                            <i class="text-xs fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="mb-5 text-xs font-bold tracking-widest uppercase" style="color: #4ade8080">Halaman</h4>
-                    <ul class="space-y-3 text-sm">
-                        <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = [
-                            ['route' => 'home',           'label' => 'Beranda'],
-                            ['route' => 'about',          'label' => 'Tentang Kami'],
-                            ['route' => 'teachers',       'label' => 'Tenaga Pendidik'],
-                            ['route' => 'mata-pelajaran', 'label' => 'Mata Pelajaran'],
-                            ['route' => 'peraturan',      'label' => 'Peraturan Sekolah'],
-                            ['route' => 'prestasi.index', 'label' => 'Prestasi'],
-                            ['route' => 'facilities',     'label' => 'Fasilitas'],
-                            ['route' => 'gallery',        'label' => 'Galeri'],
-                        ]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li>
-                            <a href="<?php echo e(route($item['route'])); ?>"
-                                class="flex items-center gap-2 transition-colors hover:text-white group"
-                                style="color: #9ca3af">
-                                <i class="text-xs transition-colors fas fa-chevron-right group-hover:text-yellow-400" style="color: #15803d80"></i>
-                                <?php echo e($item['label']); ?>
-
-                            </a>
-                        </li>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="mb-5 text-xs font-bold tracking-widest uppercase" style="color: #4ade8080">Kontak</h4>
-                    <ul class="mb-5 space-y-4 text-sm">
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: #15803d26">
-                                <i class="text-xs fas fa-phone" style="color: #4ade80"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs mb-0.5" style="color: #6b7280">Telepon</p>
-                                <a href="tel:02259471234" class="font-medium transition-colors hover:text-white" style="color: #d1d5db">(022) 5947-1234</a>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: #15803d26">
-                                <i class="text-xs fas fa-envelope" style="color: #4ade80"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs mb-0.5" style="color: #6b7280">Email</p>
-                                <a href="mailto:info&#64;miterpaduibnusina.sch.id" class="font-medium transition-colors hover:text-white" style="color: #d1d5db">info&#64;miterpaduibnusina.sch.id</a>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style="background: #15803d26">
-                                <i class="text-xs fas fa-map-marker-alt" style="color: #4ade80"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs mb-0.5" style="color: #6b7280">Alamat</p>
-                                <span class="leading-relaxed" style="color: #d1d5db">Jl. Raya Bangsri - Keling KM.4, Dukuh Segawe,<br>Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457</span>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="h-32 overflow-hidden rounded-xl" style="outline: 1px solid #15803d26">
-                        <iframe class="w-full h-full"
-                            src="https://maps.google.com/maps?q=-6.507694,110.794806&hl=id&z=16&output=embed"
-                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-                            style="border:0;"></iframe>
-                    </div>
-                    <a href="https://maps.app.goo.gl/D3CUGH9acTNJZzaH7" target="_blank" rel="noopener"
-                        class="inline-flex items-center gap-1.5 text-xs mt-2 transition-colors hover:text-green-300"
-                        style="color: #4ade80">
-                        <i class="fas fa-external-link-alt text-[10px]"></i> Buka di Google Maps
-                    </a>
-                </div>
-
-                <div>
-                    <h4 class="mb-5 text-xs font-bold tracking-widest uppercase" style="color: #4ade8080">Jam Operasional</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li class="flex items-center justify-between py-2.5 border-b" style="border-color: #ffffff0d">
-                            <span class="text-xs" style="color: #6b7280">Senin – Jumat</span>
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full" style="background: #15803d26; color: #4ade80">07:00 – 14:00</span>
-                        </li>
-                        <li class="flex items-center justify-between py-2.5 border-b" style="border-color: #ffffff0d">
-                            <span class="text-xs" style="color: #6b7280">Sabtu</span>
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full" style="background: #15803d26; color: #4ade80">07:00 – 12:00</span>
-                        </li>
-                        <li class="flex items-center justify-between py-2.5">
-                            <span class="text-xs" style="color: #6b7280">Minggu</span>
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full" style="background: #7f1d1d26; color: #f87171">Libur</span>
-                        </li>
-                    </ul>
-                    <div class="p-4 mt-6 border rounded-xl" style="background: #EAB3080d; border-color: #EAB30826">
-                        <div class="flex items-center gap-2 mb-1">
-                            <i class="text-xs fas fa-info-circle" style="color: #EAB308"></i>
-                            <span class="text-xs font-semibold" style="color: #EAB308">Info SPMB</span>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                    <div class="flex items-start gap-2.5">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style="background:rgba(21,128,61,.17)">
+                            <i class="fas fa-map-marker-alt text-[10px] text-[#4ade80]"></i>
                         </div>
-                        <p class="text-xs leading-relaxed" style="color: #6b7280">Pendaftaran peserta didik baru dibuka setiap awal tahun ajaran.</p>
-                        <a href="<?php echo e(route('ppdb')); ?>"
-                            class="text-xs font-semibold mt-1.5 inline-flex items-center gap-1 transition-colors hover:text-yellow-300"
-                            style="color: #EAB308">
-                            Lihat info SPMB <i class="text-xs fas fa-arrow-right"></i>
-                        </a>
+                        <div>
+                            <p class="text-[10px] text-gray-500 mb-0.5">Alamat</p>
+                            <p class="text-sm leading-relaxed text-gray-300">Jl. Raya Bangsri - Keling KM.4,<br>Desa Jinggotan, Kec. Kembang,<br>Kab. Jepara 59457</p>
+                        </div>
                     </div>
                 </div>
-
+                <div class="overflow-hidden h-28 rounded-xl" style="outline:1px solid rgba(21,128,61,.18)">
+                    <iframe src="https://maps.google.com/maps?q=-6.507694,110.794806&hl=id&z=16&output=embed"
+                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                        class="w-full h-full border-0"></iframe>
+                </div>
+                <a href="https://maps.app.goo.gl/D3CUGH9acTNJZzaH7" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-1.5 text-xs text-[#4ade80] hover:text-[#86efac] transition-colors mt-2 no-underline">
+                    <i class="fas fa-external-link-alt text-[9px]"></i> Buka di Google Maps
+                </a>
             </div>
 
-            <div class="flex flex-col items-center justify-between gap-3 pt-8 md:flex-row">
-                <p class="text-xs" style="color: #4b5563">
-                    © <?php echo e(date('Y')); ?> <span class="font-medium" style="color: #6b7280"><?php echo e(config('app.name')); ?></span>. Semua hak dilindungi.
-                </p>
-                <div class="flex items-center gap-1 text-xs" style="color: #4b5563">
-                    <a href="<?php echo e(route('privacy')); ?>" class="px-3 py-1 transition-colors rounded-lg hover:text-gray-300">Kebijakan Privasi</a>
-                    <span style="color: #374151">·</span>
-                    <a href="<?php echo e(route('terms')); ?>" class="px-3 py-1 transition-colors rounded-lg hover:text-gray-300">Syarat & Ketentuan</a>
+            
+            <div>
+                <h4 class="text-[10px] font-extrabold uppercase tracking-[.14em] text-[#4ade80]/50 mb-5">Jam Operasional</h4>
+                <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = [['Senin – Jumat','07:00 – 14:00',false],['Sabtu','07:00 – 12:00',false],['Minggu','Libur',true]]; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as [$d,$t,$off]): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="flex items-center justify-between py-2.5 border-b border-white/[.04]">
+                    <span class="text-xs text-gray-500"><?php echo e($d); ?></span>
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-full <?php echo e($off ? 'bg-red-900/20 text-red-400' : 'text-[#4ade80]'); ?>" style="<?php echo e($off ? '' : 'background:rgba(21,128,61,.17)'); ?>"><?php echo e($t); ?></span>
+                </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
+                <div class="p-4 mt-5 border rounded-xl" style="background:rgba(234,179,8,.05);border-color:rgba(234,179,8,.13)">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <i class="fas fa-info-circle text-[10px] text-[#EAB308]"></i>
+                        <span class="text-xs font-bold text-[#EAB308]">Info SPMB</span>
+                    </div>
+                    <p class="mb-2 text-xs leading-relaxed text-gray-500">Pendaftaran peserta didik baru dibuka setiap awal tahun ajaran.</p>
+                    <a href="<?php echo e(route('ppdb')); ?>" class="text-xs font-bold text-[#EAB308] hover:text-yellow-300 inline-flex items-center gap-1 no-underline transition-colors">
+                        Lihat info SPMB <i class="fas fa-arrow-right text-[10px]"></i>
+                    </a>
                 </div>
             </div>
         </div>
-    </footer>
 
-    <script>
-        function initMobileMenu() {
-            const btn = document.getElementById('mobileMenuBtn');
-            const drawer = document.getElementById('mobileDrawer');
-            const overlay = document.getElementById('mobileOverlay');
-            const closeBtn = document.getElementById('closeMobileMenu');
-            const bar1 = document.getElementById('bar1');
-            const bar2 = document.getElementById('bar2');
-            const bar3 = document.getElementById('bar3');
+        <div class="flex flex-col items-center justify-between gap-3 md:flex-row pt-7">
+            <p class="text-xs text-gray-600">© <?php echo e(date('Y')); ?> <span class="font-semibold text-gray-500"><?php echo e(config('app.name')); ?></span>. Semua hak dilindungi.</p>
+            <div class="flex items-center gap-1 text-xs">
+                <a href="<?php echo e(route('privacy')); ?>" class="px-2.5 py-1 text-gray-500 hover:text-gray-300 rounded-lg transition-colors no-underline">Kebijakan Privasi</a>
+                <span class="text-gray-700">·</span>
+                <a href="<?php echo e(route('terms')); ?>" class="px-2.5 py-1 text-gray-500 hover:text-gray-300 rounded-lg transition-colors no-underline">Syarat & Ketentuan</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
-            if (!btn) return;
+<script>
+(function(){
+    var btn=document.getElementById('burgerBtn'),
+        ov=document.getElementById('overlay'),
+        dr=document.getElementById('drawer'),
+        cl=document.getElementById('drawerClose'),
+        b1=document.getElementById('b1'),
+        b2=document.getElementById('b2'),
+        b3=document.getElementById('b3');
 
-            function openMenu() {
-                drawer.classList.remove('translate-x-full');
-                overlay.classList.remove('opacity-0', 'pointer-events-none');
-                bar1.style.transform = 'translateY(8px) rotate(45deg)';
-                bar2.style.opacity = '0';
-                bar3.style.transform = 'translateY(-8px) rotate(-45deg)';
-                document.body.style.overflow = 'hidden';
-            }
+    function init(){
+        if(!btn) return;
+        btn.onclick = open; cl.onclick = shut; ov.onclick = shut;
+    }
+    function open(){
+        dr.classList.add('on'); ov.classList.add('on');
+        b1.style.transform='translateY(7px) rotate(45deg)';
+        b2.style.opacity='0';
+        b3.style.transform='translateY(-7px) rotate(-45deg)';
+        document.body.style.overflow='hidden';
+    }
+    function shut(){
+        dr.classList.remove('on'); ov.classList.remove('on');
+        b1.style.transform=b3.style.transform='';
+        b2.style.opacity=''; document.body.style.overflow='';
+    }
+    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('livewire:navigated', init);
+})();
+</script>
 
-            function closeMenu() {
-                drawer.classList.add('translate-x-full');
-                overlay.classList.add('opacity-0', 'pointer-events-none');
-                bar1.style.transform = '';
-                bar2.style.opacity = '';
-                bar3.style.transform = '';
-                document.body.style.overflow = '';
-            }
-
-            btn.removeEventListener('click', openMenu);
-            closeBtn.removeEventListener('click', closeMenu);
-            overlay.removeEventListener('click', closeMenu);
-
-            btn.addEventListener('click', openMenu);
-            closeBtn.addEventListener('click', closeMenu);
-            overlay.addEventListener('click', closeMenu);
-        }
-
-        document.addEventListener('DOMContentLoaded', initMobileMenu);
-        document.addEventListener('livewire:navigated', initMobileMenu);
-    </script>
-    <?php echo $__env->yieldPushContent('scripts'); ?>
-    <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
-
+<?php echo $__env->yieldPushContent('scripts'); ?>
+<?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
 
 </body>
 </html><?php /**PATH C:\laragon\www\4329_Yusuf_Hammam\resources\views/components/layouts/app.blade.php ENDPATH**/ ?>

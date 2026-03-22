@@ -1,367 +1,369 @@
 <div>
-    <section class="relative pt-12 pb-20 overflow-hidden"
-        style="background: linear-gradient(to bottom right, #F0F4ED, #F0F4ED, #15803d0d)">
-        <div class="absolute inset-0 opacity-5">
-            <div class="absolute rounded-full top-20 left-20 w-72 h-72 blur-3xl" style="background: #15803d"></div>
-            <div class="absolute rounded-full bottom-20 right-20 w-96 h-96 blur-3xl" style="background: #EAB308"></div>
-        </div>
 
-        <div class="container relative z-10 px-6 mx-auto">
-            <div class="grid items-center gap-12 lg:grid-cols-2">
-                <div class="space-y-6 animate-fade-in">
-                    <div class="inline-block px-4 py-2 rounded-full" style="background: #15803d1a">
-                        <span class="text-sm font-semibold" style="color: #15803d">🏆 Akreditasi B</span>
-                    </div>
-                    <h1 class="text-5xl font-bold leading-tight text-gray-900 font-display lg:text-6xl">
+{{-- ═══════════ HERO ═══════════ --}}
+<section class="relative overflow-hidden bg-[#F0F4ED]">
+
+    {{-- Subtle bg blobs --}}
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-40 -right-40 w-[560px] h-[560px] rounded-full"
+            style="background:radial-gradient(circle,rgba(21,128,61,.07) 0%,transparent 60%)"></div>
+        <div class="absolute rounded-full -bottom-28 -left-28 w-96 h-96"
+            style="background:radial-gradient(circle,rgba(234,179,8,.05) 0%,transparent 60%)"></div>
+    </div>
+
+    <div class="relative z-10 max-w-screen-xl px-4 pt-8 pb-10 mx-auto sm:px-6 lg:py-20">
+        <div class="grid items-center grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-14">
+
+            {{-- LEFT ── Copy (order-1 on mobile: teks tampil DULU) --}}
+            <div class="flex flex-col order-1 gap-5 lg:gap-6 lg:order-1">
+
+                {{-- Badge --}}
+                <div class="inline-flex items-center gap-2 w-fit px-3.5 py-1.5 rounded-full bg-white border border-[#15803d]/15"
+                    style="box-shadow:0 1px 8px rgba(21,128,61,.09)">
+                    <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 bg-[#22c55e]"></span>
+                    <span class="text-[11.5px] font-semibold text-[#15803d] tracking-wide">Terakreditasi B</span>
+                </div>
+
+                {{-- Headline — clamp mobile-friendly --}}
+                <div class="-mt-1">
+                    <h1 class="text-[1.9rem] sm:text-[2.2rem] lg:text-[2.75rem] xl:text-[3rem] font-extrabold leading-[1.18] tracking-tight text-gray-900">
                         Membentuk Generasi
-                        <span class="text-transparent bg-clip-text"
-                            style="background-image: linear-gradient(to right, #15803d, #22c55e); -webkit-background-clip: text; background-clip: text;">Unggul
-                            &
-                            Berkarakter</span>
                     </h1>
-                    <p class="text-lg leading-relaxed text-gray-600">
-                        {{ config('app.name') }} berkomitmen memberikan pendidikan berkualitas dengan fasilitas modern
-                        dan tenaga pendidik profesional untuk mengembangkan potensi anak Indonesia.
-                    </p>
-                    <div class="flex flex-wrap gap-4 pt-4">
-                        <a href="{{ route('ppdb') }}"
-                            class="inline-flex items-center px-6 py-3 font-bold rounded-xl transition-all duration-300 hover:-translate-y-0.5"
-                            style="background: #EAB308; color: #14532d; box-shadow: 0 10px 20px #EAB30833;">
-                            Daftar Sekarang
-                            <span class="ml-2">→</span>
-                        </a>
-                        <a href="{{ route('about') }}"
-                            class="inline-flex items-center px-6 py-3 font-bold rounded-xl border-2 transition-all duration-300 hover:-translate-y-0.5"
-                            style="color: #15803d; border-color: #15803d; background: #F0F4ED;">
-                            Pelajari Lebih Lanjut
-                            <span class="ml-2">→</span>
-                        </a>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-gray-200">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold" style="color: #15803d">357+</div>
-                            <div class="mt-1 text-sm text-gray-600">Siswa Aktif</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold" style="color: #15803d">35+</div>
-                            <div class="mt-1 text-sm text-gray-600">Guru Profesional</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold" style="color: #15803d">19+</div>
-                            <div class="mt-1 text-sm text-gray-600">Tahun Berpengalaman</div>
-                        </div>
-                    </div>
+                    <h1 class="text-[1.9rem] sm:text-[2.2rem] lg:text-[2.75rem] xl:text-[3rem] font-extrabold leading-[1.18] tracking-tight"
+                        style="background:linear-gradient(90deg,#15803d,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">
+                        Unggul &amp; Berkarakter
+                    </h1>
                 </div>
 
-                <div class="relative flex items-center justify-center p-4">
-                    <div class="absolute w-full h-full -translate-x-1/2 -translate-y-1/2 rounded-full top-1/2 left-1/2 blur-3xl"
-                        style="background: linear-gradient(to top right, #15803d1a, #EAB3081a)"></div>
+                {{-- Desc --}}
+                <p class="text-[14.5px] lg:text-[15px] leading-relaxed text-gray-500">
+                    {{ config('app.name') }} berkomitmen memberikan pendidikan berkualitas
+                    dengan fasilitas modern dan tenaga pendidik profesional.
+                </p>
 
-                    <div class="relative w-full max-w-lg">
-                        <div
-                            class="relative overflow-hidden rounded-4xl shadow-2xl group transition-transform duration-500 hover:scale-[1.02]">
-                            @if ($heroImage && $heroImage->image)
-                                <img src="{{ asset('files/' . $heroImage->image) }}" alt="{{ config('app.name') }}"
-                                    class="object-cover w-full h-auto aspect-4/5 md:aspect-square"
-                                    onerror="this.style.display='none'; document.getElementById('fallback-hero').classList.remove('hidden')">
-                            @else
-                                <img src="{{ asset('hero_image.png') }}"
-                                    class="object-cover w-full h-auto aspect-4/5 md:aspect-square">
-                            @endif
-                            <div class="absolute inset-0"
-                                style="background: linear-gradient(to top, #14532d33, transparent)"></div>
-                        </div>
-
-                        <div class="absolute flex items-center p-4 space-x-4 border shadow-2xl -bottom-4 -right-4 md:-right-8 rounded-2xl animate-bounce-slow"
-                            style="background: #F0F4EDF0; backdrop-filter: blur(4px); border-color: #d1fae5;">
-                            <div class="flex items-center justify-center w-12 h-12 rounded-full shadow-lg shrink-0"
-                                style="background: #15803d; box-shadow: 0 4px 12px #15803d4d;">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
-                                        d="M5 13l4 4L19 7"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-[10px] uppercase tracking-wider text-gray-500 font-bold">Status Resmi</p>
-                                <p class="text-lg font-bold leading-tight text-gray-900">Terakreditasi B</p>
-                            </div>
-                        </div>
-
-                        <div class="absolute -top-4 -left-4 font-bold py-2 px-4 rounded-lg shadow-lg rotate-[-5deg]"
-                            style="background: #EAB308; color: #14532d;">
-                            Unggul & Berkarakter
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{-- ===== SAMBUTAN ===== --}}
-    @if ($principalGreeting?->title)
-        <section id="sambutan" class="relative py-24 overflow-hidden" style="background: #F0F4ED">
-            <div class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 w-96 h-96 blur-3xl"
-                style="background: #15803d1a"></div>
-
-            <div class="container relative z-10 px-6 mx-auto">
-                <div class="max-w-6xl mx-auto">
-                    <div class="grid items-center gap-16 lg:grid-cols-12">
-
-                        <div class="flex justify-center order-1 lg:col-span-5">
-                            <div class="relative group">
-                                <div class="absolute transition-transform duration-500 border-2 border-dashed -inset-4 rounded-4xl rotate-3 group-hover:rotate-0"
-                                    style="border-color: #15803d33"></div>
-
-                                <div class="relative w-72 h-96 md:w-80 md:h-112.5 rounded-4xl overflow-hidden shadow-2xl border-8"
-                                    style="background: #d1fae5; border-color: #F0F4ED;">
-                                    @if ($principalGreeting?->image)
-                                        <img src="{{ asset('files/' . $principalGreeting->image) }}"
-                                            alt="{{ $principalGreeting->principal_name ?? 'Kepala Sekolah' }}"
-                                            class="object-cover w-full h-full">
-                                    @else
-                                        <div class="flex flex-col items-center justify-center w-full h-full"
-                                            style="background: linear-gradient(to bottom right, #dcfce7, #bbf7d0)">
-                                            <i class="fas fa-user-tie text-7xl" style="color: #86efac"></i>
-                                            <p class="mt-4 text-xs tracking-widest uppercase" style="color: #4ade80">
-                                                Photo Placeholder</p>
-                                        </div>
-                                    @endif
-
-                                    <div class="absolute inset-x-0 bottom-0 p-6 pt-12"
-                                        style="background: linear-gradient(to top, #14532de6, transparent)">
-                                        <p class="mb-0 text-xl font-bold text-white">
-                                            {{ $principalGreeting?->principal_name ?? 'Kepala Sekolah' }}</p>
-                                        <p class="text-sm italic" style="color: #86efac">Kepala Sekolah
-                                            {{ config('app.name') }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="order-2 space-y-6 lg:col-span-7">
-                            <div>
-                                <span
-                                    class="inline-block px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] rounded-full mb-4"
-                                    style="background: #15803d1a; color: #15803d">
-                                    Sambutan Kepala Sekolah
-                                </span>
-                                <h2 class="text-3xl font-extrabold leading-tight md:text-5xl" style="color: #14532d">
-                                    {{ $principalGreeting?->title }}
-                                </h2>
-                            </div>
-
-                            <div class="relative">
-                                <i class="absolute text-5xl fas fa-quote-left -top-4 -left-6"
-                                    style="color: #15803d1a"></i>
-                                <div class="relative z-10 text-lg italic leading-relaxed text-gray-600">
-                                    "{!! Str::limit(strip_tags($principalGreeting?->content ?? ''), 450) !!}"
-                                </div>
-                            </div>
-
-                            <div class="pt-4">
-                                <a href="{{ route('about') }}"
-                                    class="inline-flex items-center px-8 py-4 font-bold text-white transition-all duration-300 group rounded-xl hover:-translate-y-1"
-                                    style="background: #15803d; box-shadow: 0 10px 20px #15803d4d;">
-                                    Pelajari Lebih Lanjut
-                                    <svg class="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-    @endif
-
-    {{-- ===== GURU ===== --}}
-    <section id="guru" class="py-20" style="background: #fefefe">
-        <div class="container px-6 mx-auto">
-            <div class="max-w-3xl mx-auto mb-16 text-center">
-                <span class="text-sm font-semibold tracking-wider uppercase" style="color: #15803d">Tim Kami</span>
-                <h2 class="mt-4 mb-6 text-4xl font-bold font-display" style="color: #14532d">Tenaga Pendidik &
-                    Pengajar</h2>
-                <p class="leading-relaxed text-gray-600">Guru berpengalaman dan berdedikasi tinggi siap membimbing
-                    potensi siswa.</p>
-            </div>
-
-            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                @forelse($teachers as $teacher)
-                    <div class="text-center teacher-card">
-                        <div class="flex items-center justify-center w-32 h-32 mx-auto mb-4 overflow-hidden transition-transform duration-300 rounded-full hover:scale-105"
-                            style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            @if ($teacher->image)
-                                <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}"
-                                    class="object-cover w-full h-full">
-                            @else
-                                <i class="text-5xl text-white fas fa-chalkboard-user"></i>
-                            @endif
-                        </div>
-                        <h3 class="text-xl font-bold font-display" style="color: #14532d">
-                            {{ $teacher->name ?? 'Guru' }}</h3>
-                        <p class="mb-2 font-semibold" style="color: #15803d">{{ $teacher->subject ?? 'Pendidik' }}
-                        </p>
-                    </div>
-                @empty
-                    <div class="py-10 text-center col-span-full">
-                        <p class="text-gray-500">Profil guru sedang dipersiapkan</p>
-                    </div>
-                @endforelse
-            </div>
-
-            <div class="mt-12 text-center">
-                <a href="{{ route('teachers') }}"
-                    class="inline-flex items-center px-8 py-3 font-semibold text-white transition-all duration-300 rounded-xl hover:-translate-y-1"
-                    style="background: #15803d; box-shadow: 0 4px 16px #15803d33;">
-                    Lihat Semua Guru
-                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    {{-- ===== BERITA ===== --}}
-    <section id="berita" class="py-20 border-t" style="background: #F0F4ED; border-color: #d1fae5">
-        <div class="container px-6 mx-auto">
-            <div class="flex flex-col items-center justify-between gap-8 mb-12 md:flex-row">
-                <div>
-                    <span class="text-sm font-semibold tracking-wider uppercase" style="color: #15803d">Berita
-                        Terkini</span>
-                    <h2 class="mt-2 text-4xl font-bold font-display" style="color: #14532d">Berita & Pengumuman</h2>
-                </div>
-                <a href="{{ route('news') }}?tab=agenda" class="flex items-center font-semibold transition-colors"
-                    style="color: #15803d">
-                    Lihat Semua <span class="ml-2">→</span>
-                </a>
-            </div>
-
-            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                @forelse($latestNews as $news)
-                    <div class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border shadow-md rounded-xl hover:shadow-xl group"
-                        style="border-color: #d1fae5">
-                        <div class="relative h-56 overflow-hidden">
-                            @if ($news->featured_image)
-                                <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
-                                    class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
-                            @else
-                                <div class="flex items-center justify-center w-full h-full text-4xl font-bold text-white"
-                                    style="background: #15803d">
-                                    {{ strtoupper(substr($news->title, 0, 1)) }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="flex flex-col flex-1 p-6" style="background: #fefefe">
-                            <span class="text-xs font-semibold px-3 py-1.5 rounded-full w-fit mb-4"
-                                style="color: #15803d; background: #15803d1a">
-                                {{ $news->published_at?->format('d M Y') ?? 'Terbaru' }}
-                            </span>
-                            <h3 class="mb-4 text-base font-bold leading-tight text-gray-900 transition font-display line-clamp-2"
-                                style="transition: color 0.2s">
-                                {{ $news->title }}
-                            </h3>
-                            <p class="flex-1 mb-6 text-sm leading-relaxed text-gray-600 line-clamp-3">
-                                {{ $news->excerpt ?? Str::limit(strip_tags($news->content), 100) }}
-                            </p>
-                            <div class="mb-4 border-t" style="border-color: #d1fae5"></div>
-                            <a href="{{ route('news.detail', $news->slug) }}"
-                                class="inline-flex items-center text-sm font-semibold group/link"
-                                style="color: #15803d">
-                                Baca Selengkapnya <i
-                                    class="ml-2 transition-transform fas fa-arrow-right group-hover/link:translate-x-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                @empty
-                    <div class="py-10 text-center col-span-full">
-                        <p class="text-gray-500">Belum ada berita terbaru</p>
-                    </div>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-    {{-- ===== PRESTASI ===== --}}
-    <div class="py-20" style="background: linear-gradient(to bottom, #fefefe, #F0F4ED)">
-        <div class="container px-6 mx-auto">
-            <div class="max-w-3xl mx-auto mb-16 text-center">
-                <span class="text-sm font-semibold tracking-wider uppercase" style="color: #15803d">Pencapaian
-                    Sekolah</span>
-                <h2 class="mt-4 mb-6 text-4xl font-bold font-display" style="color: #14532d">Prestasi Terbaru
-                    {{ config('app.name') }}</h2>
-            </div>
-
-            <div class="grid grid-cols-1 gap-8 mb-12 md:grid-cols-2 lg:grid-cols-3">
-                @if ($prestasis->isEmpty())
-                    <div class="col-span-1 py-12 text-center md:col-span-2 lg:col-span-3">
-                        <p class="text-lg text-gray-500">Belum ada prestasi yang dipublikasikan</p>
-                    </div>
-                @else
-                    @foreach ($prestasis as $prestasi)
-                        @php $award = getAwardIcon($prestasi->category); @endphp
-                        <div
-                            class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border border-gray-200 shadow-lg rounded-2xl hover:shadow-2xl group">
-                            <div class="flex items-center justify-center px-6 py-8 shrink-0"
-                                style="background: linear-gradient(to bottom right, #f8fafc, #f1f5f9)">
-                                <div class="flex items-center justify-center w-24 h-24 transition-transform duration-300 transform rounded-full shadow-lg group-hover:scale-110"
-                                    style="{{ $award['bgStyle'] }}">
-                                    <i class="{{ $award['icon'] }} text-white text-5xl"></i>
-                                </div>
-                            </div>
-
-                            <div class="flex flex-col flex-1 p-6">
-                                <h3 class="mb-2 text-lg font-bold leading-snug text-gray-900 line-clamp-2">
-                                    {{ $prestasi->title }}</h3>
-
-                                @if ($prestasi->category)
-                                    <div class="mb-3 text-xs font-semibold tracking-wide uppercase line-clamp-1"
-                                        style="{{ $award['textStyle'] }}">
-                                        {{ $prestasi->category }}
-                                    </div>
-                                @endif
-
-                                <p class="flex-1 mb-3 text-sm leading-relaxed text-gray-600 line-clamp-2">
-                                    {{ $prestasi->description }}</p>
-
-                                @if ($prestasi->achievement_date)
-                                    <div class="flex items-center mb-4 text-xs text-gray-500">
-                                        <i class="mr-2 fas fa-calendar"></i>
-                                        {{ $prestasi->achievement_date->format('d M Y') }}
-                                    </div>
-                                @endif
-
-                                <div class="pt-3 mt-auto border-t border-gray-200"></div>
-                                <a href="{{ route('prestasi.detail', $prestasi->slug) }}"
-                                    class="inline-block mt-3 text-sm font-semibold transition-opacity hover:opacity-80 group/link"
-                                    style="{{ $award['textStyle'] }}">
-                                    Baca Selengkapnya
-                                    <i
-                                        class="ml-2 transition-transform fas fa-arrow-right group-hover/link:translate-x-1"></i>
-                                </a>
-                            </div>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
-
-            @if ($prestasis->isNotEmpty())
-                <div class="text-center">
-                    <a href="{{ route('prestasi.index') }}"
-                        class="inline-block px-8 py-3 font-semibold text-white transition-all duration-300 rounded-lg shadow-lg hover:-translate-y-1"
-                        style="background: #15803d; box-shadow: 0 4px 16px #15803d33;">
-                        Lihat Semua Prestasi <i class="ml-2 fas fa-arrow-right"></i>
+                {{-- CTA — full width on mobile, auto on desktop --}}
+                <div class="flex flex-col gap-3 sm:flex-row">
+                    <a href="{{ route('ppdb') }}"
+                        class="flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold rounded-xl transition-all hover:-translate-y-0.5 active:scale-[.98]"
+                        style="background:#EAB308;color:#14532d;box-shadow:0 4px 16px rgba(234,179,8,.35)">
+                        Daftar Sekarang
+                        <i class="text-xs fas fa-arrow-right"></i>
+                    </a>
+                    <a href="{{ route('about') }}"
+                        class="flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold rounded-xl border transition-all hover:-translate-y-0.5 active:scale-[.98] bg-white"
+                        style="color:#15803d;border-color:rgba(21,128,61,.2)">
+                        Pelajari Lebih Lanjut
+                        <i class="text-xs fas fa-arrow-right"></i>
                     </a>
                 </div>
-            @endif
+
+                {{-- Stats — pada mobile: 3 col equal, compact --}}
+                <div class="grid grid-cols-3 gap-2.5 sm:flex sm:items-stretch sm:gap-3 pt-1">
+                    @foreach([
+                        ['357+','Siswa Aktif'],
+                        ['35+','Guru Profesional'],
+                        ['19+','Tahun Berpengalaman'],
+                    ] as [$num,$label])
+                    <div class="flex flex-col items-center text-center px-2 sm:px-5 py-3.5 rounded-2xl bg-white border border-[#15803d]/10"
+                        style="box-shadow:0 2px 10px rgba(21,128,61,.07)">
+                        <span class="text-xl sm:text-[1.55rem] font-extrabold text-[#15803d] leading-none tracking-tight">{{ $num }}</span>
+                        <span class="text-[10px] sm:text-[11px] text-gray-400 font-medium mt-1.5 leading-snug">{{ $label }}</span>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- RIGHT ── Image (order-2 on mobile: gambar di bawah teks) --}}
+            <div class="order-2 lg:order-2">
+
+                {{-- Wrapper: overflow-hidden mencegah dashed ring terpotong --}}
+                <div class="relative px-4 pt-1 pb-6 sm:px-5 lg:px-0 lg:pt-0 lg:pb-5">
+
+                    {{-- Dashed decorative ring — hanya tampil lg ke atas --}}
+                    <div class="hidden lg:block absolute rounded-[28px] border-2 border-dashed border-[#15803d]/14"
+                        style="inset:-14px;transform:rotate(1.5deg)"></div>
+
+                    {{-- Label sticker --}}
+                    <div class="absolute top-0 left-4 sm:left-5 lg:left-0 z-10 px-3.5 py-1.5 rounded-tl-[22px] rounded-br-xl text-xs sm:text-sm font-bold"
+                        style="background:#EAB308;color:#14532d;box-shadow:0 4px 12px rgba(234,179,8,.3)">
+                        Unggul &amp; Berkarakter
+                    </div>
+
+                    {{-- Image:
+                         Mobile  → 16/9 landscape (tidak terlalu tinggi, pas di layar kecil)
+                         Desktop → 5/6 portrait  (sejajar panjang teks kiri) --}}
+                    <style>
+                        @media(min-width:1024px){
+                            .hero-img-wrap{aspect-ratio:5/6!important;max-height:520px;box-shadow:0 16px 48px rgba(0,0,0,.13)!important}
+                        }
+                    </style>
+                    <div class="hero-img-wrap relative rounded-[18px] sm:rounded-[22px] overflow-hidden w-full"
+                        style="aspect-ratio:16/9;box-shadow:0 8px 28px rgba(0,0,0,.11)">
+                        @if ($heroImage && $heroImage->image)
+                            <img src="{{ asset('files/' . $heroImage->image) }}"
+                                alt="{{ config('app.name') }}"
+                                class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]">
+                        @else
+                            <img src="{{ asset('hero_image.png') }}"
+                                alt="{{ config('app.name') }}"
+                                class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]">
+                        @endif
+                        <div class="absolute inset-0"
+                            style="background:linear-gradient(to top,rgba(14,83,45,.2) 0%,transparent 45%)"></div>
+                    </div>
+
+                    {{-- Akreditasi badge — di dalam flow, tidak absolute pada mobile --}}
+                    <div class="absolute bottom-0 right-4 sm:right-5 lg:right-4 z-10 flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-white"
+                        style="box-shadow:0 6px 24px rgba(0,0,0,.11);border:1px solid rgba(21,128,61,.08)">
+                        <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-full lg:w-9 lg:h-9"
+                            style="background:#15803d;box-shadow:0 3px 10px rgba(21,128,61,.38)">
+                            <svg width="14" height="14" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-[8px] uppercase tracking-widest text-gray-400 font-bold leading-none mb-1">Status Resmi</p>
+                            <p class="text-[13px] font-extrabold text-gray-900 leading-none">Terakreditasi B</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
+</section>
+
+
+{{-- ═══════════ SAMBUTAN ═══════════ --}}
+@if ($principalGreeting?->title)
+<section id="sambutan" class="relative py-20 overflow-hidden bg-white">
+    <div class="absolute top-0 right-0 rounded-full pointer-events-none w-96 h-96"
+        style="background:radial-gradient(circle,rgba(21,128,61,.05),transparent);transform:translate(35%,-35%)"></div>
+
+    <div class="max-w-screen-xl px-6 mx-auto">
+        <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+
+            <div class="flex justify-center lg:col-span-5">
+                <div class="relative">
+                    <div class="absolute rounded-[26px] border-2 border-dashed border-[#15803d]/15"
+                        style="inset:-16px;transform:rotate(2.5deg)"></div>
+
+                    <div class="relative w-56 h-72 md:w-64 md:h-80 rounded-[22px] overflow-hidden border-4 border-white bg-[#dcfce7]"
+                        style="box-shadow:0 16px 48px rgba(0,0,0,.12)">
+                        @if ($principalGreeting?->image)
+                            <img src="{{ asset('files/' . $principalGreeting->image) }}"
+                                alt="{{ $principalGreeting->principal_name ?? 'Kepala Sekolah' }}"
+                                class="object-cover object-top w-full h-full">
+                        @else
+                            <div class="flex flex-col items-center justify-center w-full h-full gap-3"
+                                style="background:linear-gradient(145deg,#dcfce7,#bbf7d0)">
+                                <div class="w-16 h-16 rounded-full flex items-center justify-center bg-[#15803d]/15">
+                                    <i class="fas fa-user-tie text-3xl text-[#4ade80]"></i>
+                                </div>
+                                <p class="text-[10px] font-bold uppercase tracking-widest text-[#4ade80]">Foto Belum Tersedia</p>
+                            </div>
+                        @endif
+                        <div class="absolute inset-x-0 bottom-0 px-5 pt-10 pb-4"
+                            style="background:linear-gradient(to top,rgba(14,83,45,.88),transparent)">
+                            <p class="text-white font-extrabold text-[15px] leading-tight">
+                                {{ $principalGreeting?->principal_name ?? 'Kepala Sekolah' }}
+                            </p>
+                            <p class="text-xs text-[#86efac] italic mt-1">
+                                Kepala Sekolah {{ config('app.name') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-6 lg:col-span-7">
+                <div>
+                    <span class="inline-block px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] rounded-full bg-[#15803d]/10 text-[#15803d] mb-4">
+                        Sambutan Kepala Sekolah
+                    </span>
+                    <h2 class="text-[1.9rem] lg:text-[2.1rem] font-extrabold text-gray-900 leading-snug tracking-tight">
+                        {{ $principalGreeting?->title }}
+                    </h2>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-[#f8fdf9] border border-[#15803d]/10 border-l-4 border-l-[#15803d]">
+                    <p class="text-[15px] leading-[1.85] text-gray-600 italic">
+                        "{!! Str::limit(strip_tags($principalGreeting?->content ?? ''), 450) !!}"
+                    </p>
+                </div>
+
+                <div>
+                    <a href="{{ route('about') }}"
+                        class="inline-flex items-center gap-2 px-6 py-3 text-sm font-bold text-white rounded-xl transition-all hover:-translate-y-0.5"
+                        style="background:#15803d;box-shadow:0 4px 16px rgba(21,128,61,.3)">
+                        Pelajari Lebih Lanjut
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@endif
+
+
+{{-- ═══════════ GURU ═══════════ --}}
+<section id="guru" class="py-20 bg-[#F0F4ED]">
+    <div class="max-w-screen-xl px-6 mx-auto">
+        <div class="max-w-xl mx-auto text-center mb-14">
+            <span class="text-[11px] font-extrabold uppercase tracking-[.18em] text-[#15803d]">Tim Kami</span>
+            <h2 class="mt-3 mb-3 text-[2rem] lg:text-[2.2rem] font-extrabold text-[#14532d] tracking-tight">Tenaga Pendidik & Pengajar</h2>
+            <p class="text-[15px] text-gray-500 leading-relaxed">Guru berpengalaman dan berdedikasi tinggi siap membimbing potensi setiap siswa.</p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            @forelse($teachers as $teacher)
+            <div class="flex flex-col items-center text-center px-8 py-9 rounded-2xl bg-white border border-[#15803d]/10 transition-all hover:-translate-y-1"
+                style="box-shadow:0 2px 12px rgba(21,128,61,.06)">
+                <div class="w-[88px] h-[88px] rounded-full overflow-hidden mb-5 flex-shrink-0"
+                    style="background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 6px 18px rgba(21,128,61,.26)">
+                    @if ($teacher->image)
+                        <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="object-cover w-full h-full">
+                    @else
+                        <div class="flex items-center justify-center w-full h-full">
+                            <i class="text-4xl text-white fas fa-chalkboard-user"></i>
+                        </div>
+                    @endif
+                </div>
+                <h3 class="text-[15px] font-extrabold text-[#14532d]">{{ $teacher->name ?? 'Guru' }}</h3>
+                <p class="text-xs font-semibold text-[#15803d] mt-1.5">{{ $teacher->subject ?? 'Pendidik' }}</p>
+            </div>
+            @empty
+            <div class="py-10 text-center text-gray-400 col-span-full">Profil guru sedang dipersiapkan</div>
+            @endforelse
+        </div>
+
+        <div class="mt-10 text-center">
+            <a href="{{ route('teachers') }}"
+                class="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold text-white rounded-xl transition-all hover:-translate-y-0.5"
+                style="background:#15803d;box-shadow:0 4px 16px rgba(21,128,61,.28)">
+                Lihat Semua Guru <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+{{-- ═══════════ BERITA ═══════════ --}}
+<section id="berita" class="py-20 bg-white border-t border-[#e8f5e9]">
+    <div class="max-w-screen-xl px-6 mx-auto">
+        <div class="flex flex-col justify-between gap-4 mb-12 sm:flex-row sm:items-end">
+            <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-[.18em] text-[#15803d]">Berita Terkini</span>
+                <h2 class="mt-2 text-[2rem] lg:text-[2.2rem] font-extrabold text-[#14532d] tracking-tight">Berita & Pengumuman</h2>
+            </div>
+            <a href="{{ route('news') }}?tab=agenda"
+                class="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#15803d] px-4 py-2 rounded-lg border border-[#15803d]/18 hover:bg-[#15803d]/[.06] transition-colors flex-shrink-0">
+                Lihat Semua <i class="text-xs fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            @forelse($latestNews as $news)
+            <article class="flex flex-col h-full overflow-hidden transition-all bg-white border border-gray-100 rounded-2xl hover:-translate-y-1 hover:shadow-lg"
+                style="box-shadow:0 1px 8px rgba(0,0,0,.05)">
+                <div class="h-[200px] overflow-hidden flex-shrink-0 bg-gray-100">
+                    @if ($news->featured_image)
+                        <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.04]">
+                    @else
+                        <div class="flex items-center justify-center w-full h-full text-5xl font-black text-white/25"
+                            style="background:linear-gradient(135deg,#15803d,#22c55e)">
+                            {{ strtoupper(substr($news->title,0,1)) }}
+                        </div>
+                    @endif
+                </div>
+                <div class="flex flex-col flex-1 p-5">
+                    <span class="text-[10.5px] font-bold text-[#15803d] bg-[#15803d]/[.08] px-2.5 py-1 rounded-md w-fit mb-3">
+                        {{ $news->published_at?->format('d M Y') ?? 'Terbaru' }}
+                    </span>
+                    <h3 class="text-[15px] font-bold text-gray-900 leading-snug mb-2.5 line-clamp-2">{{ $news->title }}</h3>
+                    <p class="text-[13.5px] text-gray-400 leading-relaxed flex-1 mb-4 line-clamp-3">
+                        {{ $news->excerpt ?? Str::limit(strip_tags($news->content), 100) }}
+                    </p>
+                    <div class="pt-4 border-t border-gray-100">
+                        <a href="{{ route('news.detail', $news->slug) }}"
+                            class="inline-flex items-center gap-1.5 text-[13px] font-bold text-[#15803d] transition-all hover:gap-3">
+                            Baca Selengkapnya <i class="text-xs fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+            @empty
+            <div class="py-10 text-center text-gray-400 col-span-full">Belum ada berita terbaru</div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+
+{{-- ═══════════ PRESTASI ═══════════ --}}
+<section class="py-20 bg-[#F0F4ED]">
+    <div class="max-w-screen-xl px-6 mx-auto">
+        <div class="max-w-xl mx-auto text-center mb-14">
+            <span class="text-[11px] font-extrabold uppercase tracking-[.18em] text-[#15803d]">Pencapaian Sekolah</span>
+            <h2 class="mt-3 text-[2rem] lg:text-[2.2rem] font-extrabold text-[#14532d] tracking-tight">
+                Prestasi Terbaru {{ config('app.name') }}
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            @if ($prestasis->isEmpty())
+            <div class="py-10 text-center text-gray-400 col-span-full">Belum ada prestasi yang dipublikasikan</div>
+            @else
+                @foreach ($prestasis as $prestasi)
+                    @php $award = getAwardIcon($prestasi->category); @endphp
+                    <div class="flex flex-col h-full overflow-hidden transition-all bg-white border border-gray-100 rounded-2xl hover:-translate-y-1 hover:shadow-lg"
+                        style="box-shadow:0 1px 8px rgba(0,0,0,.05)">
+                        <div class="flex items-center justify-center flex-shrink-0 px-6 py-8 bg-gray-50">
+                            <div class="w-[72px] h-[72px] rounded-2xl flex items-center justify-center transition-transform hover:scale-110"
+                                style="{{ $award['bgStyle'] }};box-shadow:0 6px 18px rgba(0,0,0,.11)">
+                                <i class="{{ $award['icon'] }} text-white text-3xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-col flex-1 p-5">
+                            <h3 class="text-[15px] font-bold text-gray-900 leading-snug mb-1.5 line-clamp-2">{{ $prestasi->title }}</h3>
+                            @if ($prestasi->category)
+                            <div class="text-[10.5px] font-extrabold uppercase tracking-wide mb-2" style="{{ $award['textStyle'] }}">
+                                {{ $prestasi->category }}
+                            </div>
+                            @endif
+                            <p class="text-[13.5px] text-gray-400 leading-relaxed flex-1 mb-3 line-clamp-2">{{ $prestasi->description }}</p>
+                            @if ($prestasi->achievement_date)
+                            <div class="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+                                <i class="fas fa-calendar-alt text-[10px]"></i>
+                                {{ $prestasi->achievement_date->format('d M Y') }}
+                            </div>
+                            @endif
+                            <div class="pt-4 mt-auto border-t border-gray-100">
+                                <a href="{{ route('prestasi.detail', $prestasi->slug) }}"
+                                    class="inline-flex items-center gap-1.5 text-[13px] font-bold transition-all hover:gap-3"
+                                    style="{{ $award['textStyle'] }}">
+                                    Baca Selengkapnya <i class="text-xs fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
+        @if ($prestasis->isNotEmpty())
+        <div class="mt-10 text-center">
+            <a href="{{ route('prestasi.index') }}"
+                class="inline-flex items-center gap-2 px-8 py-3 text-sm font-bold text-white rounded-xl transition-all hover:-translate-y-0.5"
+                style="background:#15803d;box-shadow:0 4px 16px rgba(21,128,61,.28)">
+                Lihat Semua Prestasi <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        @endif
+    </div>
+</section>
 
 </div>
