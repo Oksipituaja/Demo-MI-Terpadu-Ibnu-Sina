@@ -75,8 +75,7 @@
                     ];
                 @endphp
                 @foreach ($alur as $item)
-                    <div
-                        class="relative flex flex-col items-center p-5 text-center bg-white border border-gray-200 shadow-sm rounded-2xl">
+                    <div class="relative flex flex-col items-center p-5 text-center bg-white border border-gray-200 shadow-sm rounded-2xl">
                         <div class="flex items-center justify-center w-12 h-12 mb-3 rounded-xl"
                             style="{{ $item['bgStyle'] }}">
                             <i class="text-base fas {{ $item['icon'] }}" style="color: white"></i>
@@ -129,10 +128,7 @@
                     ['icon' => 'fa-users', 'text' => 'Fotokopi Kartu Keluarga (3 lembar)'],
                     ['icon' => 'fa-scroll', 'text' => 'Fotokopi Ijazah (jika sudah memiliki)'],
                     ['icon' => 'fa-money-bill', 'text' => 'Membayar Infaq Pendaftaran & Screening Rp 100.000'],
-                    [
-                        'icon' => 'fa-folder',
-                        'text' => 'Semua berkas fisik diserahkan saat daftar ulang (untuk pendaftar online)',
-                    ],
+                    ['icon' => 'fa-folder', 'text' => 'Semua berkas fisik diserahkan saat daftar ulang (untuk pendaftar online)'],
                 ];
             @endphp
             <div class="px-6 py-2">
@@ -157,7 +153,7 @@
                 </div>
                 <div>
                     <p class="mb-0.5 text-xs font-bold tracking-widest uppercase" style="color: #15803d">Humas</p>
-                    <a href="tel:081234567890"
+                    <a href="tel:085383102007"
                         class="text-base font-bold text-gray-900 transition-colors hover:opacity-80">0853 8310 2007</a>
                     <p class="text-xs text-gray-500">Informasi & pertanyaan umum</p>
                 </div>
@@ -187,181 +183,64 @@
             <div class="flex-1 border-t border-gray-200"></div>
         </div>
 
-        {{-- Form --}}
-        <div class="overflow-hidden bg-white border shadow-sm rounded-2xl" style="border-color: #15803d26">
-            <div class="px-6 py-4 border-b border-gray-100" style="background: #F0F4ED">
-                <h3 class="font-bold text-gray-800">
-                    <i class="mr-2 fas fa-edit" style="color: #15803d"></i>Isi Data Calon Siswa
-                </h3>
-                <p class="mt-0.5 text-xs text-gray-500">Lengkapi semua kolom bertanda * dengan benar</p>
+        {{-- ✅ GOOGLE FORM SECTION --}}
+        @if($googleFormUrl)
+
+            {{-- Tombol redirect --}}
+            <div class="text-center">
+                <a href="{{ $googleFormUrl }}" target="_blank"
+                    class="inline-flex items-center gap-3 px-8 py-4 text-base font-bold text-white rounded-2xl transition-all hover:-translate-y-1 hover:shadow-xl"
+                    style="background: #15803d; box-shadow: 0 6px 20px #15803d44">
+                    <i class="fab fa-google text-lg"></i>
+                    Isi Formulir Pendaftaran Online
+                    <i class="fas fa-external-link-alt text-sm opacity-70"></i>
+                </a>
+                <p class="mt-2 text-xs text-gray-400">Formulir akan terbuka di tab baru · atau isi langsung di bawah</p>
             </div>
 
-            <div class="p-6">
-                <form wire:submit="submit" class="space-y-5">
-                    <div class="grid gap-5 sm:grid-cols-2">
-
-                        <div class="sm:col-span-2">
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
-                                Nama Siswa <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" id="student_name" name="student_name" wire:model="student_name"
-                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                placeholder="Nama lengkap calon siswa">
-                            @error('student_name')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
-                                Email <span class="text-red-500">*</span>
-                            </label>
-                            <input type="email" id="email" name="email" wire:model="email"
-                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                placeholder="email@contoh.com">
-                            @error('email')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
-                                Nomor Telepon <span class="text-red-500">*</span>
-                            </label>
-                            <input type="tel" id="phone" name="phone" wire:model="phone"
-                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                placeholder="08xxxxxxxxxx">
-                            @error('phone')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">
-                                Tanggal Lahir <span class="text-red-500">*</span>
-                            </label>
-                            <div class="relative">
-                                <input type="text" id="birth_date_picker" placeholder="Pilih tanggal lahir"
-                                    autocomplete="off"
-                                    class="w-full px-4 py-2.5 text-sm bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                    style="cursor: pointer;">
-                                <i
-                                    class="absolute text-gray-400 -translate-y-1/2 pointer-events-none fas fa-calendar-alt right-3 top-1/2"></i>
-                            </div>
-                            @error('birth_date')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Sekolah Asal</label>
-                            <input type="text" id="current_school" name="current_school"
-                                wire:model="current_school"
-                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                placeholder="TK / RA asal (opsional)">
-                            @error('current_school')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Nama Wali / Orang Tua</label>
-                            <input type="text" id="guardian_name" name="guardian_name" wire:model="guardian_name"
-                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                placeholder="Nama ayah/ibu/wali">
-                            @error('guardian_name')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div>
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Nomor Telepon Wali</label>
-                            <input type="tel" id="guardian_phone" name="guardian_phone"
-                                wire:model="guardian_phone"
-                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                placeholder="08xxxxxxxxxx">
-                            @error('guardian_phone')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label class="block mb-1.5 text-sm font-bold text-gray-700">Alamat Lengkap</label>
-                            <textarea id="address" name="address" wire:model="address" rows="3"
-                                class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2"
-                                placeholder="Jalan, RT/RW, Desa, Kecamatan, Kabupaten"></textarea>
-                            @error('address')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
+            {{-- Embed iframe Google Form --}}
+            <div class="overflow-hidden bg-white border shadow-sm rounded-2xl" style="border-color: #15803d26">
+                <div class="flex items-center gap-3 px-6 py-4 border-b" style="background: #F0F4ED">
+                    <i class="fab fa-google text-lg" style="color: #15803d"></i>
+                    <div>
+                        <h3 class="font-bold text-gray-800">Formulir Pendaftaran Online</h3>
+                        <p class="mt-0.5 text-xs text-gray-500">Isi langsung di bawah ini atau klik tombol di atas</p>
                     </div>
-
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                        <p class="text-xs text-gray-400"><span class="text-red-500">*</span> Kolom wajib diisi</p>
-                        <button type="submit" wire:loading.attr="disabled"
-                            class="inline-flex items-center gap-2 px-6 py-2.5 font-bold text-white text-sm rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed hover:-translate-y-0.5"
-                            style="background: #15803d; box-shadow: 0 4px 12px #15803d33">
-                            <i wire:loading.remove wire:target="submit" class="fas fa-paper-plane"></i>
-                            <span wire:loading.remove wire:target="submit">Kirim Pendaftaran</span>
-                            <span wire:loading wire:target="submit">Loading...</span>
-                        </button>
-                    </div>
-                </form>
+                </div>
+                <iframe
+                    src="{{ $googleFormUrl }}?embedded=true"
+                    width="100%"
+                    height="900"
+                    frameborder="0"
+                    marginheight="0"
+                    marginwidth="0"
+                    class="w-full">
+                    Memuat formulir…
+                </iframe>
             </div>
-        </div>
+
+        @else
+
+            {{-- Pendaftaran belum dibuka --}}
+            <div class="flex flex-col items-center justify-center gap-5 py-16 text-center bg-white border shadow-sm rounded-2xl"
+                style="border-color: #15803d26">
+                <div class="flex items-center justify-center w-16 h-16 rounded-2xl" style="background: #fef9c3">
+                    <i class="text-2xl fas fa-clock" style="color: #ca8a04"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Pendaftaran Belum Dibuka</h3>
+                    <p class="mt-1 text-sm text-gray-500 max-w-xs mx-auto">
+                        Formulir pendaftaran online belum tersedia saat ini. Pantau terus halaman ini atau hubungi kami untuk informasi lebih lanjut.
+                    </p>
+                </div>
+                <a href="https://wa.me/6285290191131" target="_blank"
+                    class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-xl transition hover:-translate-y-0.5"
+                    style="background: #16a34a; box-shadow: 0 4px 12px #16a34a33">
+                    <i class="fab fa-whatsapp"></i> Tanya via WhatsApp
+                </a>
+            </div>
+
+        @endif
 
     </div>
-
-    {{-- Toast --}}
-    @if (session()->has('success'))
-        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show"
-            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 -translate-y-4"
-            x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-4"
-            style="position:fixed; top:80px; left:50%; transform:translateX(-50%); z-index:9999; width:max-content; max-width:90vw;">
-            <div class="flex items-center gap-3 px-5 py-4 text-sm font-semibold text-white shadow-xl rounded-2xl"
-                style="background: #15803d">
-                <i class="text-base fas fa-check-circle"></i>
-                {{ session('success') }}
-            </div>
-        </div>
-    @endif
-
-    @push('scripts')
-        <script>
-            document.addEventListener('livewire:initialized', () => {
-                function initFlatpickr() {
-                    const el = document.getElementById('birth_date_picker');
-                    if (!el) return;
-
-                    if (window._flatpickrInstance) {
-                        window._flatpickrInstance.destroy();
-                        window._flatpickrInstance = null;
-                    }
-
-                    window._flatpickrInstance = flatpickr(el, {
-                        locale: window.flatpickrLocaleId || 'default',
-                        dateFormat: 'Y-m-d',
-                        altInput: true,
-                        altFormat: 'd F Y',
-                        maxDate: 'today',
-                        disableMobile: true,
-                        onChange: function(selectedDates, dateStr) {
-                            @this.set('birth_date', dateStr, false);
-                        }
-                    });
-                }
-
-                initFlatpickr();
-
-                Livewire.on('form-submitted', () => {
-                    setTimeout(initFlatpickr, 300);
-                });
-
-                document.addEventListener('livewire:update', () => {
-                    setTimeout(initFlatpickr, 100);
-                });
-            });
-        </script>
-    @endpush
 </div>

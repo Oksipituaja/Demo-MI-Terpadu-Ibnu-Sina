@@ -62,6 +62,11 @@
                         class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
                         <i class="w-5 mr-2 fas fa-user-check"></i> Pendaftaran Siswa
                     </a>
+                    {{-- ✅ TAMBAHAN BARU --}}
+                    <a href="{{ route('admin.settings.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.settings.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fab fa-google"></i> Pengaturan PPDB
+                    </a>
                 </div>
 
                 <div class="pt-4 border-t border-gray-800">
@@ -96,17 +101,13 @@
 
         <!-- Main Content -->
         <div class="flex flex-col flex-1 overflow-hidden">
-
-            <!-- Top Bar -->
             <div class="p-4 bg-white border-b border-gray-200 shadow-sm">
                 <h2 class="text-2xl font-bold text-gray-800">@yield('page_title', 'Dashboard')</h2>
                 <p class="text-sm text-gray-600">@yield('page_subtitle', 'Kelola konten website sekolah')</p>
             </div>
 
-            <!-- Content Area -->
             <div class="flex-1 p-6 overflow-auto">
 
-                {{-- Error validasi --}}
                 @if($errors->any())
                     <div id="flash-errors"
                         class="flex items-start justify-between gap-3 px-4 py-3 mb-4 text-red-800 border border-red-200 rounded-lg bg-red-50">
@@ -128,7 +129,6 @@
                     </div>
                 @endif
 
-                {{-- Pesan sukses --}}
                 @if(session('success'))
                     <div id="flash-success"
                         class="flex items-center justify-between gap-3 px-4 py-3 mb-4 text-green-800 border border-green-200 rounded-lg bg-green-50">
@@ -143,7 +143,6 @@
                     </div>
                 @endif
 
-                {{-- Pesan error (manual session) --}}
                 @if(session('error'))
                     <div id="flash-error"
                         class="flex items-center justify-between gap-3 px-4 py-3 mb-4 text-red-800 border border-red-200 rounded-lg bg-red-50">
@@ -159,7 +158,6 @@
                 @endif
 
                 @yield('content')
-
             </div>
         </div>
     </div>

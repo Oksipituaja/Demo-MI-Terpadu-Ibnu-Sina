@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ManagementAccountController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\PrestasiController;
 use App\Http\Controllers\Admin\RegistrationController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TeacherController;
 use App\Livewire\Pages\About;
 use App\Livewire\Pages\MataPelajaran;
@@ -42,7 +43,7 @@ Route::get('/files/{path}', function (string $path) {
         file_get_contents($fullPath),
         200,
         [
-            'Content-Type' => $mimeType,
+            'Content-Type'  => $mimeType,
             'Content-Length' => filesize($fullPath),
             'Cache-Control' => 'public, max-age=86400',
         ]
@@ -67,7 +68,6 @@ Route::get('/ppdb', PPDB::class)->name('ppdb');
 Route::get('/privacy-policy', Privacy::class)->name('privacy');
 Route::get('/terms-and-conditions', Terms::class)->name('terms');
 
-// Redirect /agenda ke /news?tab=agenda
 Route::get('/agenda', function () {
     return redirect()->route('news', ['tab' => 'agenda']);
 })->name('agenda');
@@ -81,8 +81,8 @@ Route::get('/test-429', fn() => abort(429));
 
 Route::get('/debug-categories', function () {
     return response()->json([
-        'cached' => \Illuminate\Support\Facades\Cache::get('gallery.all_categories'),
-        'from_db' => \App\Models\Gallery::distinct('category')
+        'cached'   => Cache::get('gallery.all_categories'),
+        'from_db'  => \App\Models\Gallery::distinct('category')
             ->select('category')
             ->whereNotNull('category')
             ->pluck('category')
@@ -99,35 +99,27 @@ Route::get('/debug-log', function () {
 
 Route::get('/debug-link', function () {
     $result = [];
-    
-    // Cek apakah symlink ada
     $result['link_exists'] = file_exists(public_path('storage'));
-    $result['is_link'] = is_link(public_path('storage'));
-    
+    $result['is_link']     = is_link(public_path('storage'));
     try {
         \Artisan::call('storage:link');
         $result['artisan_output'] = \Artisan::output();
     } catch (\Exception $e) {
         $result['artisan_error'] = $e->getMessage();
     }
-    
     $result['link_exists_after'] = file_exists(public_path('storage'));
-    $result['is_link_after'] = is_link(public_path('storage'));
-    
+    $result['is_link_after']     = is_link(public_path('storage'));
     return response()->json($result);
 });
 
 Route::get('/debug-cache', function () {
-    $key = 'about.principal_greeting';
+    $key    = 'about.principal_greeting';
     $cached = Cache::get($key);
     return response()->json([
-        'cache_store' => config('cache.default'),
-        'cache_path' => storage_path('framework/cache'),
-        'key_exists' => Cache::has($key),
-        'cached_value' => $cached ? [
-            'id' => $cached->id,
-            'image' => $cached->image,
-        ] : null,
+        'cache_store'  => config('cache.default'),
+        'cache_path'   => storage_path('framework/cache'),
+        'key_exists'   => Cache::has($key),
+        'cached_value' => $cached ? ['id' => $cached->id, 'image' => $cached->image] : null,
     ]);
 });
 
@@ -136,35 +128,33 @@ Route::get('/debug-path', function () {
     $path = storage_path('app/public/' . $file);
     return response()->json([
         'storage_path' => $path,
-        'file_exists' => file_exists($path),
-        'realpath' => realpath(storage_path('app/public')),
+        'file_exists'  => file_exists($path),
+        'realpath'     => realpath(storage_path('app/public')),
     ]);
 });
 
 Route::get('/debug-storage', function () {
     $path = storage_path('app/public');
     return response()->json([
-        'path' => $path,
-        'exists' => is_dir($path),
-        'writable' => is_writable($path),
-        'files' => is_dir($path) ? scandir($path) : [],
+        'path'           => $path,
+        'exists'         => is_dir($path),
+        'writable'       => is_writable($path),
+        'files'          => is_dir($path) ? scandir($path) : [],
         'public_storage' => public_path('storage'),
-        'link_exists' => is_link(public_path('storage')),
+        'link_exists'    => is_link(public_path('storage')),
     ]);
 });
 
 Route::get('/debug-files', function () {
     $base = storage_path('app/public');
     return response()->json([
-        'about' => is_dir("$base/about") ? scandir("$base/about") : [],
+        'about'   => is_dir("$base/about") ? scandir("$base/about") : [],
         'gallery' => is_dir("$base/gallery") ? scandir("$base/gallery") : [],
     ]);
 });
 
-// Debug Route
 Route::get('/debug/agenda', [\App\Http\Controllers\DebugAgendaController::class, 'checkDisplay'])->name('debug.agenda');
 
-// Debug Route for News
 Route::get('/debug-news', function () {
     try {
         $news = \App\Models\News::with('user')->latest()->paginate(15);
@@ -227,5 +217,10 @@ Route::middleware(['auth', 'auth.timeout'])->prefix('admin-panel')->name('admin.
     Route::resource('prestasis', PrestasiController::class);
     Route::get('registrations', [RegistrationController::class, 'index'])->name('registrations.index');
     Route::delete('registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
+
+    // Settings PPDB
+    Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
+    Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
+
     Route::middleware('super_admin')->resource('management-account', ManagementAccountController::class);
 });

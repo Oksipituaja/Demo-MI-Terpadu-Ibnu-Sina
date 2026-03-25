@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AuthTimeout;
 use App\Http\Middleware\CachePageResponse;
+use App\Http\Middleware\ContentSecurityPolicy;
 use App\Http\Middleware\EnsureSuperAdmin;
 use App\Http\Middleware\OptimizeCaching;
 use Illuminate\Foundation\Application;
@@ -10,14 +11,14 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(ContentSecurityPolicy::class);
         $middleware->append(CachePageResponse::class);
         $middleware->append(OptimizeCaching::class);
-
         $middleware->alias([
             'super_admin'  => EnsureSuperAdmin::class,
             'auth.timeout' => AuthTimeout::class,
