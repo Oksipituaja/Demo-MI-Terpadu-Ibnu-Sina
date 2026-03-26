@@ -62,7 +62,27 @@
                 Deskripsi
                 <span class="ml-1 text-xs text-gray-400">(opsional)</span>
             </label>
-            <textarea name="description" id="description">{{ old('description', $agenda->description) }}</textarea>
+
+            {{-- Skeleton TinyMCE --}}
+            <div id="tinymce-skeleton" class="w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden" style="height:300px;">
+                <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
+                    @for ($i = 0; $i < 8; $i++)
+                        <div class="h-5 rounded bg-gray-200 animate-pulse" style="width:{{ [28,28,32,28,28,36,28,32][$i] }}px"></div>
+                        @if (in_array($i, [1, 4]))
+                            <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                        @endif
+                    @endfor
+                </div>
+                <div class="p-4 space-y-3">
+                    <div class="h-4 w-3/4 rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-2/3 rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-5/6 rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-1/2 rounded bg-gray-200 animate-pulse"></div>
+                </div>
+            </div>
+
+            <textarea name="description" id="description" class="hidden">{{ old('description', $agenda->description) }}</textarea>
         </div>
 
         <div class="flex gap-3 pt-4 border-t">
@@ -90,13 +110,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.appendChild(fpContainer);
 
     const fp = flatpickr(fpContainer, {
-        enableTime: true,
-        dateFormat: 'Y-m-d H:i',
-        time_24hr: true,
+        enableTime   : true,
+        dateFormat   : 'Y-m-d H:i',
+        time_24hr    : true,
         disableMobile: true,
-        locale: window.flatpickrLocaleId,
-        defaultDate: hiddenInput.value || null,
-        onChange: function(selectedDates) {
+        locale       : window.flatpickrLocaleId,
+        defaultDate  : hiddenInput.value || null,
+        onChange: function (selectedDates) {
             if (selectedDates[0]) {
                 const d = selectedDates[0];
                 hiddenInput.value = d.getFullYear() + '-' +
@@ -112,17 +132,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 display.classList.add('text-gray-800');
             }
         },
-        onClose: function() { fpContainer.style.display = 'none'; }
+        onClose: function () { fpContainer.style.display = 'none'; }
     });
 
-    btnPickDate.addEventListener('click', function(e) {
+    btnPickDate.addEventListener('click', function (e) {
         e.stopPropagation();
         const rect = btnPickDate.getBoundingClientRect();
         fpContainer.style.cssText = `position:fixed;z-index:99999;top:${rect.bottom+8}px;left:${rect.left}px;display:block;`;
         fp.open();
     });
 
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         const cal = document.querySelector('.flatpickr-calendar');
         if (!fpContainer.contains(e.target) && !(cal && cal.contains(e.target)) && e.target.id !== 'btn-pick-date') {
             fp.close();
@@ -132,22 +152,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ── TINYMCE ────────────────────────────────────────────────────────
     tinymce.init({
-        selector: '#description',
-        license_key: 'gpl',
-        height: 300,
-        menubar: false,
-        plugins: 'lists link autolink',
-        toolbar: [
+        selector     : '#description',
+        license_key  : 'gpl',
+        height       : 300,
+        menubar      : false,
+        plugins      : 'lists link autolink',
+        toolbar      : [
             'undo redo | bold italic underline | forecolor',
             'bullist numlist | link | removeformat'
         ],
-        toolbar_mode: 'wrap',
-        skin_url: '/build/tinymce/skins/ui/oxide',
-        content_css: '/build/tinymce/skins/content/default/content.min.css',
-        content_style: 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; }',
+        toolbar_mode  : 'wrap',
+        skin_url      : '/build/tinymce/skins/ui/oxide',
+        content_css   : '/build/tinymce/skins/content/default/content.min.css',
+        content_style : 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; }',
         ignore_clickoutside_selector: '[class*="flatpickr"]',
-        setup: function(editor) {
-            editor.on('change', function() { editor.save(); });
+        setup: function (editor) {
+            editor.on('change', function () { editor.save(); });
+        },
+        init_instance_callback: function () {
+            const sk = document.getElementById('tinymce-skeleton');
+            if (sk) sk.remove();
         }
     });
 });
