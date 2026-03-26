@@ -9946,3 +9946,43 @@ Did you mean this?
 [2026-03-25 13:04:35] local.WARNING: Slow Query: truncate table `agendas` (146.33ms)  
 [2026-03-25 13:04:35] local.WARNING: Slow Query: truncate table `facilities` (161.36ms)  
 [2026-03-25 13:04:35] local.WARNING: Slow Query: truncate table `prestasis` (162.3ms)  
+[2026-03-26 06:04:24] local.WARNING: Slow Query: select * from `abouts` limit 1 (1965.73ms)  
+[2026-03-26 06:44:20] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (714.47ms)  
+[2026-03-26 06:44:27] local.WARNING: Slow Query: select * from `prestasis` where `status` = ? order by 
+                    CASE 
+                        WHEN category LIKE '%Juara 1%' THEN 1
+                        WHEN category LIKE '%Juara 2%' THEN 2
+                        WHEN category LIKE '%Juara 3%' THEN 3
+                        WHEN category LIKE '%Harapan 1%' THEN 4
+                        WHEN category LIKE '%Harapan 2%' THEN 5
+                        WHEN category LIKE '%Harapan 3%' THEN 6
+                        WHEN category LIKE '%Harapan%' THEN 7
+                        ELSE 99
+                    END,
+                    achievement_date DESC
+                 limit 3 (304.43ms)  
+[2026-03-26 06:45:34] local.WARNING: Slow Query: select * from `sessions` where `id` = ? limit 1 (228.37ms)  
+[2026-03-26 07:10:34] local.ERROR: filemtime(): stat failed for C:\laragon\www\4329_Yusuf_Hammam\.env {"exception":"[object] (ErrorException(code: 0): filemtime(): stat failed for C:\\laragon\\www\\4329_Yusuf_Hammam\\.env at C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php:147)
+[stacktrace]
+#0 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate/Foundation/Bootstrap/HandleExceptions->handleError(2, 'filemtime(): st...', 'C://laragon//www//...', 147)
+#1 [internal function]: Illuminate/Foundation/Bootstrap/HandleExceptions->Illuminate/Foundation/Bootstrap/{closure}(2, 'filemtime(): st...', 'C://laragon//www//...', 147)
+#2 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php(147): filemtime('C://laragon//www//...')
+#3 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Illuminate/Foundation/Console/ServeCommand->handle()
+#4 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Container/Util.php(43): Illuminate/Container/BoundMethod::Illuminate/Container/{closure}()
+#5 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(96): Illuminate/Container/Util::unwrapIfClosure(Object(Closure))
+#6 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(35): Illuminate/Container/BoundMethod::callBoundMethod(Object(Illuminate/Foundation/Application), Array, Object(Closure))
+#7 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Container/Container.php(799): Illuminate/Container/BoundMethod::call(Object(Illuminate/Foundation/Application), Array, Array, NULL)
+#8 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Console/Command.php(211): Illuminate/Container/Container->call(Array)
+#9 C:/laragon/www/4329_Yusuf_Hammam/vendor/symfony/console/Command/Command.php(341): Illuminate/Console/Command->execute(Object(Symfony/Component/Console/Input/ArgvInput), Object(Illuminate/Console/OutputStyle))
+#10 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Console/Command.php(180): Symfony/Component/Console/Command/Command->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Illuminate/Console/OutputStyle))
+#11 C:/laragon/www/4329_Yusuf_Hammam/vendor/symfony/console/Application.php(1102): Illuminate/Console/Command->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#12 C:/laragon/www/4329_Yusuf_Hammam/vendor/symfony/console/Application.php(356): Symfony/Component/Console/Application->doRunCommand(Object(Illuminate/Foundation/Console/ServeCommand), Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#13 C:/laragon/www/4329_Yusuf_Hammam/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#14 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#15 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(1235): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#16 C:/laragon/www/4329_Yusuf_Hammam/artisan(16): Illuminate/Foundation/Application->handleCommand(Object(Symfony/Component/Console/Input/ArgvInput))
+#17 {main}
+"} 
+[2026-03-26 12:33:10] local.WARNING: Slow Query: select * from `abouts` limit 1 (554.77ms)  
+[2026-03-26 12:33:11] local.WARNING: Slow Query: select * from `registrations` limit 1 (158.12ms)  
+[2026-03-26 12:33:12] local.WARNING: Slow Query: select * from `users` limit 1 (294.1ms)  

@@ -13,15 +13,14 @@ class ManagementAccountController extends Controller
 {
     public function index(): View
     {
-        $users = User::latest()->paginate(15);
-
+        // Menampilkan 12 akun per halaman untuk demo
+        $users = User::latest()->paginate(12);
         return view('admin.management-account.index', compact('users'));
     }
 
     public function create(): View
     {
         $roles = UserRole::cases();
-
         return view('admin.management-account.create', compact('roles'));
     }
 
@@ -33,18 +32,6 @@ class ManagementAccountController extends Controller
             'password'  => 'required|string|min:8',
             'role'      => 'required|in:super_admin,admin',
             'is_active' => 'sometimes|boolean',
-        ], [
-            'name.required'     => 'Nama wajib diisi.',
-            'name.string'       => 'Nama harus berupa teks.',
-            'name.max'          => 'Nama tidak boleh melebihi 255 karakter.',
-            'email.required'    => 'Email wajib diisi.',
-            'email.email'       => 'Email harus format yang valid.',
-            'email.unique'      => 'Email sudah terdaftar di sistem.',
-            'password.required' => 'Password wajib diisi.',
-            'password.string'   => 'Password harus berupa teks.',
-            'password.min'      => 'Password minimal harus 8 karakter.',
-            'role.required'     => 'Peran wajib dipilih.',
-            'role.in'           => 'Peran yang dipilih tidak valid.',
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -59,7 +46,6 @@ class ManagementAccountController extends Controller
     public function edit(User $managementAccount): View
     {
         $roles = UserRole::cases();
-
         return view('admin.management-account.edit', compact('managementAccount', 'roles'));
     }
 
@@ -71,17 +57,6 @@ class ManagementAccountController extends Controller
             'password'  => 'nullable|string|min:8',
             'role'      => 'required|in:super_admin,admin',
             'is_active' => 'sometimes|boolean',
-        ], [
-            'name.required'   => 'Nama wajib diisi.',
-            'name.string'     => 'Nama harus berupa teks.',
-            'name.max'        => 'Nama tidak boleh melebihi 255 karakter.',
-            'email.required'  => 'Email wajib diisi.',
-            'email.email'     => 'Email harus format yang valid.',
-            'email.unique'    => 'Email sudah terdaftar di sistem.',
-            'password.string' => 'Password harus berupa teks.',
-            'password.min'    => 'Password minimal harus 8 karakter.',
-            'role.required'   => 'Peran wajib dipilih.',
-            'role.in'         => 'Peran yang dipilih tidak valid.',
         ]);
 
         if (filled($validated['password'])) {
@@ -91,7 +66,6 @@ class ManagementAccountController extends Controller
         }
 
         $validated['is_active'] = $request->has('is_active');
-
         $managementAccount->update($validated);
 
         return redirect()->route('admin.management-account.index')
@@ -101,19 +75,18 @@ class ManagementAccountController extends Controller
     public function destroy(User $managementAccount)
     {
         if ($managementAccount->id === auth()->id()) {
-        return back()->withErrors(['error' => 'Tidak dapat menghapus akun sendiri.']);
-    }
-
-    // Cegah hapus superadmin terakhir
-    if ($managementAccount->role === UserRole::SuperAdmin) {
-        $superAdminCount = User::where('role', UserRole::SuperAdmin)->count();
-        if ($superAdminCount <= 1) {
-            return back()->withErrors(['error' => 'Tidak dapat menghapus Super Admin terakhir.']);
+            return back()->withErrors(['error' => 'Tidak dapat menghapus akun sendiri.']);
         }
-    }
 
-    $managementAccount->delete();
-    return redirect()->route('admin.management-account.index')
-        ->with('success', 'Pengguna berhasil dihapus!');
+        if ($managementAccount->role === UserRole::SuperAdmin) {
+            $superAdminCount = User::where('role', UserRole::SuperAdmin)->count();
+            if ($superAdminCount <= 1) {
+                return back()->withErrors(['error' => 'Tidak dapat menghapus Super Admin terakhir.']);
+            }
+        }
+
+        $managementAccount->delete();
+        return redirect()->route('admin.management-account.index')
+            ->with('success', 'Pengguna berhasil dihapus!');
     }
 }
