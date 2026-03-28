@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             FacilitySeeder::class,
             AboutSeeder::class,
             PrestasiSeeder::class,
+            AddHeroImageSeeder::class,
         ]);
     }
 }

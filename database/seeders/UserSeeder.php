@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $mainUsers = [
             ['name' => 'Super Administrator', 'email' => 'superadmin@school.com', 'role' => UserRole::SuperAdmin],
             ['name' => 'Administrator', 'email' => 'admin@school.com', 'role' => UserRole::Admin],
-            ['name' => 'Yusuf Hammam', 'email' => 'user@school.com', 'role' => UserRole::Admin],
+            ['name' => 'Budi Santoso', 'email' => 'user@school.com', 'role' => UserRole::Admin],
         ];
 
         foreach ($mainUsers as $user) {
