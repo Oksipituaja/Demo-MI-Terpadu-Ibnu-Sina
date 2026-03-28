@@ -81,8 +81,8 @@
                     <input type="file" id="image" name="image" accept="image/*" class="hidden">
                     <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
                     <p class="text-gray-600">Seret & letakkan atau
-                        <button type="button" class="font-medium text-blue-600 hover:text-blue-700"
-                            onclick="document.getElementById('image').click()">pilih file</button>
+                        <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer" id="pickFileBtn">pilih
+                            file</span>
                     </p>
                     <p class="mt-1 text-xs text-gray-400">JPG, PNG, WebP (Maks. 5MB)</p>
                 </div>
@@ -166,7 +166,17 @@
             fileInput.addEventListener('change', e => {
                 if (e.target.files[0]) handleFile(e.target.files[0]);
             });
-            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            const pickFileBtn = document.getElementById('pickFileBtn');
+            if (pickFileBtn) {
+                pickFileBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    fileInput.click();
+                });
+            }
             dropZone.addEventListener('dragover', e => {
                 e.preventDefault();
                 dropZone.classList.add('border-blue-500', 'bg-blue-50');

@@ -39,9 +39,7 @@
             </div>
 
             <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">
-                    Jabatan/Mapel
-                </label>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Jabatan/Mapel</label>
                 <input type="text" name="subject" value="{{ old('subject', $teacher->subject) }}"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
             </div>
@@ -55,13 +53,14 @@
                             class="object-cover h-40 max-w-sm rounded-lg">
                     </div>
                 @endif
+                {{-- FIXED: removed onclick from inner button to prevent double dialog --}}
                 <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
                     id="dropZone">
                     <input type="file" id="image" name="image" accept="image/*" class="hidden">
                     <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
                     <p class="text-gray-600">Seret & letakkan atau
-                        <button type="button" class="font-medium text-blue-600 hover:text-blue-700"
-                            onclick="document.getElementById('image').click()">pilih file</button>
+                        <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer" id="pickFileBtn">pilih
+                            file</span>
                     </p>
                     <p class="mt-1 text-xs text-gray-400">JPG, PNG (Maks. 5MB)</p>
                 </div>
@@ -87,54 +86,64 @@
             </div>
         </form>
     </div>
-
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const dropZone = document.getElementById('dropZone');
-                const fileInput = document.getElementById('image');
-                const imagePreview = document.getElementById('imagePreview');
-                const previewImg = document.getElementById('previewImg');
-                const fileName = document.getElementById('fileName');
-                const maxSize = 5 * 1024 * 1024;
-
-                function handleFile(file) {
-                    if (!file.type.startsWith('image/')) {
-                        alert('Pilih file gambar yang valid');
-                        return;
-                    }
-                    if (file.size > maxSize) {
-                        alert('Ukuran file maksimal 5MB');
-                        return;
-                    }
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                        previewImg.src = e.target.result;
-                        fileName.textContent = `File: ${file.name} (${(file.size/1024).toFixed(2)} KB)`;
-                        imagePreview.classList.remove('hidden');
-                    };
-                    reader.readAsDataURL(file);
-                }
-
-                fileInput.addEventListener('change', e => {
-                    if (e.target.files[0]) handleFile(e.target.files[0]);
-                });
-                dropZone.addEventListener('click', () => fileInput.click());
-                dropZone.addEventListener('dragover', e => {
-                    e.preventDefault();
-                    dropZone.classList.add('border-blue-500', 'bg-blue-50');
-                });
-                dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
-                'bg-blue-50'));
-                dropZone.addEventListener('drop', e => {
-                    e.preventDefault();
-                    dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-                    if (e.dataTransfer.files[0]) {
-                        fileInput.files = e.dataTransfer.files;
-                        handleFile(e.dataTransfer.files[0]);
-                    }
-                });
-            });
-        </script>
-    @endpush
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ── IMAGE UPLOAD (FIXED: no more double dialog) ────────────────────
+            const dropZone = document.getElementById('dropZone');
+            const pickFileBtn = document.getElementById('pickFileBtn');
+            const fileInput = document.getElementById('image');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const fileName = document.getElementById('fileName');
+            const maxSize = 5 * 1024 * 1024;
+
+            function handleFile(file) {
+                if (!file.type.startsWith('image/')) {
+                    alert('Pilih file gambar yang valid');
+                    return;
+                }
+                if (file.size > maxSize) {
+                    alert('Ukuran file maksimal 5MB');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = e => {
+                    previewImg.src = e.target.result;
+                    fileName.textContent = `File: ${file.name} (${(file.size/1024).toFixed(2)} KB)`;
+                    imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+
+            dropZone.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            pickFileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', e => {
+                if (e.target.files[0]) handleFile(e.target.files[0]);
+            });
+            dropZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                dropZone.classList.add('border-blue-500', 'bg-blue-50');
+            });
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
+            'bg-blue-50'));
+            dropZone.addEventListener('drop', e => {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+                if (e.dataTransfer.files[0]) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+        });
+    </script>
+@endpush

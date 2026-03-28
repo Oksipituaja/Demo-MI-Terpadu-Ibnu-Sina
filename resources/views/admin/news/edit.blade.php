@@ -10,7 +10,6 @@
                 @method('PUT')
                 <input type="hidden" id="slug" name="slug" value="{{ old('slug', $news->slug) }}">
 
-                {{-- Judul --}}
                 <div>
                     <label for="title" class="block mb-1 text-sm font-medium text-gray-700">Judul Berita</label>
                     <input type="text" id="title" name="title" value="{{ old('title', $news->title) }}" required
@@ -20,7 +19,6 @@
                     @enderror
                 </div>
 
-                {{-- Ringkasan --}}
                 <div>
                     <label for="excerpt" class="block mb-1 text-sm font-medium text-gray-700">
                         Ringkasan
@@ -33,14 +31,11 @@
                     @enderror
                 </div>
 
-                {{-- Isi Berita + TinyMCE --}}
                 <div>
                     <label for="content" class="block mb-1 text-sm font-medium text-gray-700">Isi Berita</label>
 
-                    {{-- Skeleton placeholder: tampil saat TinyMCE belum siap --}}
                     <div id="tinymce-skeleton" class="w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
                         style="height:450px;">
-                        {{-- Toolbar skeleton --}}
                         <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
                             @for ($i = 0; $i < 10; $i++)
                                 <div class="h-5 rounded bg-gray-200 animate-pulse"
@@ -50,7 +45,6 @@
                                 @endif
                             @endfor
                         </div>
-                        {{-- Content area skeleton --}}
                         <div class="p-4 space-y-3">
                             <div class="h-4 w-3/4 rounded bg-gray-200 animate-pulse"></div>
                             <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
@@ -61,7 +55,6 @@
                         </div>
                     </div>
 
-                    {{-- Textarea disembunyikan; TinyMCE akan replace ini --}}
                     <textarea id="content" name="content" class="hidden">{{ old('content', $news->content) }}</textarea>
 
                     @error('content')
@@ -69,7 +62,6 @@
                     @enderror
                 </div>
 
-                {{-- Status & Tanggal Publikasi --}}
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label for="status" class="block mb-1 text-sm font-medium text-gray-700">Status</label>
@@ -104,7 +96,6 @@
                     </div>
                 </div>
 
-                {{-- Gambar Utama --}}
                 <div>
                     <label class="block mb-1 text-sm font-medium text-gray-700">
                         Gambar Utama
@@ -117,13 +108,14 @@
                                 class="object-cover h-40 max-w-sm rounded">
                         </div>
                     @endif
+                    {{-- FIXED: removed onclick from inner button to prevent double dialog --}}
                     <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
                         id="dropZone">
                         <input type="file" id="featured_image" name="featured_image" accept="image/*" class="hidden">
                         <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
                         <p class="text-gray-600">Seret & letakkan atau
-                            <button type="button" class="font-medium text-blue-600 hover:text-blue-700"
-                                onclick="document.getElementById('featured_image').click()">pilih file</button>
+                            <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer"
+                                id="pickFileBtn">pilih file</span>
                         </p>
                         <p class="mt-1 text-xs text-gray-400">JPG, PNG (Maks. 2MB)</p>
                     </div>
@@ -137,7 +129,6 @@
                     @enderror
                 </div>
 
-                {{-- Tombol Aksi --}}
                 <div class="flex gap-3 pt-4 border-t">
                     @include('components.admin-submit-btn', [
                         'label' => 'Simpan Perubahan',
@@ -157,8 +148,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // ── IMAGE UPLOAD ───────────────────────────────────────────────────
+            // ── IMAGE UPLOAD (FIXED: no more double dialog) ────────────────────
             const dropZone = document.getElementById('dropZone');
+            const pickFileBtn = document.getElementById('pickFileBtn');
             const fileInput = document.getElementById('featured_image');
             const imagePreview = document.getElementById('imagePreview');
             const previewImg = document.getElementById('previewImg');
@@ -183,10 +175,18 @@
                 reader.readAsDataURL(file);
             }
 
+            dropZone.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            pickFileBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                fileInput.click();
+            });
+
             fileInput.addEventListener('change', e => {
                 if (e.target.files[0]) handleFile(e.target.files[0]);
             });
-            dropZone.addEventListener('click', () => fileInput.click());
             dropZone.addEventListener('dragover', e => {
                 e.preventDefault();
                 dropZone.classList.add('border-blue-500', 'bg-blue-50');
