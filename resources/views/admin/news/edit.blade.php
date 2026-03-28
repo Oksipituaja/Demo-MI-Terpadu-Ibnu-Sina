@@ -192,7 +192,7 @@
                 dropZone.classList.add('border-blue-500', 'bg-blue-50');
             });
             dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
-            'bg-blue-50'));
+                'bg-blue-50'));
             dropZone.addEventListener('drop', e => {
                 e.preventDefault();
                 dropZone.classList.remove('border-blue-500', 'bg-blue-50');

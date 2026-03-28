@@ -29,19 +29,16 @@
                 <select id="keySelect" name="key" required
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     <option value="">-- Pilih Tipe --</option>
-                    <option value="hero_image" {{ old('key') === 'hero_image' ? 'selected' : '' }}>Gambar Utama</option>
-                    <option value="principal_greeting" {{ old('key') === 'principal_greeting' ? 'selected' : '' }}>Sambutan
-                        Kepala Sekolah</option>
-                    <option value="school_profile" {{ old('key') === 'school_profile' ? 'selected' : '' }}>Profil Sekolah
-                    </option>
-                    <option value="school_info" {{ old('key') === 'school_info' ? 'selected' : '' }}>Informasi Sekolah
-                        (JSON)</option>
-                    <option value="vision" {{ old('key') === 'vision' ? 'selected' : '' }}>Visi</option>
-                    <option value="mission" {{ old('key') === 'mission' ? 'selected' : '' }}>Misi</option>
+                    <option value="hero_image"          {{ old('key') === 'hero_image'          ? 'selected' : '' }}>Gambar Utama</option>
+                    <option value="principal_greeting"  {{ old('key') === 'principal_greeting'  ? 'selected' : '' }}>Sambutan Kepala Sekolah</option>
+                    <option value="school_profile"      {{ old('key') === 'school_profile'      ? 'selected' : '' }}>Profil Sekolah</option>
+                    <option value="school_info"         {{ old('key') === 'school_info'         ? 'selected' : '' }}>Informasi Sekolah (JSON)</option>
+                    <option value="vision"              {{ old('key') === 'vision'              ? 'selected' : '' }}>Visi</option>
+                    <option value="mission"             {{ old('key') === 'mission'             ? 'selected' : '' }}>Misi</option>
                 </select>
             </div>
 
-            {{-- Logika Panjang: Input JSON untuk School Info --}}
+            {{-- JSON Fields for School Info --}}
             <div id="schoolInfoFields" class="hidden p-4 space-y-4 border border-blue-200 rounded-lg bg-blue-50">
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -57,91 +54,210 @@
                 </div>
             </div>
 
-            <div id="contentWrapper">
+            {{-- Content + Skeleton --}}
+            <div id="contentWrapper" class="hidden">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Konten</label>
-                <textarea name="content" id="contentField" rows="6">{{ old('content') }}</textarea>
+
+                {{-- Skeleton loader --}}
+                <div id="tinymce-skeleton" class="hidden w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
+                    style="height:350px;">
+                    <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
+                        @for ($i = 0; $i < 10; $i++)
+                            <div class="h-5 rounded bg-gray-200 animate-pulse"
+                                style="width:{{ [28, 28, 32, 28, 32, 28, 28, 36, 28, 32][$i] }}px"></div>
+                            @if (in_array($i, [1, 3, 6]))
+                                <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                            @endif
+                        @endfor
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div class="h-4 w-3/4 rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-5/6 rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-2/3 rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-4/5 rounded bg-gray-200 animate-pulse"></div>
+                    </div>
+                </div>
+
+                <textarea name="content" id="contentField" class="hidden">{{ old('content') }}</textarea>
+                @error('content')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div id="imageField">
+            {{-- Image Field --}}
+            <div id="imageField" class="hidden">
                 <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
-                <div class="p-6 text-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
+                <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
                     id="dropZone">
                     <input type="file" id="image" name="featured_image" accept="image/*" class="hidden">
-                    <p class="text-gray-600">Klik untuk upload gambar</p>
+                    <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
+                    <p class="text-gray-600">Seret & letakkan atau
+                        <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer" id="pickFileBtn">pilih file</span>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">JPG, PNG (Maks. 5MB)</p>
                 </div>
                 <div id="imagePreview" class="hidden mt-4">
-                    <img id="previewImg" src="" class="h-40 rounded-lg border">
+                    <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
+                    <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
                 </div>
+                @error('featured_image')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="flex gap-3 pt-4 border-t">
-                <button type="submit" class="px-6 py-2 text-white bg-blue-600 rounded-lg">Simpan</button>
-                <a href="{{ route('admin.about.index') }}" class="px-6 py-2 bg-gray-200 rounded-lg">Batal</a>
+                @include('components.admin-submit-btn', [
+                    'label'   => 'Simpan Konten',
+                    'loading' => 'Menyimpan...',
+                ])
+                <a href="{{ route('admin.about.index') }}"
+                    class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
+                    <i class="mr-2 fas fa-times"></i> Batal
+                </a>
             </div>
         </form>
     </div>
 @endsection
 
 @push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const keySelect = document.getElementById('keySelect');
-            const contentField = document.getElementById('contentField');
-            let editorInstance = null;
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const keySelect      = document.getElementById('keySelect');
+        const contentField   = document.getElementById('contentField');
+        const contentWrapper = document.getElementById('contentWrapper');
+        const skeleton       = document.getElementById('tinymce-skeleton');
+        const noImageKeys    = ['school_profile', 'vision', 'mission', 'school_info'];
+        let tinymceReady     = false;
 
-            // Logika Panjang: Build JSON otomatis
-            function buildJson() {
-                const data = {
-                    npsn: document.getElementById('si_npsn').value,
-                    nama_sekolah: document.getElementById('si_name').value,
-                };
-                contentField.value = JSON.stringify(data);
-            }
+        // ── JSON builder ───────────────────────────────────────────────────────
+        function buildJson() {
+            const data = {
+                npsn         : document.getElementById('si_npsn').value,
+                nama_sekolah : document.getElementById('si_name').value,
+            };
+            contentField.value = JSON.stringify(data);
+        }
+        document.querySelectorAll('.si-input').forEach(el => el.addEventListener('input', buildJson));
 
-            document.querySelectorAll('.si-input').forEach(el => el.addEventListener('input', buildJson));
+        // ── TinyMCE init ───────────────────────────────────────────────────────
+        function initTinyMCE() {
+            if (tinymceReady || typeof tinymce === 'undefined') return;
+            tinymceReady = true;
 
-            // Logika Panjang: Toggle Field & TinyMCE
-            function toggleFields() {
-                const key = keySelect.value;
-                const noImageKeys = ['school_profile', 'vision', 'mission', 'school_info'];
-
-                document.getElementById('principalNameField').classList.toggle('hidden', key !==
-                    'principal_greeting');
-                document.getElementById('imageField').classList.toggle('hidden', noImageKeys.includes(key));
-                document.getElementById('schoolInfoFields').classList.toggle('hidden', key !== 'school_info');
-                document.getElementById('contentWrapper').classList.toggle('hidden', key === 'school_info');
-
-                if (key === 'school_info') {
-                    if (tinymce.get('contentField')) tinymce.get('contentField').remove();
-                    buildJson();
-                } else if (key !== '') {
-                    if (!tinymce.get('contentField')) {
-                        tinymce.init({
-                            selector: '#contentField',
-                            setup: (editor) => {
-                                editor.on('change', () => editor.save());
-                            }
-                        });
-                    }
-                }
-            }
-
-            keySelect.addEventListener('change', toggleFields);
-            toggleFields();
-
-            // Logika Panjang: Preview Gambar
-            const fileInput = document.getElementById('image');
-            document.getElementById('dropZone').addEventListener('click', () => fileInput.click());
-            fileInput.addEventListener('change', e => {
-                if (e.target.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                        document.getElementById('previewImg').src = e.target.result;
-                        document.getElementById('imagePreview').classList.remove('hidden');
-                    };
-                    reader.readAsDataURL(e.target.files[0]);
+            tinymce.init({
+                selector      : '#contentField',
+                license_key   : 'gpl',
+                height        : 350,
+                menubar       : false,
+                plugins       : 'lists link autolink',
+                toolbar       : [
+                    'undo redo | bold italic underline strikethrough | forecolor backcolor',
+                    'bullist numlist | outdent indent | blockquote',
+                    'link | alignleft aligncenter alignright alignjustify | removeformat'
+                ],
+                toolbar_mode  : 'wrap',
+                skin_url      : '/build/tinymce/skins/ui/oxide',
+                content_css   : '/build/tinymce/skins/content/default/content.min.css',
+                content_style : 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; max-width: 100%; }',
+                setup: function (editor) {
+                    editor.on('change', function () { editor.save(); });
+                },
+                init_instance_callback: function () {
+                    if (skeleton) skeleton.remove();
+                    contentField.classList.remove('hidden');
                 }
             });
+        }
+
+        // ── Toggle fields ──────────────────────────────────────────────────────
+        function toggleFields() {
+            const key = keySelect.value;
+
+            document.getElementById('principalNameField')
+                .classList.toggle('hidden', key !== 'principal_greeting');
+            document.getElementById('imageField')
+                .classList.toggle('hidden', noImageKeys.includes(key) || key === '');
+            document.getElementById('schoolInfoFields')
+                .classList.toggle('hidden', key !== 'school_info');
+
+            const isSchoolInfo = key === 'school_info';
+            const hasContent   = key !== '' && !isSchoolInfo;
+
+            contentWrapper.classList.toggle('hidden', !hasContent);
+
+            if (isSchoolInfo) {
+                if (typeof tinymce !== 'undefined' && tinymce.get('contentField')) {
+                    tinymce.get('contentField').remove();
+                    tinymceReady = false;
+                }
+                if (skeleton) skeleton.classList.add('hidden');
+                contentField.classList.remove('hidden');
+                buildJson();
+            } else if (hasContent) {
+                if (skeleton) skeleton.classList.remove('hidden');
+                contentField.classList.add('hidden');
+                initTinyMCE();
+            }
+        }
+
+        keySelect.addEventListener('change', toggleFields);
+        toggleFields();
+
+        // ── Image upload ───────────────────────────────────────────────────────
+        const dropZone     = document.getElementById('dropZone');
+        const pickFileBtn  = document.getElementById('pickFileBtn');
+        const fileInput    = document.getElementById('image');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg   = document.getElementById('previewImg');
+        const fileName     = document.getElementById('fileName');
+        const maxSize      = 5 * 1024 * 1024;
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Pilih file gambar yang valid');
+                return;
+            }
+            if (file.size > maxSize) {
+                alert('Ukuran file maksimal 5MB');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = e => {
+                previewImg.src = e.target.result;
+                fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                imagePreview.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        dropZone.addEventListener('click', function () { fileInput.click(); });
+
+        pickFileBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            fileInput.click();
         });
-    </script>
+
+        fileInput.addEventListener('change', e => {
+            if (e.target.files[0]) handleFile(e.target.files[0]);
+        });
+
+        dropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            dropZone.classList.add('border-blue-500', 'bg-blue-50');
+        });
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+        });
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+            if (e.dataTransfer.files[0]) {
+                fileInput.files = e.dataTransfer.files;
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+    });
+</script>
 @endpush
