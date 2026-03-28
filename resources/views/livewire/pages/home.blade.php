@@ -89,9 +89,6 @@
                         Unggul &amp; Berkarakter
                     </div>
 
-                    {{-- Image:
-                         Mobile  → 16/9 landscape (tidak terlalu tinggi, pas di layar kecil)
-                         Desktop → 5/6 portrait  (sejajar panjang teks kiri) --}}
                     <style>
                         @media(min-width:1024px){
                             .hero-img-wrap{aspect-ratio:5/6!important;max-height:520px;box-shadow:0 16px 48px rgba(0,0,0,.13)!important}
@@ -100,7 +97,7 @@
                     <div class="hero-img-wrap relative rounded-[18px] sm:rounded-[22px] overflow-hidden w-full"
                         style="aspect-ratio:16/9;box-shadow:0 8px 28px rgba(0,0,0,.11)">
                         @if ($heroImage && $heroImage->image)
-                            <img src="{{ asset('files/' . $heroImage->image) }}"
+                            <img src="{{ asset('storage/' . $heroImage->image) }}"
                                 alt="{{ config('app.name') }}"
                                 class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]">
                         @else
@@ -112,7 +109,7 @@
                             style="background:linear-gradient(to top,rgba(14,83,45,.2) 0%,transparent 45%)"></div>
                     </div>
 
-                    {{-- Akreditasi badge — di dalam flow, tidak absolute pada mobile --}}
+                    {{-- Akreditasi badge --}}
                     <div class="absolute bottom-0 right-4 sm:right-5 lg:right-4 z-10 flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl bg-white"
                         style="box-shadow:0 6px 24px rgba(0,0,0,.11);border:1px solid rgba(21,128,61,.08)">
                         <div class="flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-full lg:w-9 lg:h-9"
@@ -151,7 +148,7 @@
                     <div class="relative w-56 h-72 md:w-64 md:h-80 rounded-[22px] overflow-hidden border-4 border-white bg-[#dcfce7]"
                         style="box-shadow:0 16px 48px rgba(0,0,0,.12)">
                         @if ($principalGreeting?->image)
-                            <img src="{{ asset('files/' . $principalGreeting->image) }}"
+                            <img src="{{ asset('storage/' . $principalGreeting->image) }}"
                                 alt="{{ $principalGreeting->principal_name ?? 'Kepala Sekolah' }}"
                                 class="object-cover object-top w-full h-full">
                         @else
@@ -224,7 +221,7 @@
                 <div class="w-[88px] h-[88px] rounded-full overflow-hidden mb-5 flex-shrink-0"
                     style="background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 6px 18px rgba(21,128,61,.26)">
                     @if ($teacher->image)
-                        <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="object-cover w-full h-full">
+                        <img src="{{ asset('storage/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="object-cover w-full h-full">
                     @else
                         <div class="flex items-center justify-center w-full h-full">
                             <i class="text-4xl text-white fas fa-chalkboard-user"></i>
@@ -270,7 +267,7 @@
                 style="box-shadow:0 1px 8px rgba(0,0,0,.05)">
                 <div class="h-[200px] overflow-hidden flex-shrink-0 bg-gray-100">
                     @if ($news->featured_image)
-                        <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
+                        <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}"
                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.04]">
                     @else
                         <div class="flex items-center justify-center w-full h-full text-5xl font-black text-white/25"

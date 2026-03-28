@@ -113,7 +113,7 @@
                     @if ($news->featured_image)
                         <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
                             <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
-                            <img src="{{ asset('files/' . $news->featured_image) }}" alt="{{ $news->title }}"
+                            <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}"
                                 class="object-cover h-40 max-w-sm rounded">
                         </div>
                     @endif
@@ -284,7 +284,6 @@
                         editor.save();
                     });
                 },
-                // Hapus skeleton & tampilkan editor setelah TinyMCE siap
                 init_instance_callback: function(editor) {
                     const skeleton = document.getElementById('tinymce-skeleton');
                     if (skeleton) skeleton.remove();

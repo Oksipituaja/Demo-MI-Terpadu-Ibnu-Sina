@@ -58,7 +58,7 @@
                             <div class="relative flex items-center justify-center h-48 overflow-hidden"
                                 style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                                 @if ($item->featured_image)
-                                    <img src="{{ asset('files/' . $item->featured_image) }}" alt="{{ $item->title }}"
+                                    <img src="{{ asset('storage/' . $item->featured_image) }}" alt="{{ $item->title }}"
                                         loading="lazy"
                                         class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
                                 @else
@@ -82,7 +82,7 @@
                                     {{ $item->excerpt ?? Str::limit(strip_tags($item->content), 90) }}
                                 </p>
                                 <div class="pt-3 border-t" style="border-color: #15803d1a"></div>
-                                <a href="{{ route('news.detail', $item->slug) }}" 
+                                <a href="{{ route('news.detail', $item->slug) }}"
                                     class="inline-flex items-center mt-3 text-sm font-semibold transition-opacity group/link hover:opacity-75"
                                     style="color: #15803d">
                                     Baca Selengkapnya

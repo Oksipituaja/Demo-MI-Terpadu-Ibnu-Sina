@@ -34,7 +34,7 @@
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
                                 @if($article->featured_image)
-                                    <img src="{{ asset('files/' . $article->featured_image) }}"
+                                    <img src="{{ asset('storage/' . $article->featured_image) }}"
                                         alt="{{ $article->title }}"
                                         class="object-cover w-10 h-10 rounded-lg shrink-0">
                                 @else

@@ -9986,3 +9986,5 @@ Did you mean this?
 [2026-03-26 12:33:10] local.WARNING: Slow Query: select * from `abouts` limit 1 (554.77ms)  
 [2026-03-26 12:33:11] local.WARNING: Slow Query: select * from `registrations` limit 1 (158.12ms)  
 [2026-03-26 12:33:12] local.WARNING: Slow Query: select * from `users` limit 1 (294.1ms)  
+[2026-03-28 05:30:59] local.WARNING: Slow Query: select * from `abouts` limit 1 (1257.36ms)  
+[2026-03-28 05:30:59] local.WARNING: Slow Query: select * from `registrations` limit 1 (156.83ms)  
