@@ -59,7 +59,7 @@ Gunakan opsi ini jika sekolah sudah punya Google Forms dan ingin tetap memakainy
             marginwidth="0"
             class="w-full"
             loading="lazy">
-            Memuat formulir...
+            Memuat formulir....
         </iframe>
     </div>
 </div>

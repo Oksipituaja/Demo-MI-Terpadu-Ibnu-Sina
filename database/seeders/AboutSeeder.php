@@ -22,7 +22,7 @@ class AboutSeeder extends Seeder
 <p>MIS Terpadu Ibnu Sina berkomitmen untuk mewujudkan generasi muslim yang berilmu, berkarya, taat beribadah, berakhlaqul karimah, terampil, dan unggul dalam prestasi sesuai dengan visi madrasah kami.</p>
 <p>Dengan dukungan seluruh tenaga pendidik yang profesional dan fasilitas yang memadai, kami siap membimbing peserta didik menuju masa depan yang cerah dan bermartabat.</p>
 <p>Wassalamu\'alaikum warahmatullahi wabarakatuh.</p>',
-                'image'          => null,
+                'featured_image'          => null,
             ],
             [
                 'key'     => 'school_profile',

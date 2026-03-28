@@ -85,7 +85,7 @@ class TeacherSeeder extends Seeder
                 'email'   => $data['email'],
                 'phone'   => $data['phone'],
                 'subject' => $data['subject'],
-                'image'   => null,
+                'featured_image'   => null,
             ]);
         }
     }

@@ -15,7 +15,7 @@ class AddHeroImageSeeder extends Seeder
                 'title' => 'Hero Image',
                 'key' => 'hero_image',
                 'content' => 'Gambar utama yang ditampilkan di homepage',
-                'image' => null, // User akan upload melalui admin panel
+                'featured_image' => null, // User akan upload melalui admin panel
             ]);
         }
     }

@@ -30,7 +30,6 @@ class TeacherController extends Controller
             'email' => 'required|email|unique:teachers',
             'phone' => 'nullable|string',
             'subject' => 'nullable|string',
-            'bio' => 'nullable|string',
             'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
@@ -57,7 +56,6 @@ class TeacherController extends Controller
             'email' => 'required|email|unique:teachers,email,' . $teacher->id,
             'phone' => 'nullable|string',
             'subject' => 'nullable|string',
-            'bio' => 'nullable|string',
             'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
