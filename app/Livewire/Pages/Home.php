@@ -17,12 +17,27 @@ use Livewire\Component;
 #[Layout('components.layouts.app')]
 class Home extends Component
 {
+    /**
+     * Helper internal untuk menentukan icon prestasi
+     */
+    private function getAwardIcon($category)
+    {
+        $cat = strtolower($category);
+        if (str_contains($cat, '1')) {
+            return ['icon' => 'fas fa-trophy', 'bgStyle' => 'background:linear-gradient(135deg,#f59e0b,#d97706)', 'textStyle' => 'color:#d97706'];
+        } elseif (str_contains($cat, '2')) {
+            return ['icon' => 'fas fa-medal', 'bgStyle' => 'background:linear-gradient(135deg,#94a3b8,#475569)', 'textStyle' => 'color:#475569'];
+        } elseif (str_contains($cat, '3')) {
+            return ['icon' => 'fas fa-award', 'bgStyle' => 'background:linear-gradient(135deg,#b45309,#78350f)', 'textStyle' => 'color:#78350f'];
+        }
+        return ['icon' => 'fas fa-star', 'bgStyle' => 'background:linear-gradient(135deg,#10b981,#059669)', 'textStyle' => 'color:#059669'];
+    }
+
     public function render()
     {
-        // Aggressive caching untuk ultra-fast homepage
         $latestNews = Cache::remember('home.latest_news', 1800, function () {
             return News::where('status', 'published')
-                ->select(['id', 'title', 'slug', 'excerpt', 'published_at', 'featured_featured_image'])
+                ->select(['id', 'title', 'slug', 'excerpt', 'published_at', 'featured_image'])
                 ->orderBy('published_at', 'desc')
                 ->limit(3)
                 ->get();
@@ -50,38 +65,23 @@ class Home extends Component
         $agendas = Cache::remember('home.upcoming_agendas', 900, function () use ($today) {
             return Agenda::select(['id', 'title', 'description', 'event_date', 'event_time', 'location', 'status', 'slug'])
                 ->whereIn('status', ['upcoming', 'ongoing'])
-                ->orderByRaw('
-                    CASE WHEN event_date >= ? THEN 0 ELSE 1 END,
-                    CASE WHEN event_date >= ? THEN event_date ELSE NULL END ASC,
-                    event_date DESC
-                ', [$today, $today])
+                ->orderByRaw('CASE WHEN event_date >= ? THEN 0 ELSE 1 END, event_date ASC', [$today])
                 ->limit(4)
                 ->get();
         });
 
         $principalGreeting = Cache::remember('about.principal_greeting', 86400, function () {
-            return About::where('key', 'principal_greeting')->select(['id', 'key', 'title', 'principal_name', 'content', 'featured_image'])->first();
+            return About::where('key', 'principal_greeting')->first();
         });
 
-        $herofeatured_image = Cache::remember('about.hero_featured_image', 86400, function () {
-            return About::where('key', 'hero_featured_image')->select(['id', 'key', 'featured_image'])->first();
+        // Diubah menjadi $heroImage agar sinkron dengan Blade
+        $heroImage = Cache::remember('about.hero_featured_image', 86400, function () {
+            return About::where('key', 'hero_featured_image')->first();
         });
 
         $prestasis = Cache::remember('home.featured_prestasis', 1800, function () {
             return Prestasi::where('status', 'published')
-                ->orderByRaw("
-                    CASE 
-                        WHEN category LIKE '%Juara 1%' THEN 1
-                        WHEN category LIKE '%Juara 2%' THEN 2
-                        WHEN category LIKE '%Juara 3%' THEN 3
-                        WHEN category LIKE '%Harapan 1%' THEN 4
-                        WHEN category LIKE '%Harapan 2%' THEN 5
-                        WHEN category LIKE '%Harapan 3%' THEN 6
-                        WHEN category LIKE '%Harapan%' THEN 7
-                        ELSE 99
-                    END,
-                    achievement_date DESC
-                ")
+                ->orderBy('achievement_date', 'desc')
                 ->limit(3)
                 ->get();
         });
@@ -93,8 +93,9 @@ class Home extends Component
             'teachers' => $teachers,
             'agendas' => $agendas,
             'principalGreeting' => $principalGreeting,
-            'herofeatured_image' => $herofeatured_image,
+            'heroImage' => $heroImage, // <--- SINKRON
             'prestasis' => $prestasis,
+            'getAwardIcon' => fn($cat) => $this->getAwardIcon($cat) // Mengirim closure ke blade
         ]);
     }
 }

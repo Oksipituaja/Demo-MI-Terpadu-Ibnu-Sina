@@ -22,7 +22,7 @@ class Gallery extends Component
 
     public function render()
     {
-        $galleries = GalleryModel::select(['id', 'title', 'slug', 'image', 'category', 'description'])
+        $galleries = GalleryModel::select(['id', 'title', 'slug', 'featured_image', 'category', 'description'])
             ->when($this->category, function ($query) {
                 $query->where('category', $this->category);
             })

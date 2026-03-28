@@ -96,7 +96,7 @@
                     </style>
                     <div class="hero-img-wrap relative rounded-[18px] sm:rounded-[22px] overflow-hidden w-full"
                         style="aspect-ratio:16/9;box-shadow:0 8px 28px rgba(0,0,0,.11)">
-                        @if ($heroImage && $heroImage->image)
+                        @if ($heroImage && $heroImage->featured_image)
                             <img src="{{ asset('storage/' . $heroImage->featured_image) }}"
                                 alt="{{ config('app.name') }}"
                                 class="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.03]">
@@ -147,7 +147,7 @@
 
                     <div class="relative w-56 h-72 md:w-64 md:h-80 rounded-[22px] overflow-hidden border-4 border-white bg-[#dcfce7]"
                         style="box-shadow:0 16px 48px rgba(0,0,0,.12)">
-                        @if ($principalGreeting?->image)
+                        @if ($principalGreeting?->featured_image)
                             <img src="{{ asset('storage/' . $principalGreeting->featured_image) }}"
                                 alt="{{ $principalGreeting->principal_name ?? 'Kepala Sekolah' }}"
                                 class="object-cover object-top w-full h-full">
@@ -220,7 +220,7 @@
                 style="box-shadow:0 2px 12px rgba(21,128,61,.06)">
                 <div class="w-[88px] h-[88px] rounded-full overflow-hidden mb-5 flex-shrink-0"
                     style="background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 6px 18px rgba(21,128,61,.26)">
-                    @if ($teacher->image)
+                    @if ($teacher->featured_image)
                         <img src="{{ asset('storage/' . $teacher->featured_image) }}" alt="{{ $teacher->name }}" class="object-cover w-full h-full">
                     @else
                         <div class="flex items-center justify-center w-full h-full">
