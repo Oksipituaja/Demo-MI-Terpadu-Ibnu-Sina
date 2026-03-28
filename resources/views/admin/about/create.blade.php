@@ -30,8 +30,8 @@
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     <option value="">-- Pilih Tipe --</option>
                     {{-- Dua key hero yang berbeda --}}
-                    <option value="home_hero_image"     {{ old('key') === 'home_hero_image'     ? 'selected' : '' }}>🏠 Gambar Hero Beranda</option>
-                    <option value="hero_image"          {{ old('key') === 'hero_image'          ? 'selected' : '' }}>📄 Gambar Hero Tentang Kami</option>
+                    <option value="home_hero_image"     {{ old('key') === 'home_hero_image'     ? 'selected' : '' }}>Gambar Hero Beranda</option>
+                    <option value="hero_image"          {{ old('key') === 'hero_image'          ? 'selected' : '' }}>Gambar Hero Tentang Kami</option>
                     <option value="principal_greeting"  {{ old('key') === 'principal_greeting'  ? 'selected' : '' }}>Sambutan Kepala Sekolah</option>
                     <option value="school_profile"      {{ old('key') === 'school_profile'      ? 'selected' : '' }}>Profil Sekolah</option>
                     <option value="school_info"         {{ old('key') === 'school_info'         ? 'selected' : '' }}>Informasi Sekolah (JSON)</option>

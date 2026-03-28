@@ -11,7 +11,7 @@
             <p class="text-sm text-gray-500">Total {{ $abouts->count() }} konten</p>
         </div>
         <a href="{{ route('admin.about.create') }}"
-            class="flex items-center gap-2 px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+            class="hidden flex items-center gap-2 px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">
             <i class="fas fa-plus"></i> Tambah Konten
         </a>
     </div>
