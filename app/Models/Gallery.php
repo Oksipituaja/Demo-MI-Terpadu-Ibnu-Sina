@@ -11,6 +11,6 @@ class Gallery extends Model
         'slug',
         'description',
         'category',
-        'image',
+        'featured_image',
     ];
 }

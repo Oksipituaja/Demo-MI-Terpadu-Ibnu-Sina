@@ -12,8 +12,8 @@
             @if($gallery->featured_image)
                 {{-- FIXED: was asset('files/...'), must be asset('storage/...') --}}
                 <img src="{{ asset('storage/' . $gallery->featured_image) }}"
-                     alt="{{ $gallery->title }}"
-                     class="object-cover w-full h-full">
+                    alt="{{ $gallery->title }}"
+                    class="object-cover w-full h-full">
             @else
                 <i class="fas fa-images text-8xl opacity-20" style="color: #15803d"></i>
             @endif

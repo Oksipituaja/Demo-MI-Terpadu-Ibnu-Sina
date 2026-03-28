@@ -29,7 +29,7 @@ class AboutController extends Controller
             'principal_name' => 'nullable|string|max:255',
             'key' => 'required|string|unique:abouts',
             'content' => 'required|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
         if (About::where('key', $validated['key'])->exists()) {
@@ -38,9 +38,9 @@ class AboutController extends Controller
             ]);
         }
 
-        if ($request->hasFile('image')) {
-            $folder = $validated['key'] === 'hero_image' ? 'hero' : 'about';
-            $validated['image'] = $request->file('image')->store($folder, 'public');
+        if ($request->hasFile('featured_image')) {
+            $folder = $validated['key'] === 'hero_featured_image' ? 'hero' : 'about';
+            $validated['featured_image'] = $request->file('featured_image')->store($folder, 'public');
         }
 
         About::create($validated);
@@ -61,15 +61,15 @@ class AboutController extends Controller
             'principal_name' => 'nullable|string|max:255',
             'key' => 'required|string|unique:abouts,key,' . $about->id,
             'content' => 'required|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($about->image) {
-                Storage::disk('public')->delete($about->image);
+        if ($request->hasFile('featured_image')) {
+            if ($about->featured_image) {
+                Storage::disk('public')->delete($about->featured_image);
             }
-            $folder = $validated['key'] === 'hero_image' ? 'hero' : 'about';
-            $validated['image'] = $request->file('image')->store($folder, 'public');
+            $folder = $validated['key'] === 'hero_featured_image' ? 'hero' : 'about';
+            $validated['featured_image'] = $request->file('featured_image')->store($folder, 'public');
         }
 
         $about->update($validated);
@@ -80,8 +80,8 @@ class AboutController extends Controller
 
     public function destroy(About $about)
     {
-        if ($about->image) {
-            Storage::disk('public')->delete($about->image);
+        if ($about->featured_image) {
+            Storage::disk('public')->delete($about->featured_image);
         }
         $about->delete();
         $this->clearAboutCache();
@@ -92,6 +92,6 @@ class AboutController extends Controller
     private function clearAboutCache(): void
     {
         Cache::forget('about.principal_greeting');
-        Cache::forget('about.hero_image');
+        Cache::forget('about.hero_featured_image');
     }
 }

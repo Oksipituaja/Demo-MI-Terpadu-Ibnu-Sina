@@ -28,12 +28,12 @@ class FacilityController extends Controller
             'slug' => 'required|string|unique:facilities',
             'description' => 'nullable|string',
             'icon' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
             'kondisi' => 'required|in:tersedia,perbaikan,belum_ada,akan_ada',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('facilities', 'public');
+        if ($request->hasFile('featured_image')) {
+            $validated['featured_image'] = $request->file('featured_image')->store('facilities', 'public');
         }
 
         Facility::create($validated);
@@ -53,16 +53,16 @@ class FacilityController extends Controller
             'slug' => 'required|string|unique:facilities,slug,'.$facility->id,
             'description' => 'nullable|string',
             'icon' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
             'kondisi' => 'required|in:tersedia,perbaikan,belum_ada,akan_ada',
         ]);
 
-        if ($request->hasFile('image')) {
-            // Check if old image exists before deleting
-            if ($facility->image && \Storage::disk('public')->exists($facility->image)) {
-                \Storage::disk('public')->delete($facility->image);
+        if ($request->hasFile('featured_image')) {
+            // Check if old featured_image exists before deleting
+            if ($facility->featured_image && \Storage::disk('public')->exists($facility->featured_image)) {
+                \Storage::disk('public')->delete($facility->featured_image);
             }
-            $validated['image'] = $request->file('image')->store('facilities', 'public');
+            $validated['featured_image'] = $request->file('featured_image')->store('facilities', 'public');
         }
 
         $facility->update($validated);
@@ -72,8 +72,8 @@ class FacilityController extends Controller
 
     public function destroy(Facility $facility)
     {
-        if ($facility->image && \Storage::disk('public')->exists($facility->image)) {
-            \Storage::disk('public')->delete($facility->image);
+        if ($facility->featured_image && \Storage::disk('public')->exists($facility->featured_image)) {
+            \Storage::disk('public')->delete($facility->featured_image);
         }
         $facility->delete();
 

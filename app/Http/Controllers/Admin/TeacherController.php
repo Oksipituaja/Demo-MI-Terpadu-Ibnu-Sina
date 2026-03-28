@@ -31,11 +31,11 @@ class TeacherController extends Controller
             'phone' => 'nullable|string',
             'subject' => 'nullable|string',
             'bio' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('teachers', 'public');
+        if ($request->hasFile('featured_image')) {
+            $validated['featured_image'] = $request->file('featured_image')->store('teachers', 'public');
         }
 
         Teacher::create($validated);
@@ -58,14 +58,14 @@ class TeacherController extends Controller
             'phone' => 'nullable|string',
             'subject' => 'nullable|string',
             'bio' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($teacher->image && Storage::disk('public')->exists($teacher->image)) {
-                Storage::disk('public')->delete($teacher->image);
+        if ($request->hasFile('featured_image')) {
+            if ($teacher->featured_image && Storage::disk('public')->exists($teacher->featured_image)) {
+                Storage::disk('public')->delete($teacher->featured_image);
             }
-            $validated['image'] = $request->file('image')->store('teachers', 'public');
+            $validated['featured_image'] = $request->file('featured_image')->store('teachers', 'public');
         }
 
         $teacher->update($validated);
@@ -76,8 +76,8 @@ class TeacherController extends Controller
 
     public function destroy(Teacher $teacher)
     {
-        if ($teacher->image && Storage::disk('public')->exists($teacher->image)) {
-            Storage::disk('public')->delete($teacher->image);
+        if ($teacher->featured_image && Storage::disk('public')->exists($teacher->featured_image)) {
+            Storage::disk('public')->delete($teacher->featured_image);
         }
         $teacher->delete();
         Cache::forget('home.featured_teachers');

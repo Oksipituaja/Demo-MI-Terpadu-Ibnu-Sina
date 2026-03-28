@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->string('category');
-            $table->string('image');
+            $table->string('featured_image');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });

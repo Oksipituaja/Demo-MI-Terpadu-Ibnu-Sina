@@ -41,14 +41,14 @@ class PrestasiController extends Controller
             'description' => 'required|string',
             'category' => 'nullable|string|max:100',
             'achievement_date' => 'nullable|date',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
             'status' => 'required|in:draft,published',
         ]);
 
         $validated['slug'] = $this->generateUniqueSlug($validated['title']);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('prestasi', 'public');
+        if ($request->hasFile('featured_image')) {
+            $validated['featured_image'] = $request->file('featured_image')->store('prestasi', 'public');
         }
 
         Prestasi::create($validated);
@@ -68,17 +68,17 @@ class PrestasiController extends Controller
             'description' => 'required|string',
             'category' => 'nullable|string|max:100',
             'achievement_date' => 'nullable|date',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
             'status' => 'required|in:draft,published',
         ]);
 
         $validated['slug'] = $this->generateUniqueSlug($validated['title'], $prestasi->id);
 
-        if ($request->hasFile('image')) {
-            if ($prestasi->image) {
-                \Storage::disk('public')->delete($prestasi->image);
+        if ($request->hasFile('featured_image')) {
+            if ($prestasi->featured_image) {
+                \Storage::disk('public')->delete($prestasi->featured_image);
             }
-            $validated['image'] = $request->file('image')->store('prestasi', 'public');
+            $validated['featured_image'] = $request->file('featured_image')->store('prestasi', 'public');
         }
 
         $prestasi->update($validated);
@@ -88,8 +88,8 @@ class PrestasiController extends Controller
 
     public function destroy(Prestasi $prestasi)
     {
-        if ($prestasi->image) {
-            \Storage::disk('public')->delete($prestasi->image);
+        if ($prestasi->featured_image) {
+            \Storage::disk('public')->delete($prestasi->featured_image);
         }
         $prestasi->delete();
 

@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
-            $table->string('image')->nullable();
+            $table->string('featured_image')->nullable();
             $table->string('key')->unique();
             $table->timestamps();
         });

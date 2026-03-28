@@ -28,10 +28,10 @@ class GalleryController extends Controller
             'slug' => 'required|string|unique:galleries',
             'description' => 'nullable|string',
             'category' => 'required|string',
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'required|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
-        $validated['image'] = $request->file('image')->store('gallery', 'public');
+        $validated['featured_image'] = $request->file('featured_image')->store('gallery', 'public');
         Gallery::create($validated);
 
         return redirect()->route('admin.galleries.index')->with('success', 'Gallery item added successfully!');
@@ -49,15 +49,15 @@ class GalleryController extends Controller
             'slug' => 'required|string|unique:galleries,slug,'.$gallery->id,
             'description' => 'nullable|string',
             'category' => 'required|string',
-            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
-        if ($request->hasFile('image')) {
-            // FIX #1: Check if old image exists before deleting
-            if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
-                \Storage::disk('public')->delete($gallery->image);
+        if ($request->hasFile('featured_image')) {
+            // FIX #1: Check if old featured_image exists before deleting
+            if ($gallery->featured_image && \Storage::disk('public')->exists($gallery->featured_image)) {
+                \Storage::disk('public')->delete($gallery->featured_image);
             }
-            $validated['image'] = $request->file('image')->store('gallery', 'public');
+            $validated['featured_image'] = $request->file('featured_image')->store('gallery', 'public');
         }
 
         $gallery->update($validated);
@@ -67,9 +67,9 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        // FIX #1: Check if image exists before deleting
-        if ($gallery->image && \Storage::disk('public')->exists($gallery->image)) {
-            \Storage::disk('public')->delete($gallery->image);
+        // FIX #1: Check if featured_image exists before deleting
+        if ($gallery->featured_image && \Storage::disk('public')->exists($gallery->featured_image)) {
+            \Storage::disk('public')->delete($gallery->featured_image);
         }
         $gallery->delete();
 

@@ -34,11 +34,11 @@ class GalleryController extends Controller
             'slug'        => 'required|string|unique:galleries,slug|max:255',
             'description' => 'nullable|string',
             'category'    => 'required|string|max:100',
-            'image'       => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image'       => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('gallery', 'public');
+        if ($request->hasFile('featured_image')) {
+            $validated['featured_image'] = $request->file('featured_image')->store('gallery', 'public');
         }
 
         Gallery::create($validated);
@@ -55,14 +55,14 @@ class GalleryController extends Controller
             'slug'        => 'required|string|unique:galleries,slug,' . $gallery->id . '|max:255',
             'description' => 'nullable|string',
             'category'    => 'required|string|max:100',
-            'image'       => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'featured_image'       => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
-        if ($request->hasFile('image')) {
-            if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
-                Storage::disk('public')->delete($gallery->image);
+        if ($request->hasFile('featured_image')) {
+            if ($gallery->featured_image && Storage::disk('public')->exists($gallery->featured_image)) {
+                Storage::disk('public')->delete($gallery->featured_image);
             }
-            $validated['image'] = $request->file('image')->store('gallery', 'public');
+            $validated['featured_image'] = $request->file('featured_image')->store('gallery', 'public');
         }
 
         $gallery->update($validated);
@@ -74,8 +74,8 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        if ($gallery->image && Storage::disk('public')->exists($gallery->image)) {
-            Storage::disk('public')->delete($gallery->image);
+        if ($gallery->featured_image && Storage::disk('public')->exists($gallery->featured_image)) {
+            Storage::disk('public')->delete($gallery->featured_image);
         }
         $gallery->delete();
         Cache::forget('gallery.all_categories');

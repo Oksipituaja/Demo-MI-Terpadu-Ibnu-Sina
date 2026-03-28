@@ -100,7 +100,7 @@
                 {{-- FIXED: removed onclick from inner button to prevent double dialog --}}
                 <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
                     id="dropZone">
-                    <input type="file" id="image" name="image" accept="image/*" class="hidden">
+                    <input type="file" id="image" name="featured_image" accept="image/*" class="hidden">
                     <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
                     <p class="text-gray-600">Seret & letakkan atau
                         <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer" id="pickFileBtn">pilih

@@ -15,7 +15,7 @@ class Prestasi extends Model
         'slug',
         'description',
         'category',
-        'image',
+        'featured_image',
         'achievement_date',
         'status',
     ];

@@ -10,8 +10,8 @@
             style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
             @if($facility->featured_image)
                 <img src="{{ asset('storage/' . $facility->featured_image) }}"
-                     alt="{{ $facility->name }}"
-                     class="object-cover w-full h-full">
+                    alt="{{ $facility->name }}"
+                    class="object-cover w-full h-full">
             @else
                 <i class="{{ $facility->icon ?? 'fas fa-building' }} text-8xl opacity-30" style="color: #15803d"></i>
             @endif

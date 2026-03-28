@@ -15,7 +15,7 @@ return new class extends Migration
             if (!Schema::hasColumn('facilities', 'kondisi')) {
                 $table->enum('kondisi', ['tersedia', 'perbaikan', 'belum_ada', 'akan_ada'])
                     ->default('tersedia')
-                    ->after('image');
+                    ->after('featured_image');
             }
         });
     }

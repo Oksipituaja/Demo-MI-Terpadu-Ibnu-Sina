@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description');
             $table->string('category')->nullable();
-            $table->string('image')->nullable();
+            $table->string('featured_image')->nullable();
             $table->date('achievement_date')->nullable();
             $table->enum('status', ['draft', 'published'])->default('published');
             $table->timestamps();
