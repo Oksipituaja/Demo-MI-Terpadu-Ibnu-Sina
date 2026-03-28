@@ -29,16 +29,17 @@
             <label class="block mb-1 text-sm font-medium text-gray-700">Tipe Konten</label>
             <select id="keySelect" name="key" required
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50">
-                <option value="hero_image" {{ $about->key === 'hero_image' ? 'selected' : '' }}>Gambar Utama</option>
+                <option value="home_hero_image"    {{ $about->key === 'home_hero_image'    ? 'selected' : '' }}>🏠 Gambar Hero Beranda</option>
+                <option value="hero_image"         {{ $about->key === 'hero_image'         ? 'selected' : '' }}>📄 Gambar Hero Tentang Kami</option>
                 <option value="principal_greeting" {{ $about->key === 'principal_greeting' ? 'selected' : '' }}>Sambutan Kepala Sekolah</option>
-                <option value="school_profile" {{ $about->key === 'school_profile' ? 'selected' : '' }}>Profil Sekolah</option>
-                <option value="school_info" {{ $about->key === 'school_info' ? 'selected' : '' }}>Informasi Sekolah (JSON)</option>
-                <option value="vision" {{ $about->key === 'vision' ? 'selected' : '' }}>Visi</option>
-                <option value="mission" {{ $about->key === 'mission' ? 'selected' : '' }}>Misi</option>
+                <option value="school_profile"     {{ $about->key === 'school_profile'     ? 'selected' : '' }}>Profil Sekolah</option>
+                <option value="school_info"        {{ $about->key === 'school_info'        ? 'selected' : '' }}>Informasi Sekolah (JSON)</option>
+                <option value="vision"             {{ $about->key === 'vision'             ? 'selected' : '' }}>Visi</option>
+                <option value="mission"            {{ $about->key === 'mission'            ? 'selected' : '' }}>Misi</option>
             </select>
+            <p id="keyHint" class="mt-1 text-xs text-gray-400 hidden"></p>
         </div>
 
-        {{-- JSON Fields for School Info --}}
         @php
             $info = [];
             if ($about->key === 'school_info') {
@@ -60,11 +61,11 @@
             </div>
         </div>
 
-        {{-- Content + Skeleton --}}
-        <div id="contentWrapper" class="{{ $about->key === 'school_info' ? 'hidden' : '' }}">
+        {{-- Content + Skeleton — tersembunyi untuk image-only key --}}
+        @php $imageOnlyKeys = ['home_hero_image', 'hero_image']; @endphp
+        <div id="contentWrapper" class="{{ $about->key === 'school_info' || in_array($about->key, $imageOnlyKeys) ? 'hidden' : '' }}">
             <label class="block mb-1 text-sm font-medium text-gray-700">Konten</label>
 
-            {{-- Skeleton loader (sama persis seperti news) --}}
             <div id="tinymce-skeleton" class="w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
                 style="height:350px;">
                 <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
@@ -93,8 +94,14 @@
         </div>
 
         {{-- Image Field --}}
-        <div id="imageField" class="{{ in_array($about->key, ['school_profile', 'vision', 'mission', 'school_info']) ? 'hidden' : '' }}">
-            <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
+        @php $noImageKeys = ['school_profile', 'vision', 'mission', 'school_info']; @endphp
+        <div id="imageField" class="{{ in_array($about->key, $noImageKeys) ? 'hidden' : '' }}">
+            <label class="block mb-1 text-sm font-medium text-gray-700" id="imageLabel">
+                @if($about->key === 'home_hero_image') Gambar Hero Beranda
+                @elseif($about->key === 'hero_image') Gambar Hero Tentang Kami
+                @else Gambar
+                @endif
+            </label>
 
             @if ($about->featured_image)
                 <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
@@ -126,7 +133,7 @@
 
         <div class="flex gap-3 pt-4 border-t">
             @include('components.admin-submit-btn', [
-                'label' => 'Simpan Perubahan',
+                'label'   => 'Simpan Perubahan',
                 'loading' => 'Menyimpan...',
             ])
             <a href="{{ route('admin.about.index') }}"
@@ -141,14 +148,24 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const keySelect       = document.getElementById('keySelect');
-        const contentField    = document.getElementById('contentField');
-        const contentWrapper  = document.getElementById('contentWrapper');
-        const skeleton        = document.getElementById('tinymce-skeleton');
-        const noImageKeys     = ['school_profile', 'vision', 'mission', 'school_info'];
-        let tinymceReady      = false;
+        const keySelect      = document.getElementById('keySelect');
+        const contentField   = document.getElementById('contentField');
+        const contentWrapper = document.getElementById('contentWrapper');
+        const skeleton       = document.getElementById('tinymce-skeleton');
+        const keyHint        = document.getElementById('keyHint');
+        const imageLabel     = document.getElementById('imageLabel');
 
-        // ── JSON builder ───────────────────────────────────────────────────────
+        const imageOnlyKeys = ['home_hero_image', 'hero_image'];
+        const noImageKeys   = ['school_profile', 'vision', 'mission', 'school_info'];
+
+        const hints = {
+            'home_hero_image'    : '🏠 Gambar ini ditampilkan di section kanan hero halaman Beranda.',
+            'hero_image'         : '📄 Gambar ini ditampilkan sebagai banner besar di halaman Tentang Kami.',
+            'principal_greeting' : 'Foto & sambutan kepala sekolah ditampilkan di Beranda dan halaman Tentang.',
+        };
+
+        let tinymceReady = false;
+
         function buildJson() {
             const data = {
                 npsn         : document.getElementById('si_npsn').value,
@@ -158,26 +175,24 @@
         }
         document.querySelectorAll('.si-input').forEach(el => el.addEventListener('input', buildJson));
 
-        // ── TinyMCE init ───────────────────────────────────────────────────────
         function initTinyMCE() {
             if (tinymceReady || typeof tinymce === 'undefined') return;
             tinymceReady = true;
-
             tinymce.init({
-                selector        : '#contentField',
-                license_key     : 'gpl',
-                height          : 350,
-                menubar         : false,
-                plugins         : 'lists link autolink',
-                toolbar         : [
+                selector      : '#contentField',
+                license_key   : 'gpl',
+                height        : 350,
+                menubar       : false,
+                plugins       : 'lists link autolink',
+                toolbar       : [
                     'undo redo | bold italic underline strikethrough | forecolor backcolor',
                     'bullist numlist | outdent indent | blockquote',
                     'link | alignleft aligncenter alignright alignjustify | removeformat'
                 ],
-                toolbar_mode    : 'wrap',
-                skin_url        : '/build/tinymce/skins/ui/oxide',
-                content_css     : '/build/tinymce/skins/content/default/content.min.css',
-                content_style   : 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; max-width: 100%; }',
+                toolbar_mode  : 'wrap',
+                skin_url      : '/build/tinymce/skins/ui/oxide',
+                content_css   : '/build/tinymce/skins/content/default/content.min.css',
+                content_style : 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; max-width: 100%; }',
                 setup: function (editor) {
                     editor.on('change', function () { editor.save(); });
                 },
@@ -188,21 +203,35 @@
             });
         }
 
-        // ── Toggle fields ──────────────────────────────────────────────────────
         function toggleFields() {
-            const key = keySelect.value;
+            const key          = keySelect.value;
+            const isImageOnly  = imageOnlyKeys.includes(key);
+            const isSchoolInfo = key === 'school_info';
+            const hasContent   = key !== '' && !isSchoolInfo && !isImageOnly;
+            const showImage    = !noImageKeys.includes(key) && key !== '';
+
+            if (hints[key]) {
+                keyHint.textContent = hints[key];
+                keyHint.classList.remove('hidden');
+            } else {
+                keyHint.classList.add('hidden');
+            }
+
+            if (imageLabel) {
+                if (key === 'home_hero_image') imageLabel.textContent = 'Gambar Hero Beranda';
+                else if (key === 'hero_image') imageLabel.textContent = 'Gambar Hero Tentang Kami';
+                else imageLabel.textContent = 'Gambar';
+            }
 
             document.getElementById('principalNameField')
                 .classList.toggle('hidden', key !== 'principal_greeting');
             document.getElementById('imageField')
-                .classList.toggle('hidden', noImageKeys.includes(key));
+                .classList.toggle('hidden', !showImage);
             document.getElementById('schoolInfoFields')
-                .classList.toggle('hidden', key !== 'school_info');
-            contentWrapper
-                .classList.toggle('hidden', key === 'school_info');
+                .classList.toggle('hidden', !isSchoolInfo);
+            contentWrapper.classList.toggle('hidden', !hasContent);
 
-            if (key === 'school_info') {
-                // destroy TinyMCE jika ada, tampilkan textarea biasa
+            if (isSchoolInfo) {
                 if (typeof tinymce !== 'undefined' && tinymce.get('contentField')) {
                     tinymce.get('contentField').remove();
                     tinymceReady = false;
@@ -210,35 +239,34 @@
                 if (skeleton) skeleton.style.display = 'none';
                 contentField.classList.remove('hidden');
                 buildJson();
-            } else {
-                // tampilkan skeleton lalu init TinyMCE
+            } else if (hasContent) {
                 if (skeleton) skeleton.style.display = '';
                 contentField.classList.add('hidden');
                 initTinyMCE();
+            } else {
+                if (typeof tinymce !== 'undefined' && tinymce.get('contentField')) {
+                    tinymce.get('contentField').remove();
+                    tinymceReady = false;
+                }
+                if (skeleton) skeleton.style.display = 'none';
             }
         }
 
         keySelect.addEventListener('change', toggleFields);
-        toggleFields(); // jalankan saat pertama load
+        toggleFields();
 
         // ── Image upload ───────────────────────────────────────────────────────
-        const dropZone    = document.getElementById('dropZone');
-        const pickFileBtn = document.getElementById('pickFileBtn');
-        const fileInput   = document.getElementById('image');
+        const dropZone     = document.getElementById('dropZone');
+        const pickFileBtn  = document.getElementById('pickFileBtn');
+        const fileInput    = document.getElementById('image');
         const imagePreview = document.getElementById('imagePreview');
-        const previewImg  = document.getElementById('previewImg');
-        const fileName    = document.getElementById('fileName');
-        const maxSize     = 5 * 1024 * 1024;
+        const previewImg   = document.getElementById('previewImg');
+        const fileName     = document.getElementById('fileName');
+        const maxSize      = 5 * 1024 * 1024;
 
         function handleFile(file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Pilih file gambar yang valid');
-                return;
-            }
-            if (file.size > maxSize) {
-                alert('Ukuran file maksimal 5MB');
-                return;
-            }
+            if (!file.type.startsWith('image/')) { alert('Pilih file gambar yang valid'); return; }
+            if (file.size > maxSize) { alert('Ukuran file maksimal 5MB'); return; }
             const reader = new FileReader();
             reader.onload = e => {
                 previewImg.src = e.target.result;
@@ -251,30 +279,14 @@
         }
 
         dropZone.addEventListener('click', function () { fileInput.click(); });
-
-        pickFileBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            fileInput.click();
-        });
-
-        fileInput.addEventListener('change', e => {
-            if (e.target.files[0]) handleFile(e.target.files[0]);
-        });
-
-        dropZone.addEventListener('dragover', e => {
-            e.preventDefault();
-            dropZone.classList.add('border-blue-500', 'bg-blue-50');
-        });
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-        });
+        pickFileBtn.addEventListener('click', function (e) { e.stopPropagation(); fileInput.click(); });
+        fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+        dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-blue-500', 'bg-blue-50'); });
+        dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('border-blue-500', 'bg-blue-50'); });
         dropZone.addEventListener('drop', e => {
             e.preventDefault();
             dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-            if (e.dataTransfer.files[0]) {
-                fileInput.files = e.dataTransfer.files;
-                handleFile(e.dataTransfer.files[0]);
-            }
+            if (e.dataTransfer.files[0]) { fileInput.files = e.dataTransfer.files; handleFile(e.dataTransfer.files[0]); }
         });
     });
 </script>

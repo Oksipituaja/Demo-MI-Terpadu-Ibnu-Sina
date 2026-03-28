@@ -17,9 +17,6 @@ use Livewire\Component;
 #[Layout('components.layouts.app')]
 class Home extends Component
 {
-    /**
-     * Helper internal untuk menentukan icon prestasi
-     */
     private function getAwardIcon($category)
     {
         $cat = strtolower($category);
@@ -74,9 +71,9 @@ class Home extends Component
             return About::where('key', 'principal_greeting')->first();
         });
 
-        // Diubah menjadi $heroImage agar sinkron dengan Blade
-        $heroImage = Cache::remember('about.hero_featured_image', 86400, function () {
-            return About::where('key', 'hero_featured_image')->first();
+        // KEY BENAR: 'home_hero_image' khusus untuk hero section di halaman Home
+        $heroImage = Cache::remember('about.home_hero_image', 86400, function () {
+            return About::where('key', 'home_hero_image')->first();
         });
 
         $prestasis = Cache::remember('home.featured_prestasis', 1800, function () {
@@ -87,15 +84,15 @@ class Home extends Component
         });
 
         return view('livewire.pages.home', [
-            'latestNews' => $latestNews,
-            'galleries' => $galleries,
-            'facilities' => $facilities,
-            'teachers' => $teachers,
-            'agendas' => $agendas,
+            'latestNews'        => $latestNews,
+            'galleries'         => $galleries,
+            'facilities'        => $facilities,
+            'teachers'          => $teachers,
+            'agendas'           => $agendas,
             'principalGreeting' => $principalGreeting,
-            'heroImage' => $heroImage, // <--- SINKRON
-            'prestasis' => $prestasis,
-            'getAwardIcon' => fn($cat) => $this->getAwardIcon($cat) // Mengirim closure ke blade
+            'heroImage'         => $heroImage,
+            'prestasis'         => $prestasis,
+            'getAwardIcon'      => fn($cat) => $this->getAwardIcon($cat),
         ]);
     }
 }

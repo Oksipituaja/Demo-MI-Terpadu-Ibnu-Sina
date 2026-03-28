@@ -25,28 +25,32 @@ class AboutController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title'          => 'required|string|max:255',
             'principal_name' => 'nullable|string|max:255',
-            'key' => 'required|string|unique:abouts',
-            'content' => 'required|string',
+            'key'            => 'required|string|unique:abouts',
+            'content'        => 'nullable|string',
             'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
-        if (About::where('key', $validated['key'])->exists()) {
-            return back()->withInput()->withErrors([
-                'key' => "Section '{$validated['key']}' already exists.",
-            ]);
+        if ($request->hasFile('featured_image')) {
+            $folder = match($validated['key']) {
+                'home_hero_image' => 'hero/home',
+                'hero_image'      => 'hero/about',
+                default           => 'about',
+            };
+            $validated['featured_image'] = $request->file('featured_image')->store($folder, 'public');
         }
 
-        if ($request->hasFile('featured_image')) {
-            $folder = $validated['key'] === 'hero_featured_image' ? 'hero' : 'about';
-            $validated['featured_image'] = $request->file('featured_image')->store($folder, 'public');
+        // Untuk key yang hanya butuh gambar (hero), content tidak wajib
+        if (empty($validated['content'])) {
+            $validated['content'] = '';
         }
 
         About::create($validated);
         $this->clearAboutCache();
 
-        return redirect()->route('admin.about.index')->with('success', 'About section created successfully!');
+        return redirect()->route('admin.about.index')
+            ->with('success', 'Konten berhasil ditambahkan!');
     }
 
     public function edit(About $about): View
@@ -57,10 +61,10 @@ class AboutController extends Controller
     public function update(About $about, Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title'          => 'required|string|max:255',
             'principal_name' => 'nullable|string|max:255',
-            'key' => 'required|string|unique:abouts,key,' . $about->id,
-            'content' => 'required|string',
+            'key'            => 'required|string|unique:abouts,key,' . $about->id,
+            'content'        => 'nullable|string',
             'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
         ]);
 
@@ -68,14 +72,23 @@ class AboutController extends Controller
             if ($about->featured_image) {
                 Storage::disk('public')->delete($about->featured_image);
             }
-            $folder = $validated['key'] === 'hero_featured_image' ? 'hero' : 'about';
+            $folder = match($validated['key']) {
+                'home_hero_image' => 'hero/home',
+                'hero_image'      => 'hero/about',
+                default           => 'about',
+            };
             $validated['featured_image'] = $request->file('featured_image')->store($folder, 'public');
+        }
+
+        if (empty($validated['content'])) {
+            $validated['content'] = $about->content ?? '';
         }
 
         $about->update($validated);
         $this->clearAboutCache();
 
-        return redirect()->route('admin.about.index')->with('success', 'About section updated successfully!');
+        return redirect()->route('admin.about.index')
+            ->with('success', 'Konten berhasil diperbarui!');
     }
 
     public function destroy(About $about)
@@ -86,12 +99,14 @@ class AboutController extends Controller
         $about->delete();
         $this->clearAboutCache();
 
-        return redirect()->route('admin.about.index')->with('success', 'About section deleted successfully!');
+        return redirect()->route('admin.about.index')
+            ->with('success', 'Konten berhasil dihapus!');
     }
 
     private function clearAboutCache(): void
     {
         Cache::forget('about.principal_greeting');
-        Cache::forget('about.hero_featured_image');
+        Cache::forget('about.home_hero_image');  // key HOME hero
+        Cache::forget('about.hero_image');        // key ABOUT hero
     }
 }
