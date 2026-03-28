@@ -29,8 +29,8 @@
             <label class="block mb-1 text-sm font-medium text-gray-700">Tipe Konten</label>
             <select id="keySelect" name="key" required
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50">
-                <option value="home_hero_image"    {{ $about->key === 'home_hero_image'    ? 'selected' : '' }}>🏠 Gambar Hero Beranda</option>
-                <option value="hero_image"         {{ $about->key === 'hero_image'         ? 'selected' : '' }}>📄 Gambar Hero Tentang Kami</option>
+                <option value="home_hero_image"    {{ $about->key === 'home_hero_image'    ? 'selected' : '' }}>Gambar Hero Beranda</option>
+                <option value="hero_image"         {{ $about->key === 'hero_image'         ? 'selected' : '' }}>Gambar Hero Tentang Kami</option>
                 <option value="principal_greeting" {{ $about->key === 'principal_greeting' ? 'selected' : '' }}>Sambutan Kepala Sekolah</option>
                 <option value="school_profile"     {{ $about->key === 'school_profile'     ? 'selected' : '' }}>Profil Sekolah</option>
                 <option value="school_info"        {{ $about->key === 'school_info'        ? 'selected' : '' }}>Informasi Sekolah (JSON)</option>
