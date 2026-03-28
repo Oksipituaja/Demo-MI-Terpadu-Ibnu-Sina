@@ -19,6 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(ContentSecurityPolicy::class);
         $middleware->append(CachePageResponse::class);
         $middleware->append(OptimizeCaching::class);
+        $middleware->web(append: [
+            \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+        ]);
         $middleware->alias([
             'super_admin'  => EnsureSuperAdmin::class,
             'auth.timeout' => AuthTimeout::class,
