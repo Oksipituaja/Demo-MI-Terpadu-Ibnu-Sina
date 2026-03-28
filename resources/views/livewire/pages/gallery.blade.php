@@ -10,10 +10,8 @@
             <p class="mt-2" style="color: #bbf7d0">Koleksi dokumentasi aktivitas dan kegiatan sekolah</p>
         </div>
     </div>
-
     <section id="gallery" class="py-20" style="background: #F0F4ED">
         <div class="container px-6 mx-auto">
-
             {{-- Mobile & Tablet: dropdown --}}
             <div class="block mb-16 lg:hidden">
                 <div class="relative" x-data="{ open: false }">
@@ -21,8 +19,8 @@
                         class="flex items-center justify-between w-full px-5 py-3 font-semibold rounded-full"
                         style="background: #15803d; color: white">
                         <span>{{ $category ? ucfirst($category) : 'Semua Kategori' }}</span>
-                        <svg class="w-4 h-4 ml-2 transition-transform" :class="{ 'rotate-180': open }"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 ml-2 transition-transform" :class="{ 'rotate-180': open }" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
@@ -44,7 +42,6 @@
                     </div>
                 </div>
             </div>
-
             {{-- Desktop: tabs --}}
             <div class="flex-wrap justify-center hidden gap-2 mb-16 lg:flex">
                 <button wire:click="$set('category', '')"
@@ -60,7 +57,6 @@
                     </button>
                 @endforeach
             </div>
-
             <div class="grid gap-6 mb-12 md:grid-cols-2 lg:grid-cols-3"
                 wire:loading.class="transition-opacity opacity-50">
                 @forelse($galleries as $item)
@@ -69,7 +65,8 @@
                         <div class="relative flex items-center justify-center h-64 overflow-hidden rounded-xl"
                             style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
                             @if ($item->featured_image)
-                                <img src="{{ asset('files/' . $item->featured_image) }}" alt="{{ $item->title }}"
+                                {{-- FIXED: was asset('files/...'), must be asset('storage/...') --}}
+                                <img src="{{ asset('storage/' . $item->featured_image) }}" alt="{{ $item->title }}"
                                     class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                     loading="lazy">
                             @else
@@ -80,8 +77,10 @@
                                         style="color: #15803d80">Foto Segera Hadir</span>
                                 </div>
                             @endif
-                            <div class="absolute inset-0 flex items-end justify-start p-4 transition-colors duration-300 bg-black/0 group-hover:bg-black/40">
-                                <span class="text-sm font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100 line-clamp-2">
+                            <div
+                                class="absolute inset-0 flex items-end justify-start p-4 transition-colors duration-300 bg-black/0 group-hover:bg-black/40">
+                                <span
+                                    class="text-sm font-semibold text-white transition-opacity opacity-0 group-hover:opacity-100 line-clamp-2">
                                     {{ $item->title }}
                                 </span>
                             </div>
@@ -103,13 +102,11 @@
                     </div>
                 @endforelse
             </div>
-
             <div class="flex justify-center mt-8">
                 {{ $galleries->links() }}
             </div>
         </div>
     </section>
-
     <section class="relative py-20 overflow-hidden text-white"
         style="background: linear-gradient(to right, #15803d, #166534)">
         <div class="absolute inset-0 opacity-10">

@@ -4,157 +4,280 @@
 @section('page_subtitle', 'Perbarui data prestasi peserta didik')
 
 @section('content')
-<div class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
-    <form action="{{ route('admin.prestasis.update', $prestasi) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
-        @csrf @method('PUT')
+    <div class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
+        <form action="{{ route('admin.prestasis.update', $prestasi) }}" method="POST" enctype="multipart/form-data"
+            class="space-y-5">
+            @csrf @method('PUT')
 
-        {{-- Slug hidden --}}
-        <input type="hidden" name="slug" id="prestasiSlug" value="{{ old('slug', $prestasi->slug) }}">
+            <input type="hidden" name="slug" id="prestasiSlug" value="{{ old('slug', $prestasi->slug) }}">
 
-        <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">Judul Prestasi</label>
-            <input type="text" name="title" id="prestasiTitle" value="{{ old('title', $prestasi->title) }}" required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-            @error('title') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">
-                Kategori
-                <span class="ml-1 text-xs text-gray-400">(opsional)</span>
-            </label>
-            <input type="text" name="category" value="{{ old('category', $prestasi->category) }}"
-                list="categoryOptions"
-                placeholder="Pilih atau ketik kategori..."
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-            <datalist id="categoryOptions">
-                <option value="Juara 1">
-                <option value="Juara 2">
-                <option value="Juara 3">
-                <option value="Harapan 1">
-                <option value="Harapan 2">
-                <option value="Harapan 3">
-                <option value="Finalis">
-                <option value="Peserta">
-            </datalist>
-            @error('category') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">Tanggal Prestasi</label>
-            <div class="flex gap-2">
-                <div id="achievementDateDisplay"
-                    class="flex-1 px-4 py-2 text-sm border border-gray-300 rounded-lg select-none bg-gray-50 {{ old('achievement_date', $prestasi->achievement_date) ? 'text-gray-800' : 'text-gray-400' }}">
-                    {{ old('achievement_date', $prestasi->achievement_date?->format('d M Y')) ?? 'Belum dipilih' }}
-                </div>
-                <input type="hidden" name="achievement_date" id="achievement_date_input"
-                    value="{{ old('achievement_date', $prestasi->achievement_date?->format('Y-m-d')) }}">
-                <button type="button" id="btn-pick-date"
-                    class="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 shrink-0">
-                    <i class="mr-1 fas fa-calendar"></i> Pilih
-                </button>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Judul Prestasi</label>
+                <input type="text" name="title" id="prestasiTitle" value="{{ old('title', $prestasi->title) }}"
+                    required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                @error('title')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
             </div>
-            @error('achievement_date') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
 
-        <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">Deskripsi</label>
-            <textarea name="description" rows="4" required
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">{{ old('description', $prestasi->description) }}</textarea>
-            @error('description') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">
+                    Kategori
+                    <span class="ml-1 text-xs text-gray-400">(opsional)</span>
+                </label>
+                <input type="text" name="category" value="{{ old('category', $prestasi->category) }}"
+                    list="categoryOptions" placeholder="Pilih atau ketik kategori..."
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                <datalist id="categoryOptions">
+                    <option value="Juara 1">
+                    <option value="Juara 2">
+                    <option value="Juara 3">
+                    <option value="Harapan 1">
+                    <option value="Harapan 2">
+                    <option value="Harapan 3">
+                    <option value="Finalis">
+                    <option value="Peserta">
+                </datalist>
+                @error('category')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
-        <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
-            @if($prestasi->featured_image)
-                <div class="p-4 mb-3 border border-gray-200 rounded-lg bg-gray-50">
-                    <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
-                    <img src="{{ Storage::url($prestasi->featured_image) }}" alt="{{ $prestasi->title }}"
-                        class="object-cover w-24 h-24 rounded-lg">
-                    <p class="mt-1 text-xs text-gray-400">Upload gambar baru untuk mengganti</p>
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Tanggal Prestasi</label>
+                <div class="flex gap-2">
+                    <div id="achievementDateDisplay"
+                        class="flex-1 px-4 py-2 text-sm border border-gray-300 rounded-lg select-none bg-gray-50 {{ old('achievement_date', $prestasi->achievement_date) ? 'text-gray-800' : 'text-gray-400' }}">
+                        {{ old('achievement_date', $prestasi->achievement_date?->format('d M Y')) ?? 'Belum dipilih' }}
+                    </div>
+                    <input type="hidden" name="achievement_date" id="achievement_date_input"
+                        value="{{ old('achievement_date', $prestasi->achievement_date?->format('Y-m-d')) }}">
+                    <button type="button" id="btn-pick-date"
+                        class="px-4 py-2 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 shrink-0">
+                        <i class="mr-1 fas fa-calendar"></i> Pilih
+                    </button>
                 </div>
-            @endif
-            <input type="file" name="image" accept="image/*"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-            <p class="mt-1 text-xs text-gray-500">Format: JPG, PNG, WebP. Maks: 5MB</p>
-            @error('image') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
+                @error('achievement_date')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
-        <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700">Status</label>
-            <select name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                <option value="draft"     {{ old('status', $prestasi->status) === 'draft'     ? 'selected' : '' }}>Draft (Belum Tayang)</option>
-                <option value="published" {{ old('status', $prestasi->status) === 'published' ? 'selected' : '' }}>Publikasi (Tayang)</option>
-            </select>
-            @error('status') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-        </div>
+            {{-- FIXED: description now uses TinyMCE with skeleton loader (was plain textarea, inconsistent) --}}
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Deskripsi</label>
 
-        <div class="flex gap-3 pt-4 border-t">
-            @include('components.admin-submit-btn', ['label' => 'Simpan Perubahan', 'loading' => 'Menyimpan...'])
-            <a href="{{ route('admin.prestasis.index') }}"
-                class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
-                <i class="mr-2 fas fa-times"></i> Batal
-            </a>
-        </div>
-    </form>
-</div>
+                <div id="tinymce-skeleton" class="w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
+                    style="height:300px;">
+                    <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
+                        @for ($i = 0; $i < 8; $i++)
+                            <div class="h-5 rounded bg-gray-200 animate-pulse"
+                                style="width:{{ [28, 28, 32, 28, 28, 36, 28, 32][$i] }}px"></div>
+                            @if (in_array($i, [1, 4]))
+                                <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                            @endif
+                        @endfor
+                    </div>
+                    <div class="p-4 space-y-3">
+                        <div class="h-4 w-3/4 rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-5/6 rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-2/3 rounded bg-gray-200 animate-pulse"></div>
+                        <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
+                    </div>
+                </div>
+
+                <textarea name="description" id="description" class="hidden" required>{{ old('description', $prestasi->description) }}</textarea>
+                @error('description')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
+                @if ($prestasi->featured_image)
+                    <div class="p-4 mb-3 border border-gray-200 rounded-lg bg-gray-50">
+                        <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
+                        <img src="{{ Storage::url($prestasi->featured_image) }}" alt="{{ $prestasi->title }}"
+                            class="object-cover w-24 h-24 rounded-lg">
+                        <p class="mt-1 text-xs text-gray-400">Upload gambar baru untuk mengganti</p>
+                    </div>
+                @endif
+                {{-- FIXED: replaced plain file input with drag-and-drop zone (consistent with other edit pages) --}}
+                <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
+                    id="dropZone">
+                    <input type="file" id="image" name="image" accept="image/*" class="hidden">
+                    <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
+                    <p class="text-gray-600">Seret & letakkan atau
+                        <button type="button" class="font-medium text-blue-600 hover:text-blue-700"
+                            onclick="document.getElementById('image').click()">pilih file</button>
+                    </p>
+                    <p class="mt-1 text-xs text-gray-400">Format: JPG, PNG, WebP. Maks: 5MB</p>
+                </div>
+                <div id="imagePreview" class="hidden mt-4">
+                    <p class="mb-2 text-xs font-medium text-gray-600">Pratinjau Gambar Baru</p>
+                    <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
+                    <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
+                </div>
+                @error('image')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label class="block mb-1 text-sm font-medium text-gray-700">Status</label>
+                <select name="status"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
+                    <option value="draft" {{ old('status', $prestasi->status) === 'draft' ? 'selected' : '' }}>Draft
+                        (Belum Tayang)</option>
+                    <option value="published" {{ old('status', $prestasi->status) === 'published' ? 'selected' : '' }}>
+                        Publikasi (Tayang)</option>
+                </select>
+                @error('status')
+                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="flex gap-3 pt-4 border-t">
+                @include('components.admin-submit-btn', [
+                    'label' => 'Simpan Perubahan',
+                    'loading' => 'Menyimpan...',
+                ])
+                <a href="{{ route('admin.prestasis.index') }}"
+                    class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
+                    <i class="mr-2 fas fa-times"></i> Batal
+                </a>
+            </div>
+        </form>
+    </div>
+@endsection
 
 @push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-    // ── DATE PICKER ────────────────────────────────────────────────────
-    const months      = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-    const display     = document.getElementById('achievementDateDisplay');
-    const hiddenInput = document.getElementById('achievement_date_input');
-    const btnPickDate = document.getElementById('btn-pick-date');
+            // ── TINYMCE ────────────────────────────────────────────────────────
+            tinymce.init({
+                selector: '#description',
+                license_key: 'gpl',
+                height: 300,
+                menubar: false,
+                plugins: 'lists link autolink',
+                toolbar: [
+                    'undo redo | bold italic underline | forecolor',
+                    'bullist numlist | link | removeformat'
+                ],
+                toolbar_mode: 'wrap',
+                skin_url: '/build/tinymce/skins/ui/oxide',
+                content_css: '/build/tinymce/skins/content/default/content.min.css',
+                content_style: 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; }',
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        editor.save();
+                    });
+                },
+                init_instance_callback: function() {
+                    const sk = document.getElementById('tinymce-skeleton');
+                    if (sk) sk.remove();
+                }
+            });
 
-    const fpContainer = document.createElement('div');
-    fpContainer.style.cssText = 'position:fixed;z-index:99999;display:none;';
-    document.body.appendChild(fpContainer);
+            // ── DATE PICKER ────────────────────────────────────────────────────
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            const display = document.getElementById('achievementDateDisplay');
+            const hiddenInput = document.getElementById('achievement_date_input');
+            const btnPickDate = document.getElementById('btn-pick-date');
 
-    const fp = flatpickr(fpContainer, {
-        enableTime: false,
-        dateFormat: 'Y-m-d',
-        disableMobile: true,
-        locale: window.flatpickrLocaleId,
-        defaultDate: hiddenInput.value || null,
-        onChange: function(selectedDates) {
-            if (selectedDates[0]) {
-                const d = selectedDates[0];
-                hiddenInput.value = d.getFullYear() + '-' +
-                    String(d.getMonth() + 1).padStart(2, '0') + '-' +
-                    String(d.getDate()).padStart(2, '0');
-                display.textContent = String(d.getDate()).padStart(2, '0') + ' ' +
-                    months[d.getMonth()] + ' ' + d.getFullYear();
-                display.classList.remove('text-gray-400');
-                display.classList.add('text-gray-800');
+            const fpContainer = document.createElement('div');
+            fpContainer.style.cssText = 'position:fixed;z-index:99999;display:none;';
+            document.body.appendChild(fpContainer);
+
+            const fp = flatpickr(fpContainer, {
+                enableTime: false,
+                dateFormat: 'Y-m-d',
+                disableMobile: true,
+                locale: window.flatpickrLocaleId,
+                defaultDate: hiddenInput.value || null,
+                onChange: function(selectedDates) {
+                    if (selectedDates[0]) {
+                        const d = selectedDates[0];
+                        hiddenInput.value = d.getFullYear() + '-' +
+                            String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                            String(d.getDate()).padStart(2, '0');
+                        display.textContent = String(d.getDate()).padStart(2, '0') + ' ' +
+                            months[d.getMonth()] + ' ' + d.getFullYear();
+                        display.classList.remove('text-gray-400');
+                        display.classList.add('text-gray-800');
+                    }
+                },
+                onClose: function() {
+                    fpContainer.style.display = 'none';
+                }
+            });
+
+            btnPickDate.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const rect = btnPickDate.getBoundingClientRect();
+                fpContainer.style.cssText =
+                    `position:fixed;z-index:99999;top:${rect.bottom + 8}px;left:${rect.left}px;display:block;`;
+                fp.open();
+            });
+
+            document.addEventListener('click', function(e) {
+                const cal = document.querySelector('.flatpickr-calendar');
+                if (
+                    !fpContainer.contains(e.target) &&
+                    !(cal && cal.contains(e.target)) &&
+                    e.target.id !== 'btn-pick-date'
+                ) {
+                    fp.close();
+                    fpContainer.style.display = 'none';
+                }
+            });
+
+            // ── IMAGE UPLOAD ───────────────────────────────────────────────────
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('image');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const fileName = document.getElementById('fileName');
+            const maxSize = 5 * 1024 * 1024;
+
+            function handleFile(file) {
+                if (!file.type.startsWith('image/')) {
+                    alert('Pilih file gambar yang valid');
+                    return;
+                }
+                if (file.size > maxSize) {
+                    alert('Ukuran file maksimal 5MB');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = e => {
+                    previewImg.src = e.target.result;
+                    fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                    imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
             }
-        },
-        onClose: function() {
-            fpContainer.style.display = 'none';
-        }
-    });
 
-    btnPickDate.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const rect = btnPickDate.getBoundingClientRect();
-        fpContainer.style.cssText = `position:fixed;z-index:99999;top:${rect.bottom + 8}px;left:${rect.left}px;display:block;`;
-        fp.open();
-    });
-
-    document.addEventListener('click', function(e) {
-        const cal = document.querySelector('.flatpickr-calendar');
-        if (
-            !fpContainer.contains(e.target) &&
-            !(cal && cal.contains(e.target)) &&
-            e.target.id !== 'btn-pick-date'
-        ) {
-            fp.close();
-            fpContainer.style.display = 'none';
-        }
-    });
-});
-</script>
+            fileInput.addEventListener('change', e => {
+                if (e.target.files[0]) handleFile(e.target.files[0]);
+            });
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                dropZone.classList.add('border-blue-500', 'bg-blue-50');
+            });
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
+            'bg-blue-50'));
+            dropZone.addEventListener('drop', e => {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+                if (e.dataTransfer.files[0]) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+        });
+    </script>
 @endpush
-@endsection

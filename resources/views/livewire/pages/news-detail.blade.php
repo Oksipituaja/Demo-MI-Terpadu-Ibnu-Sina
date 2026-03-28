@@ -31,7 +31,8 @@
 
         <div class="prose max-w-none">
             <div class="leading-relaxed text-gray-800">
-                {!! nl2br($news->content) !!}
+                {{-- FIXED: was nl2br($news->content) which double-encodes TinyMCE HTML output --}}
+                {!! $news->content !!}
             </div>
         </div>
 

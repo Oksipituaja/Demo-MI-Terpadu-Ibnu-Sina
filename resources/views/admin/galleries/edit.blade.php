@@ -44,7 +44,7 @@
                     <span class="ml-1 text-xs text-gray-400">(opsional)</span>
                 </label>
 
-                {{-- Skeleton TinyMCE --}}
+                {{-- FIXED: Added TinyMCE skeleton loader (was missing, inconsistent with other edit pages) --}}
                 <div id="tinymce-skeleton" class="w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
                     style="height:250px;">
                     <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
@@ -105,82 +105,82 @@
             </div>
         </form>
     </div>
-
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-
-                // ── TINYMCE ────────────────────────────────────────────────────────
-                tinymce.init({
-                    selector: '#description',
-                    license_key: 'gpl',
-                    height: 250,
-                    menubar: false,
-                    plugins: 'lists link autolink',
-                    toolbar: [
-                        'undo redo | bold italic underline | forecolor',
-                        'bullist numlist | link | removeformat'
-                    ],
-                    toolbar_mode: 'wrap',
-                    skin_url: '/build/tinymce/skins/ui/oxide',
-                    content_css: '/build/tinymce/skins/content/default/content.min.css',
-                    content_style: 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; }',
-                    setup: function(editor) {
-                        editor.on('change', function() {
-                            editor.save();
-                        });
-                    },
-                    init_instance_callback: function() {
-                        const sk = document.getElementById('tinymce-skeleton');
-                        if (sk) sk.remove();
-                    }
-                });
-
-                // ── IMAGE UPLOAD ───────────────────────────────────────────────────
-                const dropZone = document.getElementById('dropZone');
-                const fileInput = document.getElementById('image');
-                const imagePreview = document.getElementById('imagePreview');
-                const previewImg = document.getElementById('previewImg');
-                const fileName = document.getElementById('fileName');
-                const maxSize = 5 * 1024 * 1024;
-
-                function handleFile(file) {
-                    if (!file.type.startsWith('image/')) {
-                        alert('Pilih file gambar yang valid');
-                        return;
-                    }
-                    if (file.size > maxSize) {
-                        alert('Ukuran file maksimal 5MB');
-                        return;
-                    }
-                    const reader = new FileReader();
-                    reader.onload = e => {
-                        previewImg.src = e.target.result;
-                        fileName.textContent = `File: ${file.name} (${(file.size/1024).toFixed(2)} KB)`;
-                        imagePreview.classList.remove('hidden');
-                    };
-                    reader.readAsDataURL(file);
-                }
-
-                fileInput.addEventListener('change', e => {
-                    if (e.target.files[0]) handleFile(e.target.files[0]);
-                });
-                dropZone.addEventListener('click', () => fileInput.click());
-                dropZone.addEventListener('dragover', e => {
-                    e.preventDefault();
-                    dropZone.classList.add('border-blue-500', 'bg-blue-50');
-                });
-                dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
-                'bg-blue-50'));
-                dropZone.addEventListener('drop', e => {
-                    e.preventDefault();
-                    dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-                    if (e.dataTransfer.files[0]) {
-                        fileInput.files = e.dataTransfer.files;
-                        handleFile(e.dataTransfer.files[0]);
-                    }
-                });
-            });
-        </script>
-    @endpush
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // ── TINYMCE ────────────────────────────────────────────────────────
+            tinymce.init({
+                selector: '#description',
+                license_key: 'gpl',
+                height: 250,
+                menubar: false,
+                plugins: 'lists link autolink',
+                toolbar: [
+                    'undo redo | bold italic underline | forecolor',
+                    'bullist numlist | link | removeformat'
+                ],
+                toolbar_mode: 'wrap',
+                skin_url: '/build/tinymce/skins/ui/oxide',
+                content_css: '/build/tinymce/skins/content/default/content.min.css',
+                content_style: 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; }',
+                setup: function(editor) {
+                    editor.on('change', function() {
+                        editor.save();
+                    });
+                },
+                init_instance_callback: function() {
+                    const sk = document.getElementById('tinymce-skeleton');
+                    if (sk) sk.remove();
+                }
+            });
+
+            // ── IMAGE UPLOAD ───────────────────────────────────────────────────
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('image');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const fileName = document.getElementById('fileName');
+            const maxSize = 5 * 1024 * 1024;
+
+            function handleFile(file) {
+                if (!file.type.startsWith('image/')) {
+                    alert('Pilih file gambar yang valid');
+                    return;
+                }
+                if (file.size > maxSize) {
+                    alert('Ukuran file maksimal 5MB');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = e => {
+                    previewImg.src = e.target.result;
+                    fileName.textContent = `File: ${file.name} (${(file.size/1024).toFixed(2)} KB)`;
+                    imagePreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+
+            fileInput.addEventListener('change', e => {
+                if (e.target.files[0]) handleFile(e.target.files[0]);
+            });
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                dropZone.classList.add('border-blue-500', 'bg-blue-50');
+            });
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
+            'bg-blue-50'));
+            dropZone.addEventListener('drop', e => {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+                if (e.dataTransfer.files[0]) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+        });
+    </script>
+@endpush
