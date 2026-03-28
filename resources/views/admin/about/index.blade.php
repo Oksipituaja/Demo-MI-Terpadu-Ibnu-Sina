@@ -48,8 +48,8 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">
-                            @if($about->image)
-                                <img src="{{ asset('files/' . $about->image) }}" alt="{{ $about->title }}"
+                            @if($about->featured_image)
+                                <img src="{{ asset('storage/' . $about->featured_image) }}" alt="{{ $about->title }}"
                                     class="object-cover w-12 h-12 rounded-lg">
                             @else
                                 {{ Str::limit($about->content, 60) ?: '—' }}

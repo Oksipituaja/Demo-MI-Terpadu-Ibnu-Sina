@@ -28,8 +28,8 @@
                     <div class="text-center teacher-card group">
                         <div class="flex items-center justify-center w-32 h-32 mx-auto mb-6 overflow-hidden transition-transform duration-300 rounded-full shadow-lg group-hover:scale-110"
                             style="background: linear-gradient(to bottom right, #15803d, #22c55e)">
-                            @if($teacher->image)
-                                <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}" class="object-cover w-full h-full">
+                            @if($teacher->featured_image)
+                                <img src="{{ asset('storage/' . $teacher->featured_image) }}" alt="{{ $teacher->name }}" class="object-cover w-full h-full">
                             @else
                                 <i class="text-5xl text-white fas fa-chalkboard-user"></i>
                             @endif

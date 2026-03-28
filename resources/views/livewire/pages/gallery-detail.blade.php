@@ -10,8 +10,8 @@
     <div class="max-w-5xl px-4 py-16 mx-auto">
         <div class="flex items-center justify-center mb-12 overflow-hidden rounded-lg h-96"
             style="background: linear-gradient(to bottom right, #dcfce7, #F0F4ED)">
-            @if($gallery->image)
-                <img src="{{ asset('files/' . $gallery->image) }}"
+            @if($gallery->featured_image)
+                <img src="{{ asset('files/' . $gallery->featured_image) }}"
                      alt="{{ $gallery->title }}"
                      class="object-cover w-full h-full">
             @else

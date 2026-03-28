@@ -33,8 +33,8 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                @if($teacher->image)
-                                    <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}"
+                                @if($teacher->featured_image)
+                                    <img src="{{ asset('storage/' . $teacher->featured_image) }}" alt="{{ $teacher->name }}"
                                         class="object-cover w-10 h-10 rounded-full shrink-0">
                                 @else
                                     <div class="flex items-center justify-center w-10 h-10 text-sm font-semibold text-white bg-blue-500 rounded-full shrink-0">

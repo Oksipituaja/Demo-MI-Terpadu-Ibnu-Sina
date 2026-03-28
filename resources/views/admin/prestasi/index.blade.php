@@ -33,8 +33,8 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                @if($prestasi->image)
-                                    <img src="{{ Storage::url($prestasi->image) }}" alt="{{ $prestasi->title }}"
+                                @if($prestasi->featured_image)
+                                    <img src="{{ Storage::url($prestasi->featured_image) }}" alt="{{ $prestasi->title }}"
                                         class="object-cover w-10 h-10 rounded-lg shrink-0">
                                 @else
                                     <div class="flex items-center justify-center w-10 h-10 bg-yellow-100 rounded-lg shrink-0">

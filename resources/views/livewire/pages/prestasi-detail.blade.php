@@ -29,9 +29,9 @@
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
 
             <div class="lg:col-span-2">
-                @if($prestasi->image)
+                @if($prestasi->featured_image)
                     <div class="w-full mb-8 overflow-hidden shadow-lg rounded-xl">
-                        <img src="{{ asset('files/' . $prestasi->image) }}"
+                        <img src="{{ asset('storage/' . $prestasi->featured_image) }}"
                             alt="{{ $prestasi->title }}"
                             class="object-cover w-full h-auto">
                     </div>

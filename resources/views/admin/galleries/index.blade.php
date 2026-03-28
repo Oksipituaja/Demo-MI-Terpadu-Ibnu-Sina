@@ -32,8 +32,8 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                @if($gallery->image)
-                                    <img src="{{ asset('files/' . $gallery->image) }}" alt="{{ $gallery->title }}"
+                                @if($gallery->featured_image)
+                                    <img src="{{ asset('storage/' . $gallery->featured_image) }}" alt="{{ $gallery->title }}"
                                         class="object-cover w-10 h-10 rounded-lg shrink-0">
                                 @else
                                     <div class="flex items-center justify-center w-10 h-10 bg-purple-100 rounded-lg shrink-0">

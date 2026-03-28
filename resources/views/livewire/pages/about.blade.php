@@ -1,6 +1,6 @@
 <div class="min-h-screen" style="background: #F0F4ED">
     @php
-        $heroImagePath = $heroImage?->image ? asset('files/' . $heroImage->image) : null;
+        $heroImagePath = $heroImage?->featured_image ? asset('storage/' . $heroImage->featured_image) : null;
     @endphp
 
     @if($heroImagePath)
@@ -48,8 +48,8 @@
                         <div class="flex justify-center order-1 lg:order-2">
                             <div class="relative w-64 h-64 md:w-80 md:h-80">
                                 <div class="absolute inset-0 flex items-center justify-center overflow-hidden bg-gray-200 rounded-full">
-                                    @if($principalGreeting->image)
-                                        <img src="{{ asset('files/' . $principalGreeting->image) }}"
+                                    @if($principalGreeting->featured_image)
+                                        <img src="{{ asset('storage/' . $principalGreeting->featured_image) }}"
                                              alt="{{ $principalGreeting->title ?? 'Kepala Sekolah' }}"
                                              class="object-cover w-full h-full">
                                     @else
@@ -159,9 +159,9 @@
 
                         @else
                             <h2 class="mb-6 text-2xl font-bold" style="color: #14532d">{{ $section->title }}</h2>
-                            @if($section->image)
+                            @if($section->featured_image)
                                 <div class="mb-6 overflow-hidden rounded-lg">
-                                    <img src="{{ asset('files/' . $section->image) }}"
+                                    <img src="{{ asset('storage/' . $section->featured_image) }}"
                                          alt="{{ $section->title }}"
                                          class="object-cover w-full h-96">
                                 </div>

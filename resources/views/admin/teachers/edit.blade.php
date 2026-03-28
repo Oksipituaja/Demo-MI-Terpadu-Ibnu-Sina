@@ -48,10 +48,10 @@
 
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Foto</label>
-                @if ($teacher->image)
+                @if ($teacher->featured_image)
                     <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
                         <p class="mb-2 text-xs font-medium text-gray-600">Foto Saat Ini</p>
-                        <img src="{{ asset('files/' . $teacher->image) }}" alt="{{ $teacher->name }}"
+                        <img src="{{ asset('storage/' . $teacher->featured_image) }}" alt="{{ $teacher->name }}"
                             class="object-cover h-40 max-w-sm rounded-lg">
                     </div>
                 @endif

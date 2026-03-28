@@ -66,10 +66,10 @@
 
         <div>
             <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
-            @if($prestasi->image)
+            @if($prestasi->featured_image)
                 <div class="p-4 mb-3 border border-gray-200 rounded-lg bg-gray-50">
                     <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
-                    <img src="{{ Storage::url($prestasi->image) }}" alt="{{ $prestasi->title }}"
+                    <img src="{{ Storage::url($prestasi->featured_image) }}" alt="{{ $prestasi->title }}"
                         class="object-cover w-24 h-24 rounded-lg">
                     <p class="mt-1 text-xs text-gray-400">Upload gambar baru untuk mengganti</p>
                 </div>

@@ -91,10 +91,10 @@
 
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
-                @if ($facility->image)
+                @if ($facility->featured_image)
                     <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
                         <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
-                        <img src="{{ asset('files/' . $facility->image) }}" alt="{{ $facility->name }}"
+                        <img src="{{ asset('storage/' . $facility->featured_image) }}" alt="{{ $facility->name }}"
                             class="object-cover h-40 max-w-sm rounded">
                     </div>
                 @endif
