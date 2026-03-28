@@ -1,135 +1,152 @@
 @extends('admin.layout')
 
-@section('page_title', 'Tambah Konten Sekolah')
-@section('page_subtitle', 'Tambah informasi tentang sekolah')
+@section('page_title', 'Edit Konten Sekolah')
+@section('page_subtitle', 'Perbarui informasi tentang sekolah')
 
 @section('content')
-    <div class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
-        <form action="{{ route('admin.about.store') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
-            @csrf
+<div class="max-w-2xl p-6 mx-auto bg-white rounded-lg shadow">
+    <form action="{{ route('admin.about.update', $about) }}" method="POST" enctype="multipart/form-data" class="space-y-5">
+        @csrf
+        @method('PUT')
 
-            <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Judul</label>
-                <input type="text" name="title" value="{{ old('title') }}" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                @error('title')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
+        <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700">Judul</label>
+            <input type="text" name="title" value="{{ old('title', $about->title) }}" required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            @error('title')
+                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div id="principalNameField" class="{{ $about->key !== 'principal_greeting' ? 'hidden' : '' }}">
+            <label class="block mb-1 text-sm font-medium text-gray-700">Nama Kepala Sekolah</label>
+            <input type="text" name="principal_name" value="{{ old('principal_name', $about->principal_name) }}"
+                placeholder="cth: Drs. Ahmad Fauzi, M.Pd"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700">Tipe Konten</label>
+            <select id="keySelect" name="key" required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-gray-50">
+                <option value="hero_image" {{ $about->key === 'hero_image' ? 'selected' : '' }}>Gambar Utama</option>
+                <option value="principal_greeting" {{ $about->key === 'principal_greeting' ? 'selected' : '' }}>Sambutan Kepala Sekolah</option>
+                <option value="school_profile" {{ $about->key === 'school_profile' ? 'selected' : '' }}>Profil Sekolah</option>
+                <option value="school_info" {{ $about->key === 'school_info' ? 'selected' : '' }}>Informasi Sekolah (JSON)</option>
+                <option value="vision" {{ $about->key === 'vision' ? 'selected' : '' }}>Visi</option>
+                <option value="mission" {{ $about->key === 'mission' ? 'selected' : '' }}>Misi</option>
+            </select>
+        </div>
+
+        {{-- JSON Fields for School Info --}}
+        @php
+            $info = [];
+            if ($about->key === 'school_info') {
+                $info = json_decode($about->content, true) ?: [];
+            }
+        @endphp
+        <div id="schoolInfoFields" class="{{ $about->key !== 'school_info' ? 'hidden' : '' }} p-4 space-y-4 border border-blue-200 rounded-lg bg-blue-50">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block mb-1 text-xs font-medium text-gray-700">NPSN</label>
+                    <input type="text" id="si_npsn" value="{{ $info['npsn'] ?? '' }}"
+                        class="si-input w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block mb-1 text-xs font-medium text-gray-700">Nama Sekolah</label>
+                    <input type="text" id="si_name" value="{{ $info['nama_sekolah'] ?? '' }}"
+                        class="si-input w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
+                </div>
             </div>
+        </div>
 
-            <div id="principalNameField" class="hidden">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Nama Kepala Sekolah</label>
-                <input type="text" name="principal_name" value="{{ old('principal_name') }}"
-                    placeholder="cth: Drs. Ahmad Fauzi, M.Pd"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-            </div>
+        {{-- Content + Skeleton --}}
+        <div id="contentWrapper" class="{{ $about->key === 'school_info' ? 'hidden' : '' }}">
+            <label class="block mb-1 text-sm font-medium text-gray-700">Konten</label>
 
-            <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">Tipe Konten</label>
-                <select id="keySelect" name="key" required
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    <option value="">-- Pilih Tipe --</option>
-                    <option value="hero_image"          {{ old('key') === 'hero_image'          ? 'selected' : '' }}>Gambar Utama</option>
-                    <option value="principal_greeting"  {{ old('key') === 'principal_greeting'  ? 'selected' : '' }}>Sambutan Kepala Sekolah</option>
-                    <option value="school_profile"      {{ old('key') === 'school_profile'      ? 'selected' : '' }}>Profil Sekolah</option>
-                    <option value="school_info"         {{ old('key') === 'school_info'         ? 'selected' : '' }}>Informasi Sekolah (JSON)</option>
-                    <option value="vision"              {{ old('key') === 'vision'              ? 'selected' : '' }}>Visi</option>
-                    <option value="mission"             {{ old('key') === 'mission'             ? 'selected' : '' }}>Misi</option>
-                </select>
-            </div>
-
-            {{-- JSON Fields for School Info --}}
-            <div id="schoolInfoFields" class="hidden p-4 space-y-4 border border-blue-200 rounded-lg bg-blue-50">
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block mb-1 text-xs font-medium text-gray-700">NPSN</label>
-                        <input type="text" id="si_npsn"
-                            class="si-input w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
-                    </div>
-                    <div>
-                        <label class="block mb-1 text-xs font-medium text-gray-700">Nama Sekolah</label>
-                        <input type="text" id="si_name"
-                            class="si-input w-full px-3 py-2 text-sm border border-gray-300 rounded-lg">
-                    </div>
+            {{-- Skeleton loader (sama persis seperti news) --}}
+            <div id="tinymce-skeleton" class="w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
+                style="height:350px;">
+                <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
+                    @for ($i = 0; $i < 10; $i++)
+                        <div class="h-5 rounded bg-gray-200 animate-pulse"
+                            style="width:{{ [28, 28, 32, 28, 32, 28, 28, 36, 28, 32][$i] }}px"></div>
+                        @if (in_array($i, [1, 3, 6]))
+                            <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                        @endif
+                    @endfor
+                </div>
+                <div class="p-4 space-y-3">
+                    <div class="h-4 w-3/4 rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-5/6 rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-2/3 rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
+                    <div class="h-4 w-4/5 rounded bg-gray-200 animate-pulse"></div>
                 </div>
             </div>
 
-            {{-- Content + Skeleton --}}
-            <div id="contentWrapper" class="hidden">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Konten</label>
+            <textarea name="content" id="contentField" class="hidden">{{ old('content', $about->content) }}</textarea>
+            @error('content')
+                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
 
-                {{-- Skeleton loader --}}
-                <div id="tinymce-skeleton" class="hidden w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
-                    style="height:350px;">
-                    <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
-                        @for ($i = 0; $i < 10; $i++)
-                            <div class="h-5 rounded bg-gray-200 animate-pulse"
-                                style="width:{{ [28, 28, 32, 28, 32, 28, 28, 36, 28, 32][$i] }}px"></div>
-                            @if (in_array($i, [1, 3, 6]))
-                                <div class="w-px h-5 bg-gray-300 mx-1"></div>
-                            @endif
-                        @endfor
-                    </div>
-                    <div class="p-4 space-y-3">
-                        <div class="h-4 w-3/4 rounded bg-gray-200 animate-pulse"></div>
-                        <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
-                        <div class="h-4 w-5/6 rounded bg-gray-200 animate-pulse"></div>
-                        <div class="h-4 w-2/3 rounded bg-gray-200 animate-pulse"></div>
-                        <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
-                        <div class="h-4 w-4/5 rounded bg-gray-200 animate-pulse"></div>
-                    </div>
+        {{-- Image Field --}}
+        <div id="imageField" class="{{ in_array($about->key, ['school_profile', 'vision', 'mission', 'school_info']) ? 'hidden' : '' }}">
+            <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
+
+            @if ($about->featured_image)
+                <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
+                    <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
+                    <img src="{{ asset('storage/' . $about->featured_image) }}"
+                        alt="{{ $about->title }}"
+                        class="object-cover h-40 max-w-sm rounded-lg" id="currentImg">
                 </div>
+            @endif
 
-                <textarea name="content" id="contentField" class="hidden">{{ old('content') }}</textarea>
-                @error('content')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
+            <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
+                id="dropZone">
+                <input type="file" id="image" name="featured_image" accept="image/*" class="hidden">
+                <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
+                <p class="text-gray-600">Seret & letakkan atau
+                    <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer" id="pickFileBtn">pilih file</span>
+                </p>
+                <p class="mt-1 text-xs text-gray-400">JPG, PNG (Maks. 5MB)</p>
             </div>
+            <div id="imagePreview" class="hidden mt-4">
+                <p class="mb-2 text-xs font-medium text-gray-600">Pratinjau Gambar Baru</p>
+                <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
+                <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
+            </div>
+            @error('featured_image')
+                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
 
-            {{-- Image Field --}}
-            <div id="imageField" class="hidden">
-                <label class="block mb-1 text-sm font-medium text-gray-700">Gambar</label>
-                <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
-                    id="dropZone">
-                    <input type="file" id="image" name="featured_image" accept="image/*" class="hidden">
-                    <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
-                    <p class="text-gray-600">Seret & letakkan atau
-                        <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer" id="pickFileBtn">pilih file</span>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-400">JPG, PNG (Maks. 5MB)</p>
-                </div>
-                <div id="imagePreview" class="hidden mt-4">
-                    <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
-                    <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
-                </div>
-                @error('featured_image')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="flex gap-3 pt-4 border-t">
-                @include('components.admin-submit-btn', [
-                    'label'   => 'Simpan Konten',
-                    'loading' => 'Menyimpan...',
-                ])
-                <a href="{{ route('admin.about.index') }}"
-                    class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
-                    <i class="mr-2 fas fa-times"></i> Batal
-                </a>
-            </div>
-        </form>
-    </div>
+        <div class="flex gap-3 pt-4 border-t">
+            @include('components.admin-submit-btn', [
+                'label' => 'Simpan Perubahan',
+                'loading' => 'Menyimpan...',
+            ])
+            <a href="{{ route('admin.about.index') }}"
+                class="px-6 py-2 font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300">
+                <i class="mr-2 fas fa-times"></i> Batal
+            </a>
+        </div>
+    </form>
+</div>
 @endsection
 
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const keySelect      = document.getElementById('keySelect');
-        const contentField   = document.getElementById('contentField');
-        const contentWrapper = document.getElementById('contentWrapper');
-        const skeleton       = document.getElementById('tinymce-skeleton');
-        const noImageKeys    = ['school_profile', 'vision', 'mission', 'school_info'];
-        let tinymceReady     = false;
+        const keySelect       = document.getElementById('keySelect');
+        const contentField    = document.getElementById('contentField');
+        const contentWrapper  = document.getElementById('contentWrapper');
+        const skeleton        = document.getElementById('tinymce-skeleton');
+        const noImageKeys     = ['school_profile', 'vision', 'mission', 'school_info'];
+        let tinymceReady      = false;
 
         // ── JSON builder ───────────────────────────────────────────────────────
         function buildJson() {
@@ -147,20 +164,20 @@
             tinymceReady = true;
 
             tinymce.init({
-                selector      : '#contentField',
-                license_key   : 'gpl',
-                height        : 350,
-                menubar       : false,
-                plugins       : 'lists link autolink',
-                toolbar       : [
+                selector        : '#contentField',
+                license_key     : 'gpl',
+                height          : 350,
+                menubar         : false,
+                plugins         : 'lists link autolink',
+                toolbar         : [
                     'undo redo | bold italic underline strikethrough | forecolor backcolor',
                     'bullist numlist | outdent indent | blockquote',
                     'link | alignleft aligncenter alignright alignjustify | removeformat'
                 ],
-                toolbar_mode  : 'wrap',
-                skin_url      : '/build/tinymce/skins/ui/oxide',
-                content_css   : '/build/tinymce/skins/content/default/content.min.css',
-                content_style : 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; max-width: 100%; }',
+                toolbar_mode    : 'wrap',
+                skin_url        : '/build/tinymce/skins/ui/oxide',
+                content_css     : '/build/tinymce/skins/content/default/content.min.css',
+                content_style   : 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; max-width: 100%; }',
                 setup: function (editor) {
                     editor.on('change', function () { editor.save(); });
                 },
@@ -178,41 +195,40 @@
             document.getElementById('principalNameField')
                 .classList.toggle('hidden', key !== 'principal_greeting');
             document.getElementById('imageField')
-                .classList.toggle('hidden', noImageKeys.includes(key) || key === '');
+                .classList.toggle('hidden', noImageKeys.includes(key));
             document.getElementById('schoolInfoFields')
                 .classList.toggle('hidden', key !== 'school_info');
+            contentWrapper
+                .classList.toggle('hidden', key === 'school_info');
 
-            const isSchoolInfo = key === 'school_info';
-            const hasContent   = key !== '' && !isSchoolInfo;
-
-            contentWrapper.classList.toggle('hidden', !hasContent);
-
-            if (isSchoolInfo) {
+            if (key === 'school_info') {
+                // destroy TinyMCE jika ada, tampilkan textarea biasa
                 if (typeof tinymce !== 'undefined' && tinymce.get('contentField')) {
                     tinymce.get('contentField').remove();
                     tinymceReady = false;
                 }
-                if (skeleton) skeleton.classList.add('hidden');
+                if (skeleton) skeleton.style.display = 'none';
                 contentField.classList.remove('hidden');
                 buildJson();
-            } else if (hasContent) {
-                if (skeleton) skeleton.classList.remove('hidden');
+            } else {
+                // tampilkan skeleton lalu init TinyMCE
+                if (skeleton) skeleton.style.display = '';
                 contentField.classList.add('hidden');
                 initTinyMCE();
             }
         }
 
         keySelect.addEventListener('change', toggleFields);
-        toggleFields();
+        toggleFields(); // jalankan saat pertama load
 
         // ── Image upload ───────────────────────────────────────────────────────
-        const dropZone     = document.getElementById('dropZone');
-        const pickFileBtn  = document.getElementById('pickFileBtn');
-        const fileInput    = document.getElementById('image');
+        const dropZone    = document.getElementById('dropZone');
+        const pickFileBtn = document.getElementById('pickFileBtn');
+        const fileInput   = document.getElementById('image');
         const imagePreview = document.getElementById('imagePreview');
-        const previewImg   = document.getElementById('previewImg');
-        const fileName     = document.getElementById('fileName');
-        const maxSize      = 5 * 1024 * 1024;
+        const previewImg  = document.getElementById('previewImg');
+        const fileName    = document.getElementById('fileName');
+        const maxSize     = 5 * 1024 * 1024;
 
         function handleFile(file) {
             if (!file.type.startsWith('image/')) {
@@ -228,6 +244,8 @@
                 previewImg.src = e.target.result;
                 fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
                 imagePreview.classList.remove('hidden');
+                const currentImg = document.getElementById('currentImg');
+                if (currentImg) currentImg.classList.add('opacity-50');
             };
             reader.readAsDataURL(file);
         }
