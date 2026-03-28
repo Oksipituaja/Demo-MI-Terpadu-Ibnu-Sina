@@ -27,8 +27,7 @@ cmds = [
 
 [phases.build]
 cmds = [
-  "npm ci",
-  "npm run build",
+  "npm run build"
 ]
 
 [start]
