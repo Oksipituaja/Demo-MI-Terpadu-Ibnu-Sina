@@ -159,8 +159,8 @@
         const noImageKeys   = ['school_profile', 'vision', 'mission', 'school_info'];
 
         const hints = {
-            'home_hero_image'    : '🏠 Gambar ini ditampilkan di section kanan hero halaman Beranda.',
-            'hero_image'         : '📄 Gambar ini ditampilkan sebagai banner besar di halaman Tentang Kami.',
+            'home_hero_image'    : 'Gambar ini ditampilkan di section kanan hero halaman Beranda.',
+            'hero_image'         : 'Gambar ini ditampilkan sebagai banner besar di halaman Tentang Kami.',
             'principal_greeting' : 'Foto & sambutan kepala sekolah ditampilkan di Beranda dan halaman Tentang.',
         };
 
