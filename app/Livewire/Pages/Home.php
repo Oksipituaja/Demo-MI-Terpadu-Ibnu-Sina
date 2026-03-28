@@ -22,26 +22,26 @@ class Home extends Component
         // Aggressive caching untuk ultra-fast homepage
         $latestNews = Cache::remember('home.latest_news', 1800, function () {
             return News::where('status', 'published')
-                ->select(['id', 'title', 'slug', 'excerpt', 'published_at', 'featured_image'])
+                ->select(['id', 'title', 'slug', 'excerpt', 'published_at', 'featured_featured_image'])
                 ->orderBy('published_at', 'desc')
                 ->limit(3)
                 ->get();
         });
 
         $galleries = Cache::remember('home.random_galleries', 1800, function () {
-            return Gallery::select(['id', 'title', 'slug', 'image', 'category'])
+            return Gallery::select(['id', 'title', 'slug', 'featured_image', 'category'])
                 ->inRandomOrder()
                 ->limit(6)
                 ->get();
         });
 
         $facilities = Cache::remember('home.all_facilities', 3600, function () {
-            return Facility::select(['id', 'name', 'slug', 'description', 'image', 'icon'])
+            return Facility::select(['id', 'name', 'slug', 'description', 'featured_image', 'icon'])
                 ->get();
         });
 
         $teachers = Cache::remember('home.featured_teachers', 3600, function () {
-            return Teacher::select(['id', 'name', 'subject', 'image', 'slug'])
+            return Teacher::select(['id', 'name', 'subject', 'featured_image', 'slug'])
                 ->limit(3)
                 ->get();
         });
@@ -60,11 +60,11 @@ class Home extends Component
         });
 
         $principalGreeting = Cache::remember('about.principal_greeting', 86400, function () {
-            return About::where('key', 'principal_greeting')->select(['id', 'key', 'title', 'principal_name', 'content', 'image'])->first();
+            return About::where('key', 'principal_greeting')->select(['id', 'key', 'title', 'principal_name', 'content', 'featured_image'])->first();
         });
 
-        $heroImage = Cache::remember('about.hero_image', 86400, function () {
-            return About::where('key', 'hero_image')->select(['id', 'key', 'image'])->first();
+        $herofeatured_image = Cache::remember('about.hero_featured_image', 86400, function () {
+            return About::where('key', 'hero_featured_image')->select(['id', 'key', 'featured_image'])->first();
         });
 
         $prestasis = Cache::remember('home.featured_prestasis', 1800, function () {
@@ -93,7 +93,7 @@ class Home extends Component
             'teachers' => $teachers,
             'agendas' => $agendas,
             'principalGreeting' => $principalGreeting,
-            'heroImage' => $heroImage,
+            'herofeatured_image' => $herofeatured_image,
             'prestasis' => $prestasis,
         ]);
     }
