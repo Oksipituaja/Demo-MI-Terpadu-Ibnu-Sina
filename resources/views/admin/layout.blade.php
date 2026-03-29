@@ -6,9 +6,11 @@
     <link rel="shortcut icon" href="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" type="image/x-icon">
     <title>@yield('title', 'Admin Panel - MI Terpadu Ibnu Sina')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         .flatpickr-calendar { z-index: 9999 !important; }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -62,7 +64,6 @@
                         class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
                         <i class="w-5 mr-2 fas fa-user-check"></i> Pendaftaran Siswa
                     </a>
-                    {{-- ✅ TAMBAHAN BARU --}}
                     <a href="{{ route('admin.settings.index') }}"
                         class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.settings.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
                         <i class="w-5 mr-2 fab fa-google"></i> Pengaturan PPDB

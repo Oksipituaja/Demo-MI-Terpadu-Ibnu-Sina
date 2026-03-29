@@ -331,7 +331,7 @@
                                 {{ $prestasi->category }}
                             </div>
                             @endif
-                            <p class="text-[13.5px] text-gray-400 leading-relaxed flex-1 mb-3 line-clamp-2">{{ $prestasi->description }}</p>
+                            <p class="text-[13.5px] text-gray-400 leading-relaxed flex-1 mb-3 line-clamp-2">{{ Str::limit(strip_tags($prestasi->description), 120) }}</p>
                             @if ($prestasi->achievement_date)
                             <div class="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
                                 <i class="fas fa-calendar-alt text-[10px]"></i>

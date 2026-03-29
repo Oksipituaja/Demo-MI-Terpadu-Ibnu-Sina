@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 @import 'flatpickr/dist/flatpickr.min.css';
+@import 'cropperjs/dist/cropper.min.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -48,6 +49,10 @@ body {
     font-family: var(--font-family-body);
 }
 
+[x-cloak] {
+    display: none !important;
+}
+
 .btn-primary {
     @apply inline-flex items-center px-8 py-4 font-bold text-white transition-all duration-300 shadow-xl rounded-xl hover:-translate-y-1 active:scale-95;
     background: linear-gradient(to right, #1E40AF, #3B82F6);
@@ -89,8 +94,15 @@ body {
 }
 
 @keyframes fade-in {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .animate-fade-in {

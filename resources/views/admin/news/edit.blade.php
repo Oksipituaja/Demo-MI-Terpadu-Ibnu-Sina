@@ -6,14 +6,13 @@
         <div class="p-6 bg-white rounded-lg shadow">
             <form action="{{ route('admin.news.update', $news) }}" method="POST" enctype="multipart/form-data"
                 class="space-y-6">
-                @csrf
-                @method('PUT')
+                @csrf @method('PUT')
                 <input type="hidden" id="slug" name="slug" value="{{ old('slug', $news->slug) }}">
 
                 <div>
                     <label for="title" class="block mb-1 text-sm font-medium text-gray-700">Judul Berita</label>
                     <input type="text" id="title" name="title" value="{{ old('title', $news->title) }}" required
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                     @error('title')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -21,11 +20,11 @@
 
                 <div>
                     <label for="excerpt" class="block mb-1 text-sm font-medium text-gray-700">
-                        Ringkasan
-                        <span class="ml-1 text-xs font-normal text-gray-400">(ditampilkan di halaman daftar berita)</span>
+                        Ringkasan <span class="ml-1 text-xs font-normal text-gray-400">(ditampilkan di halaman daftar
+                            berita)</span>
                     </label>
                     <textarea id="excerpt" name="excerpt" rows="3"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('excerpt', $news->excerpt) }}</textarea>
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">{{ old('excerpt', $news->excerpt) }}</textarea>
                     @error('excerpt')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -33,30 +32,24 @@
 
                 <div>
                     <label for="content" class="block mb-1 text-sm font-medium text-gray-700">Isi Berita</label>
-
-                    <div id="tinymce-skeleton" class="w-full rounded-lg border border-gray-200 bg-gray-100 overflow-hidden"
+                    <div id="tinymce-skeleton" class="w-full overflow-hidden bg-gray-100 border border-gray-200 rounded-lg"
                         style="height:450px;">
                         <div class="flex items-center gap-2 px-3 py-2 border-b border-gray-200 bg-gray-50">
                             @for ($i = 0; $i < 10; $i++)
-                                <div class="h-5 rounded bg-gray-200 animate-pulse"
+                                <div class="h-5 bg-gray-200 rounded animate-pulse"
                                     style="width:{{ [28, 28, 32, 28, 32, 28, 28, 36, 28, 32][$i] }}px"></div>
                                 @if (in_array($i, [1, 3, 6]))
-                                    <div class="w-px h-5 bg-gray-300 mx-1"></div>
+                                    <div class="w-px h-5 mx-1 bg-gray-300"></div>
                                 @endif
                             @endfor
                         </div>
                         <div class="p-4 space-y-3">
-                            <div class="h-4 w-3/4 rounded bg-gray-200 animate-pulse"></div>
-                            <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
-                            <div class="h-4 w-5/6 rounded bg-gray-200 animate-pulse"></div>
-                            <div class="h-4 w-2/3 rounded bg-gray-200 animate-pulse"></div>
-                            <div class="h-4 w-full rounded bg-gray-200 animate-pulse"></div>
-                            <div class="h-4 w-4/5 rounded bg-gray-200 animate-pulse"></div>
+                            @foreach ([75, 100, 83, 66, 100, 80] as $w)
+                                <div class="h-4 bg-gray-200 rounded animate-pulse" style="width:{{ $w }}%"></div>
+                            @endforeach
                         </div>
                     </div>
-
                     <textarea id="content" name="content" class="hidden">{{ old('content', $news->content) }}</textarea>
-
                     @error('content')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -66,7 +59,7 @@
                     <div>
                         <label for="status" class="block mb-1 text-sm font-medium text-gray-700">Status</label>
                         <select id="status" name="status" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                             <option value="draft" {{ old('status', $news->status) === 'draft' ? 'selected' : '' }}>Draft
                                 (Belum Tayang)</option>
                             <option value="published" {{ old('status', $news->status) === 'published' ? 'selected' : '' }}>
@@ -96,38 +89,9 @@
                     </div>
                 </div>
 
-                <div>
-                    <label class="block mb-1 text-sm font-medium text-gray-700">
-                        Gambar Utama
-                        <span class="ml-1 text-xs font-normal text-gray-400">(opsional)</span>
-                    </label>
-                    @if ($news->featured_image)
-                        <div class="p-4 mb-4 border border-gray-200 rounded-lg bg-gray-50">
-                            <p class="mb-2 text-xs font-medium text-gray-600">Gambar Saat Ini</p>
-                            <img src="{{ asset('storage/' . $news->featured_image) }}" alt="{{ $news->title }}"
-                                class="object-cover h-40 max-w-sm rounded">
-                        </div>
-                    @endif
-                    {{-- FIXED: removed onclick from inner button to prevent double dialog --}}
-                    <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
-                        id="dropZone">
-                        <input type="file" id="featured_image" name="featured_image" accept="image/*" class="hidden">
-                        <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
-                        <p class="text-gray-600">Seret & letakkan atau
-                            <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer"
-                                id="pickFileBtn">pilih file</span>
-                        </p>
-                        <p class="mt-1 text-xs text-gray-400">JPG, PNG (Maks. 2MB)</p>
-                    </div>
-                    <div id="imagePreview" class="hidden mt-4">
-                        <p class="mb-2 text-xs font-medium text-gray-600">Pratinjau Gambar Baru</p>
-                        <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
-                        <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
-                    </div>
-                    @error('featured_image')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                {{-- ✅ Crop Component --}}
+                <x-image-crop-upload name="featured_image" label="Gambar Utama" aspect-ratio="16/9" :optional="true"
+                    :max-size-mb="2" :current-image="$news->featured_image ? asset('storage/' . $news->featured_image) : null" :current-alt="$news->title" :error="$errors->first('featured_image')" />
 
                 <div class="flex gap-3 pt-4 border-t">
                     @include('components.admin-submit-btn', [
@@ -147,71 +111,35 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
-            // ── IMAGE UPLOAD (FIXED: no more double dialog) ────────────────────
-            const dropZone = document.getElementById('dropZone');
-            const pickFileBtn = document.getElementById('pickFileBtn');
-            const fileInput = document.getElementById('featured_image');
-            const imagePreview = document.getElementById('imagePreview');
-            const previewImg = document.getElementById('previewImg');
-            const fileName = document.getElementById('fileName');
-            const maxSize = 2 * 1024 * 1024;
-
-            function handleFile(file) {
-                if (!file.type.startsWith('image/')) {
-                    alert('Pilih file gambar yang valid');
-                    return;
-                }
-                if (file.size > maxSize) {
-                    alert('Ukuran file maksimal 2MB');
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = e => {
-                    previewImg.src = e.target.result;
-                    fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
-                    imagePreview.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-
-            dropZone.addEventListener('click', function() {
-                fileInput.click();
-            });
-
-            pickFileBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                fileInput.click();
-            });
-
-            fileInput.addEventListener('change', e => {
-                if (e.target.files[0]) handleFile(e.target.files[0]);
-            });
-            dropZone.addEventListener('dragover', e => {
-                e.preventDefault();
-                dropZone.classList.add('border-blue-500', 'bg-blue-50');
-            });
-            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
-                'bg-blue-50'));
-            dropZone.addEventListener('drop', e => {
-                e.preventDefault();
-                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-                if (e.dataTransfer.files[0]) {
-                    fileInput.files = e.dataTransfer.files;
-                    handleFile(e.dataTransfer.files[0]);
+            // TINYMCE
+            tinymce.init({
+                selector: '#content',
+                license_key: 'gpl',
+                height: 450,
+                menubar: false,
+                plugins: 'lists link autolink',
+                toolbar: ['undo redo | bold italic underline strikethrough | forecolor backcolor',
+                    'bullist numlist | outdent indent | blockquote | link | alignleft aligncenter alignright | removeformat'
+                ],
+                toolbar_mode: 'wrap',
+                skin_url: '/build/tinymce/skins/ui/oxide',
+                content_css: '/build/tinymce/skins/content/default/content.min.css',
+                content_style: 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; }',
+                setup: e => e.on('change', () => e.save()),
+                init_instance_callback: () => {
+                    const s = document.getElementById('tinymce-skeleton');
+                    if (s) s.remove();
                 }
             });
 
-            // ── DATE PICKER ────────────────────────────────────────────────────
+            // DATE PICKER
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
             const display = document.getElementById('publishDateDisplay');
             const hiddenInput = document.getElementById('published_at_input');
             const btnPickDate = document.getElementById('btn-pick-date');
-
             const fpContainer = document.createElement('div');
             fpContainer.style.cssText = 'position:fixed;z-index:99999;display:none;';
             document.body.appendChild(fpContainer);
-
             const fp = flatpickr(fpContainer, {
                 enableTime: true,
                 dateFormat: 'Y-m-d H:i',
@@ -219,77 +147,36 @@
                 disableMobile: true,
                 locale: window.flatpickrLocaleId,
                 defaultDate: hiddenInput.value || null,
-                onChange: function(selectedDates) {
-                    if (selectedDates[0]) {
-                        const d = selectedDates[0];
-                        hiddenInput.value = d.getFullYear() + '-' +
-                            String(d.getMonth() + 1).padStart(2, '0') + '-' +
-                            String(d.getDate()).padStart(2, '0') + ' ' +
-                            String(d.getHours()).padStart(2, '0') + ':' +
-                            String(d.getMinutes()).padStart(2, '0');
-                        display.textContent =
-                            String(d.getDate()).padStart(2, '0') + ' ' +
-                            months[d.getMonth()] + ' ' + d.getFullYear() + ', ' +
-                            String(d.getHours()).padStart(2, '0') + ':' +
-                            String(d.getMinutes()).padStart(2, '0');
-                        display.classList.remove('text-gray-400');
-                        display.classList.add('text-gray-800');
-                    }
+                onChange(selectedDates) {
+                    if (!selectedDates[0]) return;
+                    const d = selectedDates[0];
+                    hiddenInput.value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') +
+                        '-' + String(d.getDate()).padStart(2, '0') + ' ' + String(d.getHours()).padStart(2,
+                            '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+                    display.textContent = String(d.getDate()).padStart(2, '0') + ' ' + months[d
+                    .getMonth()] + ' ' + d.getFullYear() + ', ' + String(d.getHours()).padStart(2, '0') +
+                        ':' + String(d.getMinutes()).padStart(2, '0');
+                    display.classList.replace('text-gray-400', 'text-gray-800');
                 },
-                onClose: function() {
+                onClose() {
                     fpContainer.style.display = 'none';
                 }
             });
-
-            btnPickDate.addEventListener('click', function(e) {
+            btnPickDate.addEventListener('click', e => {
                 e.stopPropagation();
-                const rect = btnPickDate.getBoundingClientRect();
+                const r = btnPickDate.getBoundingClientRect();
                 fpContainer.style.cssText =
-                    `position:fixed;z-index:99999;top:${rect.bottom + 8}px;left:${rect.left}px;display:block;`;
+                    `position:fixed;z-index:99999;top:${r.bottom+8}px;left:${r.left}px;display:block;`;
                 fp.open();
             });
-
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', e => {
                 const cal = document.querySelector('.flatpickr-calendar');
-                if (
-                    !fpContainer.contains(e.target) &&
-                    !(cal && cal.contains(e.target)) &&
-                    e.target.id !== 'btn-pick-date'
-                ) {
+                if (!fpContainer.contains(e.target) && !(cal?.contains(e.target)) && e.target.id !==
+                    'btn-pick-date') {
                     fp.close();
                     fpContainer.style.display = 'none';
                 }
             });
-
-            // ── TINYMCE ────────────────────────────────────────────────────────
-            tinymce.init({
-                selector: '#content',
-                license_key: 'gpl',
-                height: 450,
-                menubar: false,
-                plugins: 'lists link autolink',
-                toolbar: [
-                    'undo redo | bold italic underline strikethrough | forecolor backcolor',
-                    'bullist numlist | outdent indent | blockquote',
-                    'link | alignleft aligncenter alignright alignjustify | removeformat'
-                ],
-                toolbar_mode: 'wrap',
-                skin_url: '/build/tinymce/skins/ui/oxide',
-                content_css: '/build/tinymce/skins/content/default/content.min.css',
-                content_style: 'body { font-family: sans-serif; font-size: 14px; line-height: 1.8; max-width: 100%; }',
-                image_uploadtab: false,
-                ignore_clickoutside_selector: '[class*="flatpickr"]',
-                setup: function(editor) {
-                    editor.on('change', function() {
-                        editor.save();
-                    });
-                },
-                init_instance_callback: function(editor) {
-                    const skeleton = document.getElementById('tinymce-skeleton');
-                    if (skeleton) skeleton.remove();
-                }
-            });
-
         });
     </script>
 @endpush

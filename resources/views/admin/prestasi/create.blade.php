@@ -62,7 +62,6 @@
                 @enderror
             </div>
 
-            {{-- FIXED: description now uses TinyMCE (consistent with facilities, galleries, about modules) --}}
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Deskripsi</label>
                 <textarea name="description" id="description">{{ old('description') }}</textarea>
@@ -71,36 +70,16 @@
                 @enderror
             </div>
 
-            <div>
-                <label class="block mb-1 text-sm font-medium text-gray-700">
-                    Gambar
-                    <span class="ml-1 text-xs text-gray-400">(opsional)</span>
-                </label>
-                <div class="p-6 text-center transition border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:border-blue-500 hover:bg-blue-50"
-                    id="dropZone">
-                    <input type="file" id="image" name="featured_image" accept="image/*" class="hidden">
-                    <i class="mb-2 text-3xl text-gray-400 fas fa-cloud-upload-alt"></i>
-                    <p class="text-gray-600">Seret & letakkan atau
-                        <span class="font-medium text-blue-600 hover:text-blue-700 cursor-pointer" id="pickFileBtn">pilih
-                            file</span>
-                    </p>
-                    <p class="mt-1 text-xs text-gray-400">Format: JPG, PNG, WebP. Maks: 5MB</p>
-                </div>
-                <div id="imagePreview" class="hidden mt-4">
-                    <img id="previewImg" src="" alt="Preview" class="object-cover h-40 max-w-sm rounded-lg">
-                    <p id="fileName" class="mt-2 text-xs text-gray-600"></p>
-                </div>
-                @error('image')
-                    <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
+            {{-- ✅ Crop Upload Component --}}
+            <x-image-crop-upload name="featured_image" label="Gambar Prestasi" aspect-ratio="16/9" :optional="true"
+                :error="$errors->first('featured_image')" />
 
             <div>
                 <label class="block mb-1 text-sm font-medium text-gray-700">Status</label>
                 <select name="status"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" required>
-                    <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>Draft (Belum
-                        Tayang)</option>
+                    <option value="draft" {{ old('status', 'draft') === 'draft' ? 'selected' : '' }}>Draft (Belum Tayang)
+                    </option>
                     <option value="published" {{ old('status') === 'published' ? 'selected' : '' }}>Publikasi (Tayang)
                     </option>
                 </select>
@@ -151,8 +130,7 @@
                 height: 300,
                 menubar: false,
                 plugins: 'lists link autolink',
-                toolbar: [
-                    'undo redo | bold italic underline | forecolor',
+                toolbar: ['undo redo | bold italic underline | forecolor',
                     'bullist numlist | link | removeformat'
                 ],
                 toolbar_mode: 'wrap',
@@ -185,11 +163,10 @@
                 onChange: function(selectedDates) {
                     if (selectedDates[0]) {
                         const d = selectedDates[0];
-                        hiddenInput.value = d.getFullYear() + '-' +
-                            String(d.getMonth() + 1).padStart(2, '0') + '-' +
-                            String(d.getDate()).padStart(2, '0');
-                        display.textContent = String(d.getDate()).padStart(2, '0') + ' ' +
-                            months[d.getMonth()] + ' ' + d.getFullYear();
+                        hiddenInput.value = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2,
+                            '0') + '-' + String(d.getDate()).padStart(2, '0');
+                        display.textContent = String(d.getDate()).padStart(2, '0') + ' ' + months[d
+                            .getMonth()] + ' ' + d.getFullYear();
                         display.classList.remove('text-gray-400');
                         display.classList.add('text-gray-800');
                     }
@@ -203,75 +180,16 @@
                 e.stopPropagation();
                 const rect = btnPickDate.getBoundingClientRect();
                 fpContainer.style.cssText =
-                    `position:fixed;z-index:99999;top:${rect.bottom + 8}px;left:${rect.left}px;display:block;`;
+                    `position:fixed;z-index:99999;top:${rect.bottom+8}px;left:${rect.left}px;display:block;`;
                 fp.open();
             });
 
             document.addEventListener('click', function(e) {
                 const cal = document.querySelector('.flatpickr-calendar');
-                if (
-                    !fpContainer.contains(e.target) &&
-                    !(cal && cal.contains(e.target)) &&
-                    e.target.id !== 'btn-pick-date'
-                ) {
+                if (!fpContainer.contains(e.target) && !(cal && cal.contains(e.target)) && e.target.id !==
+                    'btn-pick-date') {
                     fp.close();
                     fpContainer.style.display = 'none';
-                }
-            });
-
-            // ── IMAGE UPLOAD ───────────────────────────────────────────────────
-            const dropZone = document.getElementById('dropZone');
-            const fileInput = document.getElementById('image');
-            const imagePreview = document.getElementById('imagePreview');
-            const previewImg = document.getElementById('previewImg');
-            const fileName = document.getElementById('fileName');
-            const maxSize = 5 * 1024 * 1024;
-
-            function handleFile(file) {
-                if (!file.type.startsWith('image/')) {
-                    alert('Pilih file gambar yang valid');
-                    return;
-                }
-                if (file.size > maxSize) {
-                    alert('Ukuran file maksimal 5MB');
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = e => {
-                    previewImg.src = e.target.result;
-                    fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
-                    imagePreview.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-
-            fileInput.addEventListener('change', e => {
-                if (e.target.files[0]) handleFile(e.target.files[0]);
-            });
-
-            dropZone.addEventListener('click', function() {
-                fileInput.click();
-            });
-
-            const pickFileBtn = document.getElementById('pickFileBtn');
-            if (pickFileBtn) {
-                pickFileBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    fileInput.click();
-                });
-            }
-            dropZone.addEventListener('dragover', e => {
-                e.preventDefault();
-                dropZone.classList.add('border-blue-500', 'bg-blue-50');
-            });
-            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-blue-500',
-            'bg-blue-50'));
-            dropZone.addEventListener('drop', e => {
-                e.preventDefault();
-                dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-                if (e.dataTransfer.files[0]) {
-                    fileInput.files = e.dataTransfer.files;
-                    handleFile(e.dataTransfer.files[0]);
                 }
             });
         });

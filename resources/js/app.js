@@ -11,7 +11,13 @@ import 'tinymce/plugins/autolink';
 import 'tinymce/plugins/image';
 import 'tinymce/plugins/table';
 import 'tinymce/plugins/codesample';
+import Cropper from 'cropperjs';
+import Alpine from 'alpinejs';
 
 window.flatpickr = flatpickr;
 window.flatpickrLocaleId = Indonesian;
 window.tinymce = tinymce;
+window.Cropper = Cropper;
+window.Alpine = Alpine;
+
+Alpine.start();
