@@ -13,14 +13,14 @@
     </div>
 
     <div class="container px-6 py-16 mx-auto">
-        @if($prestasis->isEmpty())
+        @if ($prestasis->isEmpty())
             <div class="py-16 text-center rounded-2xl" style="background: #dcfce7">
                 <i class="mb-4 text-6xl fas fa-trophy" style="color: #15803d40"></i>
                 <p class="text-lg text-gray-500">Belum ada prestasi yang dipublikasikan</p>
             </div>
         @else
             <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                @foreach($prestasis as $prestasi)
+                @foreach ($prestasis as $prestasi)
                     @php $award = getAwardIcon($prestasi->category); @endphp
                     <div class="flex flex-col h-full overflow-hidden transition-all duration-300 bg-white border shadow-lg rounded-2xl hover:shadow-2xl group"
                         style="border-color: #15803d1a">
@@ -36,18 +36,19 @@
                         <div class="flex flex-col flex-1 p-6">
                             <h3 class="mb-3 text-xl font-bold leading-tight text-gray-900">{{ $prestasi->title }}</h3>
 
-                            @if($prestasi->category)
+                            @if ($prestasi->category)
                                 <div class="mb-3 text-sm font-semibold tracking-wide uppercase line-clamp-1"
                                     style="{{ $award['textStyle'] }}">
                                     {{ $prestasi->category }}
                                 </div>
                             @endif
 
+                            {{-- FIX: strip_tags() removes TinyMCE HTML before displaying plain text preview --}}
                             <p class="flex-1 mb-4 text-sm leading-relaxed text-gray-600 line-clamp-3">
-                                {{ $prestasi->description }}
+                                {{ Str::limit(strip_tags($prestasi->description), 150) }}
                             </p>
 
-                            @if($prestasi->achievement_date)
+                            @if ($prestasi->achievement_date)
                                 <div class="flex items-center mb-4 text-xs text-gray-500">
                                     <i class="mr-2 fas fa-calendar"></i>
                                     {{ $prestasi->achievement_date->format('d M Y') }}
@@ -60,7 +61,8 @@
                                 class="inline-block mt-4 text-sm font-semibold transition-opacity hover:opacity-80 group/link"
                                 style="{{ $award['textStyle'] }}">
                                 Baca Selengkapnya
-                                <i class="ml-2 transition-transform fas fa-arrow-right group-hover/link:translate-x-1"></i>
+                                <i
+                                    class="ml-2 transition-transform fas fa-arrow-right group-hover/link:translate-x-1"></i>
                             </a>
                         </div>
                     </div>

@@ -3,19 +3,18 @@
     <div class="py-12 text-white" style="background: linear-gradient(to right, #15803d, #166534)">
         <div class="container px-6 mx-auto">
             <a href="{{ route('prestasi.index') }}"
-                class="inline-flex items-center mb-4 text-sm transition-colors hover:text-white"
-                style="color: #86efac">
+                class="inline-flex items-center mb-4 text-sm transition-colors hover:text-white" style="color: #86efac">
                 <i class="mr-2 fas fa-arrow-left"></i> Kembali ke Prestasi
             </a>
             <h1 class="text-4xl font-bold text-white">{{ $prestasi->title }}</h1>
             <div class="flex flex-wrap gap-4 mt-4">
-                @if($prestasi->category)
+                @if ($prestasi->category)
                     <span class="px-3 py-1 text-sm font-semibold rounded-full"
                         style="background: rgba(255,255,255,0.2); color: white">
                         {{ $prestasi->category }}
                     </span>
                 @endif
-                @if($prestasi->achievement_date)
+                @if ($prestasi->achievement_date)
                     <span class="flex items-center gap-2 text-sm" style="color: #86efac">
                         <i class="fas fa-calendar"></i>
                         {{ $prestasi->achievement_date->format('d F Y') }}
@@ -29,10 +28,9 @@
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
 
             <div class="lg:col-span-2">
-                @if($prestasi->featured_image)
+                @if ($prestasi->featured_image)
                     <div class="w-full mb-8 overflow-hidden shadow-lg rounded-xl">
-                        <img src="{{ asset('storage/' . $prestasi->featured_image) }}"
-                            alt="{{ $prestasi->title }}"
+                        <img src="{{ Storage::url($prestasi->featured_image) }}" alt="{{ $prestasi->title }}"
                             class="object-cover w-full h-auto">
                     </div>
                 @else
@@ -43,10 +41,11 @@
                     </div>
                 @endif
 
+                {{-- FIX: Use {!! !!} instead of {{ }} to render TinyMCE HTML content --}}
                 <div class="prose prose-lg max-w-none">
                     <h2 class="mb-4 text-2xl font-bold" style="color: #14532d">Deskripsi</h2>
-                    <div class="leading-relaxed text-gray-700 whitespace-pre-line">
-                        {{ $prestasi->description }}
+                    <div class="leading-relaxed text-gray-700 tinymce-content">
+                        {!! $prestasi->description !!}
                     </div>
                 </div>
             </div>
@@ -55,7 +54,7 @@
                 <div class="sticky p-6 rounded-xl top-4" style="background: #dcfce7">
                     <h3 class="mb-6 text-lg font-bold" style="color: #14532d">Informasi Prestasi</h3>
 
-                    @if($prestasi->category)
+                    @if ($prestasi->category)
                         @php $award = getAwardIcon($prestasi->category); @endphp
                         <div class="mb-6">
                             <p class="mb-2 text-sm font-semibold text-gray-600">Kategori</p>
@@ -71,7 +70,7 @@
                         </div>
                     @endif
 
-                    @if($prestasi->achievement_date)
+                    @if ($prestasi->achievement_date)
                         <div class="mb-6">
                             <p class="mb-2 text-sm font-semibold text-gray-600">Tanggal Pencapaian</p>
                             <p class="font-medium text-gray-900">{{ $prestasi->achievement_date->format('d F Y') }}</p>

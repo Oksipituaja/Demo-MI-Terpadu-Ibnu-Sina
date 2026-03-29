@@ -37,23 +37,24 @@ class PrestasiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'nullable|string|max:100',
+            'title'            => 'required|string|max:255',
+            'description'      => 'required|string',
+            'category'         => 'nullable|string|max:100',
             'achievement_date' => 'nullable|date',
-            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
-            'status' => 'required|in:draft,published',
+            'featured_image'   => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'status'           => 'required|in:draft,published',
         ]);
 
         $validated['slug'] = $this->generateUniqueSlug($validated['title']);
 
         if ($request->hasFile('featured_image')) {
+            // Store under 'prestasi' folder in public disk → accessible via asset('storage/prestasi/...')
             $validated['featured_image'] = $request->file('featured_image')->store('prestasi', 'public');
         }
 
         Prestasi::create($validated);
 
-        return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi created successfully!');
+        return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi berhasil ditambahkan!');
     }
 
     public function edit(Prestasi $prestasi): View
@@ -64,17 +65,18 @@ class PrestasiController extends Controller
     public function update(Prestasi $prestasi, Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'nullable|string|max:100',
+            'title'            => 'required|string|max:255',
+            'description'      => 'required|string',
+            'category'         => 'nullable|string|max:100',
             'achievement_date' => 'nullable|date',
-            'featured_image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
-            'status' => 'required|in:draft,published',
+            'featured_image'   => 'nullable|file|mimes:jpeg,png,jpg,gif,svg,webp,avif|max:5120',
+            'status'           => 'required|in:draft,published',
         ]);
 
         $validated['slug'] = $this->generateUniqueSlug($validated['title'], $prestasi->id);
 
         if ($request->hasFile('featured_image')) {
+            // Delete old image if exists
             if ($prestasi->featured_image) {
                 \Storage::disk('public')->delete($prestasi->featured_image);
             }
@@ -83,7 +85,7 @@ class PrestasiController extends Controller
 
         $prestasi->update($validated);
 
-        return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi updated successfully!');
+        return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi berhasil diperbarui!');
     }
 
     public function destroy(Prestasi $prestasi)
@@ -93,26 +95,26 @@ class PrestasiController extends Controller
         }
         $prestasi->delete();
 
-        return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi deleted successfully!');
+        return redirect()->route('admin.prestasis.index')->with('success', 'Prestasi berhasil dihapus!');
     }
 
     /**
-     * Generate unique slug with collision detection
+     * Generate unique slug with collision detection.
      *
-     * @param  ?int  $excludeId  - Exclude this ID from check (for updates)
+     * @param  ?int  $excludeId  Exclude this ID from uniqueness check (for updates)
      */
     private function generateUniqueSlug(string $title, ?int $excludeId = null): string
     {
-        $slug = Str::slug($title);
+        $slug     = Str::slug($title);
         $baseSlug = $slug;
-        $counter = 1;
+        $counter  = 1;
 
-        while (Prestasi::where('slug', $slug)
-            ->when($excludeId, function ($query) use ($excludeId) {
-                return $query->where('id', '!=', $excludeId);
-            })
-            ->exists()) {
-            $slug = $baseSlug.'-'.$counter;
+        while (
+            Prestasi::where('slug', $slug)
+            ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
+            ->exists()
+        ) {
+            $slug = $baseSlug . '-' . $counter;
             $counter++;
         }
 

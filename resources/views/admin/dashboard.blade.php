@@ -112,7 +112,7 @@
 
 <div class="p-6 bg-white rounded-lg shadow">
     <h3 class="mb-3 text-lg font-semibold text-gray-800">
-        <i class="mr-2 text-blue-600 fas fa-hand-wave"></i>
+        <i class="mr-2 text-blue-600 fas fa-hand-paper"></i>
         Selamat Datang, {{ Auth::user()->name }}!
     </h3>
     <p class="mb-4 text-sm text-gray-600">Gunakan menu di sebelah kiri untuk mengelola konten website sekolah. Berikut yang dapat Anda lakukan:</p>

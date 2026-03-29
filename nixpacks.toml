@@ -34,4 +34,4 @@ cmds = [
 ]
 
 [start]
-cmd = "php artisan migrate --seed --force && rm -rf public/storage && php artisan storage:link && php -S 0.0.0.0:$PORT -t public"
+cmd = "php artisan migrate --force && php artisan optimize:cache && php -S 0.0.0.0:$PORT -t public"
