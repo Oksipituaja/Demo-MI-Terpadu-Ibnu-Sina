@@ -27,11 +27,8 @@ cmds = [
 [phases.build]
 cmds = [
   "npm ci",
-  "npm run build",
-  "php artisan config:cache",
-  "php artisan route:cache",
-  "php artisan view:cache"
+  "npm run build"
 ]
 
 [start]
-cmd = "php artisan migrate --force && php artisan storage:link --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php -S 0.0.0.0:$PORT -t public"
+cmd = "chmod +x /app/start.sh && /app/start.sh"
