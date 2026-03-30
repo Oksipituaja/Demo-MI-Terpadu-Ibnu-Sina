@@ -60,9 +60,9 @@
                         class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.prestasi.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
                         <i class="w-5 mr-2 fas fa-trophy"></i> Prestasi Siswa
                     </a>
-                    <a href="{{ route('admin.registrations.index') }}"
-                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.registrations.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
-                        <i class="w-5 mr-2 fas fa-user-check"></i> Pendaftaran Siswa
+                    <a href="{{ route('admin.consultations.index') }}"
+                        class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.consultations.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                        <i class="w-5 mr-2 fas fa-envelope-open-text"></i> Pesan Masuk
                     </a>
                     <a href="{{ route('admin.settings.index') }}"
                         class="flex items-center px-4 py-2 rounded-lg text-sm {{ request()->routeIs('admin.settings.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">

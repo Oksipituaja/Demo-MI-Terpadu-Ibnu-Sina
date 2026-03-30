@@ -8,9 +8,9 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ManagementAccountController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\PrestasiController;
-use App\Http\Controllers\Admin\RegistrationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\ConsultationController;
 use App\Livewire\Pages\About;
 use App\Livewire\Pages\MataPelajaran;
 use App\Livewire\Pages\Peraturan;
@@ -27,6 +27,7 @@ use App\Livewire\Pages\PrestasiDetail;
 use App\Livewire\Pages\Privacy;
 use App\Livewire\Pages\Teachers;
 use App\Livewire\Pages\Terms;
+use App\Livewire\Pages\Konsultasi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
@@ -43,9 +44,9 @@ Route::get('/files/{path}', function (string $path) {
         file_get_contents($fullPath),
         200,
         [
-            'Content-Type'  => $mimeType,
+            'Content-Type'   => $mimeType,
             'Content-Length' => filesize($fullPath),
-            'Cache-Control' => 'public, max-age=86400',
+            'Cache-Control'  => 'public, max-age=86400',
         ]
     );
 })->where('path', '.*');
@@ -67,12 +68,13 @@ Route::get('/prestasi/{slug}', PrestasiDetail::class)->name('prestasi.detail');
 Route::get('/ppdb', PPDB::class)->name('ppdb');
 Route::get('/privacy-policy', Privacy::class)->name('privacy');
 Route::get('/terms-and-conditions', Terms::class)->name('terms');
+Route::get('/konsultasi', Konsultasi::class)->name('konsultasi');
 
 Route::get('/agenda', function () {
     return redirect()->route('news', ['tab' => 'agenda']);
 })->name('agenda');
 
-// Testing error pages
+// ===== Debug Routes (hapus di production) =====
 Route::get('/test-403', fn() => abort(403));
 Route::get('/test-404', fn() => abort(404));
 Route::get('/test-500', fn() => abort(500));
@@ -208,6 +210,8 @@ Route::redirect('/admin', '/admin-panel');
 // ===== Admin Panel Routes =====
 Route::middleware(['auth', 'auth.timeout'])->prefix('admin-panel')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Konten
     Route::resource('news', NewsController::class);
     Route::resource('teachers', TeacherController::class);
     Route::resource('galleries', GalleryController::class);
@@ -215,12 +219,16 @@ Route::middleware(['auth', 'auth.timeout'])->prefix('admin-panel')->name('admin.
     Route::resource('facilities', FacilityController::class);
     Route::resource('about', AboutController::class);
     Route::resource('prestasis', PrestasiController::class);
-    Route::get('registrations', [RegistrationController::class, 'index'])->name('registrations.index');
-    Route::delete('registrations/{registration}', [RegistrationController::class, 'destroy'])->name('registrations.destroy');
+
+    // Konsultasi
+    Route::get('consultations', [ConsultationController::class, 'index'])->name('consultations.index');
+    Route::post('consultations/{consultation}/reply', [ConsultationController::class, 'reply'])->name('consultations.reply');
+    Route::delete('consultations/{consultation}', [ConsultationController::class, 'destroy'])->name('consultations.destroy');
 
     // Settings PPDB
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
 
+    // Super Admin only
     Route::middleware('super_admin')->resource('management-account', ManagementAccountController::class);
 });

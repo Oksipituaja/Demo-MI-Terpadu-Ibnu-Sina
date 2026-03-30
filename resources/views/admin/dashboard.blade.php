@@ -62,15 +62,15 @@
         <p class="mt-1 text-xs text-blue-600">Kelola fasilitas →</p>
     </a>
 
-    <a href="{{ route('admin.registrations.index') }}" class="p-6 transition bg-white rounded-lg shadow hover:shadow-md group">
+    <a href="{{ route('admin.consultations.index') }}" class="p-6 transition bg-white rounded-lg shadow hover:shadow-md group">
         <div class="flex items-center justify-between mb-3">
             <div class="flex items-center justify-center w-12 h-12 transition bg-indigo-100 rounded-lg group-hover:bg-indigo-200">
-                <i class="text-xl text-indigo-600 fas fa-user-check"></i>
+                <i class="text-xl text-indigo-600 fas fa-envelope-open-text"></i>
             </div>
-            <span class="text-3xl font-bold text-gray-800">{{ $stats['registrations_count'] }}</span>
+            <span class="text-3xl font-bold text-gray-800">{{ $stats['consultations_count'] }}</span>
         </div>
-        <p class="text-sm font-medium text-gray-600">Pendaftaran Siswa</p>
-        <p class="mt-1 text-xs text-blue-600">Lihat pendaftaran →</p>
+        <p class="text-sm font-medium text-gray-600">Pesan Masuk</p>
+        <p class="mt-1 text-xs text-blue-600">Lihat Pesan Masuk →</p>
     </a>
 
     <a href="{{ route('admin.prestasis.index') }}" class="p-6 transition bg-white rounded-lg shadow hover:shadow-md group">

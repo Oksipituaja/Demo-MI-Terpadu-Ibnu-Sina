@@ -2,32 +2,32 @@
 
 namespace App\Mail;
 
-use App\Models\Registration;
+use App\Models\Consultation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NewRegistrationMail extends Mailable
+class ConsultationReplyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public function __construct(
-        public Registration $registration
+        public Consultation $consultation
     ) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '🎓 Pendaftar Baru PPDB - ' . $this->registration->student_name,
+            subject: '💬 Jawaban Konsultasi Anda - MI Terpadu Ibnu Sina',
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'mail.new-registration',
+            view: 'mail.consultation-reply',
         );
     }
 }

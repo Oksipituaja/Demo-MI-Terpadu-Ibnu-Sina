@@ -16,7 +16,7 @@ class DashboardController extends Controller
             'galleries_count'          => \App\Models\Gallery::count(),
             'agendas_count'            => \App\Models\Agenda::count(),
             'facilities_count'         => \App\Models\Facility::count(),
-            'registrations_count'      => \App\Models\Registration::count(),
+            'consultations_count'      => \App\Models\Consultation::count(),
             'prestasi_count'           => \App\Models\Prestasi::count(),
             'about_count'              => \App\Models\About::count(),
             'management_account_count' => User::count(),
