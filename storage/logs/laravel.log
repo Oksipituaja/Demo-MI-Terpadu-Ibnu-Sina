@@ -15311,3 +15311,5 @@ Did you mean this?
 #85 {main}
 "} 
 [2026-03-30 15:11:49] local.INFO: [ConsultationController] Mail job dispatched {"consultation_id":7,"to":"oksipituaja@gmail.com","queue_driver":"database"} 
+[2026-03-30 15:47:27] local.INFO: [SendConsultationReplyMail] Email berhasil dikirim {"consultation_id":8,"to":"oksipituaja@gmail.com","attempt":1} 
+[2026-03-30 15:47:27] local.INFO: [ConsultationController] Mail job dispatched {"consultation_id":8,"to":"oksipituaja@gmail.com","queue_driver":"sync"} 
