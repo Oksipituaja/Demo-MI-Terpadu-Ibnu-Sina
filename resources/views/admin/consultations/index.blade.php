@@ -39,36 +39,49 @@
         </div>
     </div>
 
-    {{-- Filter & Search --}}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 px-5 py-4 mb-5">
+    {{-- Filter & Search (gabungan: search + pill status, tanpa tombol Filter terpisah) --}}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 px-5 py-3 mb-5">
         <form method="GET" action="{{ route('admin.consultations.index') }}" class="flex flex-wrap items-center gap-3"
             id="filterForm">
+
+            {{-- Search input --}}
             <div class="flex-1 min-w-[200px] relative">
                 <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                 <input type="text" name="search" id="liveSearchInput" value="{{ request('search') }}"
                     placeholder="Cari nama, email, atau topik..." autocomplete="off"
-                    class="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400">
-                {{-- Live search spinner (hidden until typing) --}}
+                    class="w-full pl-9 pr-8 py-2 text-sm border border-gray-200 rounded-lg
+                              focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400">
                 <i id="searchSpinner"
                     class="fas fa-circle-notch fa-spin absolute right-3 top-1/2 -translate-y-1/2 text-indigo-400 text-sm"
                     style="display:none;"></i>
             </div>
-            <select name="status" id="statusFilter"
-                class="text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 focus:border-indigo-400 bg-white">
-                <option value="">Semua Status</option>
-                <option value="pending" @selected(request('status') === 'pending')>Belum Dijawab</option>
-                <option value="replied" @selected(request('status') === 'replied')>Sudah Dijawab</option>
-            </select>
-            <button type="submit"
-                class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition">
-                <i class="fas fa-filter mr-1"></i> Filter
-            </button>
+
+            {{-- Status pill buttons --}}
+            <div class="flex items-center gap-1 bg-gray-100 rounded-lg p-1 shrink-0">
+                @foreach (['' => 'Semua', 'pending' => 'Belum Dijawab', 'replied' => 'Sudah Dijawab'] as $val => $label)
+                    <button type="button" onclick="setStatusFilter('{{ $val }}')"
+                        data-status-btn="{{ $val }}"
+                        class="px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-150 whitespace-nowrap
+                                   {{ request('status', '') === $val
+                                       ? 'bg-white text-indigo-600 shadow-sm font-semibold'
+                                       : 'text-gray-500 hover:text-gray-700' }}">
+                        {{ $label }}
+                    </button>
+                @endforeach
+            </div>
+
+            {{-- Hidden status input (diisi via JS) --}}
+            <input type="hidden" name="status" id="statusHiddenInput" value="{{ request('status', '') }}">
+
+            {{-- Reset link (muncul hanya kalau ada filter aktif) --}}
             @if (request()->hasAny(['search', 'status']))
                 <a href="{{ route('admin.consultations.index') }}"
-                    class="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition">
-                    <i class="fas fa-times mr-1"></i> Reset
+                    class="inline-flex items-center gap-1 px-3 py-2 text-xs font-medium text-gray-500
+                          bg-gray-100 rounded-lg hover:bg-gray-200 hover:text-gray-700 transition shrink-0">
+                    <i class="fas fa-times"></i> Reset
                 </a>
             @endif
+
         </form>
     </div>
 
@@ -95,11 +108,12 @@
                         <tr class="hover:bg-gray-50 transition-colors {{ $item->isPending() ? 'bg-amber-50/30' : '' }}"
                             data-name="{{ strtolower($item->name) }}" data-email="{{ strtolower($item->email) }}"
                             data-subject="{{ strtolower($item->subject ?? '') }}" data-status="{{ $item->status }}">
+
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
                                     <div
                                         class="flex items-center justify-center w-9 h-9 text-xs font-bold text-white rounded-full shrink-0
-                                    {{ $item->isPending() ? 'bg-amber-500' : 'bg-emerald-500' }}">
+                                                {{ $item->isPending() ? 'bg-amber-500' : 'bg-emerald-500' }}">
                                         {{ strtoupper(substr($item->name, 0, 1)) }}
                                     </div>
                                     <div>
@@ -108,16 +122,19 @@
                                     </div>
                                 </div>
                             </td>
+
                             <td class="px-6 py-4 max-w-xs">
                                 @if ($item->subject)
                                     <div class="text-sm font-medium text-gray-800 mb-0.5">{{ $item->subject }}</div>
                                 @endif
                                 <div class="text-xs text-gray-400 line-clamp-2">{{ Str::limit($item->message, 80) }}</div>
                             </td>
+
                             <td class="px-6 py-4">
                                 <div class="text-sm text-gray-600">{{ $item->created_at->format('d M Y') }}</div>
                                 <div class="text-xs text-gray-400">{{ $item->created_at->format('H:i') }} WIB</div>
                             </td>
+
                             <td class="px-6 py-4">
                                 @if ($item->isPending())
                                     <span
@@ -133,28 +150,35 @@
                                     </span>
                                 @endif
                             </td>
+
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
+                                    {{--
+                                        FIX: Ganti addslashes() → json_encode() agar karakter
+                                        newline, tab, kutip, dan entitas HTML tidak memecah
+                                        sintaks JavaScript (penyebab SyntaxError di Railway).
+                                    --}}
                                     <button type="button"
                                         onclick="openReplyModal(
-                                        {{ $item->id }},
-                                        '{{ addslashes($item->name) }}',
-                                        '{{ addslashes($item->email) }}',
-                                        '{{ addslashes($item->subject ?? '') }}',
-                                        '{{ addslashes($item->message) }}',
-                                        '{{ $item->created_at->format('d M Y, H:i') }}',
-                                        {{ $item->isReplied() ? 'true' : 'false' }},
-                                        '{{ addslashes($item->reply ?? '') }}'
-                                    )"
+                                            {{ $item->id }},
+                                            {{ json_encode($item->name) }},
+                                            {{ json_encode($item->email) }},
+                                            {{ json_encode($item->subject ?? '') }},
+                                            {{ json_encode($item->message) }},
+                                            {{ json_encode($item->created_at->format('d M Y, H:i')) }},
+                                            {{ $item->isReplied() ? 'true' : 'false' }},
+                                            {{ json_encode($item->reply ?? '') }}
+                                        )"
                                         class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-lg transition
-                                        {{ $item->isPending()
-                                            ? 'bg-indigo-600 text-white hover:bg-indigo-700'
-                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                                               {{ $item->isPending()
+                                                   ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                                                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                                         <i class="fas {{ $item->isPending() ? 'fa-reply' : 'fa-eye' }}"></i>
                                         {{ $item->isPending() ? 'Jawab' : 'Lihat' }}
                                     </button>
+
                                     <form action="{{ route('admin.consultations.destroy', $item) }}" method="POST"
-                                        onsubmit="return confirmDelete(event, '{{ addslashes($item->name) }}', this)">
+                                        onsubmit="return confirmDelete(event, {{ json_encode($item->name) }}, this)">
                                         @csrf @method('DELETE')
                                         <button type="submit"
                                             class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-red-500 bg-red-50 rounded-lg hover:bg-red-100 transition">
@@ -260,8 +284,8 @@
                     </div>
                     <p class="text-xs text-gray-400">
                         <i class="fas fa-paper-plane mr-1"></i>
-                        Jawaban akan langsung dikirim ke email: <span id="replyTargetEmail"
-                            class="font-semibold text-indigo-600"></span>
+                        Jawaban akan langsung dikirim ke email:
+                        <span id="replyTargetEmail" class="font-semibold text-indigo-600"></span>
                     </p>
                 </form>
             </div>
@@ -315,39 +339,35 @@
             function showToast(message, type = 'success', duration = 4000) {
                 const t = toastIcons[type] || toastIcons.success;
                 const container = document.getElementById('toastContainer');
-
                 const toast = document.createElement('div');
-                toast.className = `pointer-events-auto relative overflow-hidden flex items-start gap-3 px-4 py-3 rounded-xl shadow-lg ${t.bg} min-w-[280px] max-w-sm
-        translate-x-full opacity-0 transition-all duration-300 ease-out`;
 
-                toast.innerHTML = `
-        <i class="fas ${t.icon} ${t.color} text-lg mt-0.5 shrink-0"></i>
-        <div class="flex-1">
-            <p class="text-sm font-medium text-gray-800 leading-snug">${message}</p>
-        </div>
-        <button onclick="dismissToast(this.closest('[data-toast]'))"
-            class="shrink-0 text-gray-400 hover:text-gray-600 transition mt-0.5">
-            <i class="fas fa-xmark text-sm"></i>
-        </button>
-        <div class="absolute bottom-0 left-0 h-[3px] ${t.bar} rounded-full toast-progress" style="width:100%; transition: width ${duration}ms linear;"></div>
-    `;
+                toast.className =
+                    `pointer-events-auto relative overflow-hidden flex items-start gap-3 px-4 py-3 rounded-xl shadow-lg ${t.bg} min-w-[280px] max-w-sm translate-x-full opacity-0 transition-all duration-300 ease-out`;
                 toast.setAttribute('data-toast', '');
+                toast.innerHTML = `
+                    <i class="fas ${t.icon} ${t.color} text-lg mt-0.5 shrink-0"></i>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-800 leading-snug">${message}</p>
+                    </div>
+                    <button onclick="dismissToast(this.closest('[data-toast]'))"
+                            class="shrink-0 text-gray-400 hover:text-gray-600 transition mt-0.5">
+                        <i class="fas fa-xmark text-sm"></i>
+                    </button>
+                    <div class="absolute bottom-0 left-0 h-[3px] ${t.bar} rounded-full toast-progress"
+                         style="width:100%; transition: width ${duration}ms linear;"></div>
+                `;
                 container.appendChild(toast);
 
-                // Slide in
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         toast.classList.remove('translate-x-full', 'opacity-0');
                         toast.classList.add('translate-x-0', 'opacity-100');
-                        // Start progress bar
                         const bar = toast.querySelector('.toast-progress');
                         if (bar) setTimeout(() => bar.style.width = '0%', 50);
                     });
                 });
 
-                // Auto dismiss
-                const timer = setTimeout(() => dismissToast(toast), duration);
-                toast._timer = timer;
+                toast._timer = setTimeout(() => dismissToast(toast), duration);
             }
 
             function dismissToast(toast) {
@@ -362,26 +382,24 @@
             // FLASH MESSAGES → TOAST
             // =============================================
             @if (session('success'))
-                document.addEventListener('DOMContentLoaded', () => showToast('{{ addslashes(session('success')) }}',
-                    'success'));
+                document.addEventListener('DOMContentLoaded', () => showToast(@json(session('success')), 'success'));
             @endif
             @if (session('error'))
-                document.addEventListener('DOMContentLoaded', () => showToast('{{ addslashes(session('error')) }}', 'error'));
+                document.addEventListener('DOMContentLoaded', () => showToast(@json(session('error')), 'error'));
             @endif
             @if (session('warning'))
-                document.addEventListener('DOMContentLoaded', () => showToast('{{ addslashes(session('warning')) }}',
-                    'warning'));
+                document.addEventListener('DOMContentLoaded', () => showToast(@json(session('warning')), 'warning'));
             @endif
             @if (session('info'))
-                document.addEventListener('DOMContentLoaded', () => showToast('{{ addslashes(session('info')) }}', 'info'));
+                document.addEventListener('DOMContentLoaded', () => showToast(@json(session('info')), 'info'));
             @endif
 
             // =============================================
-            // LIVE SEARCH (client-side filter)
+            // STATUS PILL FILTER + LIVE SEARCH
             // =============================================
             (function() {
                 const input = document.getElementById('liveSearchInput');
-                const statusSel = document.getElementById('statusFilter');
+                const hiddenStatus = document.getElementById('statusHiddenInput');
                 const spinner = document.getElementById('searchSpinner');
                 const tbody = document.getElementById('tableBody');
                 const pagination = document.getElementById('paginationWrapper');
@@ -390,18 +408,16 @@
 
                 function filterRows() {
                     const q = input.value.toLowerCase().trim();
-                    const status = statusSel.value;
+                    const status = hiddenStatus.value;
                     const rows = tbody.querySelectorAll('tr[data-name]');
                     let visible = 0;
 
                     rows.forEach(row => {
-                        const name = row.dataset.name || '';
-                        const email = row.dataset.email || '';
-                        const subject = row.dataset.subject || '';
-                        const rowStatus = row.dataset.status || '';
-
-                        const matchSearch = !q || name.includes(q) || email.includes(q) || subject.includes(q);
-                        const matchStatus = !status || rowStatus === status;
+                        const matchSearch = !q ||
+                            (row.dataset.name || '').includes(q) ||
+                            (row.dataset.email || '').includes(q) ||
+                            (row.dataset.subject || '').includes(q);
+                        const matchStatus = !status || row.dataset.status === status;
 
                         if (matchSearch && matchStatus) {
                             row.classList.remove('hidden');
@@ -411,17 +427,12 @@
                         }
                     });
 
-                    // Toggle empty state
                     liveEmpty.classList.toggle('hidden', visible > 0);
-
-                    // Hide pagination when filtering live
-                    if (q || status) {
-                        pagination.classList.add('hidden');
-                    } else {
-                        pagination.classList.remove('hidden');
-                    }
+                    // Sembunyikan pagination saat filter/search aktif
+                    pagination.classList.toggle('hidden', !!(q || status));
                 }
 
+                // Live search on typing
                 input.addEventListener('input', () => {
                     spinner.style.display = 'block';
                     clearTimeout(debounceTimer);
@@ -431,14 +442,34 @@
                     }, 300);
                 });
 
-                // Status dropdown also triggers live filter
-                statusSel.addEventListener('change', () => {
-                    // If there's a search query, filter live; otherwise submit form
+                /**
+                 * setStatusFilter — dipanggil dari pill button status.
+                 * Kalau ada teks search → filter live (client-side).
+                 * Kalau tidak ada teks → submit form ke server agar
+                 * pagination server-side juga ikut terfilter.
+                 */
+                window.setStatusFilter = function(val) {
+                    hiddenStatus.value = val;
+
+                    // Sync tampilan pill (active state)
+                    document.querySelectorAll('[data-status-btn]').forEach(btn => {
+                        const active = btn.dataset.statusBtn === val;
+                        btn.classList.toggle('bg-white', active);
+                        btn.classList.toggle('text-indigo-600', active);
+                        btn.classList.toggle('shadow-sm', active);
+                        btn.classList.toggle('font-semibold', active);
+                        btn.classList.toggle('text-gray-500', !active);
+                        btn.classList.toggle('hover:text-gray-700', !active);
+                    });
+
                     if (input.value.trim()) {
+                        // Ada query → filter di client
                         filterRows();
+                    } else {
+                        // Tidak ada query → biarkan server yang filter
+                        document.getElementById('filterForm').submit();
                     }
-                    // If no search, let form submit handle it (standard filter)
-                });
+                };
             })();
 
             // =============================================
@@ -453,7 +484,10 @@
             }
 
             // =============================================
-            // MODAL
+            // MODAL JAWAB / LIHAT
+            // FIX: Semua parameter sekarang di-pass via json_encode
+            //      di sisi Blade agar aman terhadap newline, kutip,
+            //      dan karakter khusus lain (bukan addslashes).
             // =============================================
             let currentFormAction = '';
 
@@ -461,18 +495,21 @@
                 document.getElementById('modalTitle').textContent = isReplied ? 'Detail Pertanyaan' : 'Jawab Pertanyaan';
                 document.getElementById('modalMeta').textContent = 'Masuk pada ' + date;
 
-                document.getElementById('modalAvatar').textContent = name.charAt(0).toUpperCase();
-                document.getElementById('modalAvatar').className =
+                const avatar = document.getElementById('modalAvatar');
+                avatar.textContent = name.charAt(0).toUpperCase();
+                avatar.className =
                     'w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0 ' +
                     (isReplied ? 'bg-emerald-500' : 'bg-amber-500');
+
                 document.getElementById('modalName').textContent = name;
                 document.getElementById('modalEmail').textContent = email;
 
+                const subjectWrap = document.getElementById('subjectWrap');
                 if (subject && subject.trim() !== '') {
-                    document.getElementById('subjectWrap').classList.remove('hidden');
+                    subjectWrap.classList.remove('hidden');
                     document.getElementById('modalSubject').textContent = subject;
                 } else {
-                    document.getElementById('subjectWrap').classList.add('hidden');
+                    subjectWrap.classList.add('hidden');
                 }
 
                 document.getElementById('modalMessage').textContent = message;
@@ -507,6 +544,7 @@
                 modal.classList.remove('flex');
             }
 
+            // Klik backdrop → tutup modal
             document.getElementById('replyModal').addEventListener('click', function(e) {
                 if (e.target === this) closeModal();
             });
