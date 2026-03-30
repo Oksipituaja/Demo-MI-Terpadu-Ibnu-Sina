@@ -19,8 +19,9 @@ class ConsultationReplyMail extends Mailable
 
     public function envelope(): Envelope
     {
+        // Tidak pakai emoji — beberapa SMTP server/mail client menolak emoji di subject header
         return new Envelope(
-            subject: '💬 Jawaban Konsultasi Anda - MI Terpadu Ibnu Sina',
+            subject: 'Jawaban Konsultasi Anda - MI Terpadu Ibnu Sina',
         );
     }
 

@@ -4,139 +4,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jawaban Konsultasi — MI Terpadu Ibnu Sina</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Jawaban Konsultasi &#8212; MI Terpadu Ibnu Sina</title>
+    <!--[if mso]>
+    <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+    </noscript>
+    <![endif]-->
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f0f4ed;
-            color: #374151;
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .wrapper {
+        body,
+        table,
+        td,
+        a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            outline: none;
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            background-color: #edf2e9;
+            color: #374151;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Wrapper ── */
+        .email-wrapper {
             max-width: 600px;
             margin: 32px auto;
             background: #ffffff;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 32px rgba(21,128,61,.10);
+            box-shadow: 0 4px 40px rgba(21, 128, 61, .12);
         }
 
         /* ── Header ── */
         .header {
-            background: linear-gradient(135deg, #14532d 0%, #15803d 60%, #22c55e 100%);
+            background: linear-gradient(135deg, #14532d 0%, #15803d 55%, #22c55e 100%);
             padding: 36px 40px 32px;
         }
+
         .header-top {
             display: flex;
             align-items: center;
             gap: 14px;
             margin-bottom: 18px;
         }
+
         .logo-box {
-            width: 44px; height: 44px;
+            width: 52px;
+            height: 52px;
             border-radius: 12px;
-            background: rgba(255,255,255,.18);
-            display: flex; align-items: center; justify-content: center;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
+            padding: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .20);
         }
-        .logo-box span {
-            font-size: 13px;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: -.5px;
+
+        .logo-box img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
         }
-        .header-school {
-            color: rgba(255,255,255,.85);
-            font-size: 13px;
-            font-weight: 600;
+
+        .header-school-name {
+            color: rgba(255, 255, 255, .92);
+            font-size: 14px;
+            font-weight: 700;
             line-height: 1.3;
         }
-        .header-school small {
+
+        .header-school-sub {
             display: block;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 500;
-            color: rgba(255,255,255,.55);
-            margin-top: 1px;
+            color: rgba(255, 255, 255, .58);
+            margin-top: 3px;
         }
 
         .header-divider {
             height: 1px;
-            background: rgba(255,255,255,.12);
-            margin-bottom: 18px;
+            background: rgba(255, 255, 255, .14);
+            margin-bottom: 22px;
         }
 
         .header h1 {
-            color: #fff;
-            font-size: 21px;
+            color: #ffffff;
+            font-size: 22px;
             font-weight: 800;
             margin-bottom: 6px;
             letter-spacing: -.3px;
         }
-        .header p {
-            color: rgba(255,255,255,.65);
+
+        .header-subtitle {
+            color: rgba(255, 255, 255, .62);
             font-size: 13px;
         }
-        .badge {
+
+        .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(255,255,255,.15);
-            border: 1px solid rgba(255,255,255,.22);
-            color: #fff;
+            gap: 7px;
+            background: rgba(255, 255, 255, .14);
+            border: 1px solid rgba(255, 255, 255, .22);
+            color: #ffffff;
             font-size: 11px;
             font-weight: 700;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 999px;
-            margin-top: 14px;
-            letter-spacing: .04em;
+            margin-top: 16px;
+            letter-spacing: .05em;
+            text-transform: uppercase;
         }
+
         .badge-dot {
-            width: 6px; height: 6px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: #4ade80;
             flex-shrink: 0;
         }
 
         /* ── Body ── */
-        .body { padding: 32px 40px; }
+        .body {
+            padding: 32px 40px 36px;
+        }
 
         .greeting {
             font-size: 15px;
             color: #374151;
-            margin-bottom: 24px;
-            line-height: 1.7;
+            margin-bottom: 28px;
+            line-height: 1.75;
         }
-        .greeting strong { color: #15803d; font-weight: 700; }
 
+        .greeting strong {
+            color: #15803d;
+            font-weight: 700;
+        }
+
+        /* Section Label */
         .section-label {
             font-size: 10px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: .12em;
+            letter-spacing: .14em;
             color: #9ca3af;
             margin-bottom: 10px;
         }
 
         /* Question box */
-        .question-box {
-            background: #f8fdf9;
-            border-left: 3px solid #d1fae5;
-            border-radius: 0 10px 10px 0;
-            padding: 14px 16px;
-            margin-bottom: 6px;
-        }
         .question-subject {
             font-size: 13px;
             font-weight: 700;
             color: #14532d;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            padding-left: 4px;
         }
+
+        .question-box {
+            background: #f8fdf9;
+            border-left: 3px solid #bbf7d0;
+            border-radius: 0 10px 10px 0;
+            padding: 14px 18px;
+            margin-bottom: 24px;
+        }
+
         .question-box p {
             font-size: 14px;
             color: #6b7280;
-            line-height: 1.7;
+            line-height: 1.75;
         }
 
         /* Reply box */
@@ -144,101 +208,164 @@
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
             border-left: 4px solid #15803d;
-            border-radius: 0 12px 12px 0;
-            padding: 18px 20px;
-            margin-bottom: 6px;
+            border-radius: 0 14px 14px 0;
+            padding: 20px 22px;
+            margin-bottom: 10px;
         }
+
         .reply-box p {
             font-size: 14px;
             color: #14532d;
-            line-height: 1.85;
+            line-height: 1.9;
             white-space: pre-line;
         }
 
+        /* Meta row */
         .meta-row {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 11.5px;
+            gap: 7px;
+            font-size: 12px;
             color: #9ca3af;
             margin-bottom: 28px;
-        }
-        .meta-icon {
-            width: 16px; height: 16px;
-            border-radius: 50%;
-            background: #dcfce7;
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: 8px;
-            color: #15803d;
+            margin-top: 10px;
         }
 
+        .meta-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #dcfce7;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #15803d;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .meta-time {
+            color: #15803d;
+            font-weight: 700;
+        }
+
+        /* Closing */
         .closing {
             font-size: 13.5px;
             color: #6b7280;
-            line-height: 1.7;
-            padding: 16px 18px;
+            line-height: 1.75;
+            padding: 18px 20px;
             border-radius: 12px;
             background: #f9fafb;
             border: 1px solid #f3f4f6;
         }
+
         .closing a {
             color: #15803d;
             font-weight: 700;
             text-decoration: none;
         }
 
+        /* ── Divider ── */
+        .section-divider {
+            height: 1px;
+            background: #e8f5e9;
+            margin: 0 40px;
+        }
+
         /* ── Footer ── */
         .footer {
-            background: #f0f4ed;
-            border-top: 1px solid #e7f0e8;
-            padding: 20px 40px;
+            background: #edf2e9;
+            border-top: 1px solid #dde8da;
+            padding: 22px 40px;
             text-align: center;
         }
-        .footer p {
-            font-size: 11.5px;
-            color: #9ca3af;
-            line-height: 1.7;
-        }
-        .footer strong { color: #6b7280; }
+
         .footer-brand {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
         }
-        .footer-brand-dot {
-            width: 18px; height: 18px;
+
+        .footer-logo {
+            width: 22px;
+            height: 22px;
             border-radius: 5px;
-            background: linear-gradient(135deg,#15803d,#22c55e);
-            display: inline-flex; align-items: center; justify-content: center;
-            font-size: 7px;
-            font-weight: 900;
-            color: #fff;
+            object-fit: contain;
         }
+
         .footer-brand-name {
             font-size: 12px;
             font-weight: 700;
             color: #4b5563;
         }
+
+        .footer p {
+            font-size: 11px;
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+
+        /* Responsive */
+        @media only screen and (max-width: 620px) {
+            .email-wrapper {
+                margin: 16px !important;
+                border-radius: 16px !important;
+            }
+
+            .header {
+                padding: 28px 24px 24px !important;
+            }
+
+            .body {
+                padding: 24px 24px 28px !important;
+            }
+
+            .section-divider {
+                margin: 0 24px !important;
+            }
+
+            .footer {
+                padding: 18px 24px !important;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <div class="wrapper">
+
+    <div class="email-wrapper">
 
         {{-- ── HEADER ── --}}
         <div class="header">
             <div class="header-top">
-                <div class="logo-box"><span>MI</span></div>
-                <div class="header-school">
-                    MI Terpadu Ibnu Sina
-                    <small>Madrasah Ibtidaiyah · Kembang, Jepara</small>
+                <div class="logo-box">
+                    {{--
+                    asset() menghasilkan URL absolut berdasarkan ASSET_URL di .env.
+                    Railway: ASSET_URL=https://demo-mi-terpadu-ibnu-sina-production.up.railway.app
+                    Local:   tidak ada ASSET_URL → pakai APP_URL → http://localhost:8000
+                    Logo akan muncul di email hanya jika ASSET_URL di-set di Railway environment variables.
+                --}}
+                    <img src="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" alt="MI Terpadu Ibnu Sina"
+                        width="44" height="44">
+                </div>
+                <div>
+                    <div class="header-school-name">
+                        MI Terpadu Ibnu Sina
+                        <small class="header-school-sub">Madrasah Ibtidaiyah &middot; Kembang, Jepara</small>
+                    </div>
                 </div>
             </div>
+
             <div class="header-divider"></div>
+
             <h1>Jawaban Konsultasi</h1>
-            <p>Pertanyaan Anda telah dijawab oleh tim kami.</p>
-            <div class="badge">
+            <p class="header-subtitle">Pertanyaan Anda telah dijawab oleh tim kami.</p>
+
+            <div class="status-badge">
                 <span class="badge-dot"></span>
                 Pertanyaan Anda Sudah Dijawab
             </div>
@@ -247,57 +374,66 @@
         {{-- ── BODY ── --}}
         <div class="body">
 
+            {{-- Salam --}}
             <p class="greeting">
-                Assalamu'alaikum, <strong>{{ $consultation->name }}</strong>.<br>
+                Assalamu&#8217;alaikum, <strong>{{ $consultation->name }}</strong>.<br>
                 Terima kasih telah menghubungi kami. Berikut adalah jawaban atas pertanyaan yang Anda kirimkan:
             </p>
 
-            {{-- Pertanyaan --}}
+            {{-- ── Pertanyaan ── --}}
             <p class="section-label">Pertanyaan Anda</p>
+
             @if ($consultation->subject)
                 <p class="question-subject">{{ $consultation->subject }}</p>
             @endif
+
             <div class="question-box">
                 <p>{{ $consultation->message }}</p>
             </div>
-            <div style="margin-bottom:24px;"></div>
 
-            {{-- Jawaban --}}
+            {{-- ── Jawaban ── --}}
             <p class="section-label">Jawaban dari Kami</p>
+
             <div class="reply-box">
                 <p>{{ $consultation->reply }}</p>
             </div>
 
             {{-- Waktu balas --}}
-            <div class="meta-row" style="margin-top:10px;">
-                <span class="meta-icon">✓</span>
+            <div class="meta-row">
+                <span class="meta-icon">&#10003;</span>
                 Dijawab pada:
-                <strong style="color:#15803d;">
-                    {{ $consultation->replied_at?->locale('id')->isoFormat('dddd, D MMMM YYYY · HH:mm') }} WIB
-                </strong>
+                <span class="meta-time">
+                    {{ $consultation->replied_at?->locale('id')->isoFormat('dddd, D MMMM YYYY [&middot;] HH:mm') }} WIB
+                </span>
             </div>
 
             {{-- Penutup --}}
             <div class="closing">
                 Jika Anda masih memiliki pertanyaan lain, silakan kunjungi halaman
-                <a href="#">Konsultasi</a> di website kami — kami selalu siap membantu. 🙏<br><br>
-                Wassalamu'alaikum warahmatullahi wabarakatuh.
+                <a href="{{ config('app.url') }}/konsultasi">Konsultasi</a>
+                di website kami &mdash; kami selalu siap membantu. &#128591;<br><br>
+                <em>Wassalamu&#8217;alaikum warahmatullahi wabarakatuh.</em>
             </div>
+
         </div>
+
+        <div class="section-divider"></div>
 
         {{-- ── FOOTER ── --}}
         <div class="footer">
             <div class="footer-brand">
-                <span class="footer-brand-dot">MI</span>
+                <img src="{{ asset('MI-Terpadu-Ibnu-Sina-Kembang-Jepara-Logo.png') }}" alt="MI Terpadu Ibnu Sina"
+                    class="footer-logo" width="22" height="22">
                 <span class="footer-brand-name">MI Terpadu Ibnu Sina</span>
             </div>
             <p>
                 Email ini dikirim otomatis oleh sistem informasi sekolah.<br>
-                Jl. Raya Bangsri - Keling KM.4, Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457
+                Jl. Raya Bangsri &ndash; Keling KM.4, Desa Jinggotan, Kec. Kembang, Kab. Jepara 59457
             </p>
         </div>
 
     </div>
+
 </body>
 
 </html>

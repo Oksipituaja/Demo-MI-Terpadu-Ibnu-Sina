@@ -15310,3 +15310,4 @@ Did you mean this?
 #84 C:/laragon/www/4329_Yusuf_Hammam/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(23): require_once('C://laragon//www//...')
 #85 {main}
 "} 
+[2026-03-30 15:11:49] local.INFO: [ConsultationController] Mail job dispatched {"consultation_id":7,"to":"oksipituaja@gmail.com","queue_driver":"database"} 
