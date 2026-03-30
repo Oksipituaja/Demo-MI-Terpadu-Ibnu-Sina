@@ -1,31 +1,26 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Default Mailer
-    |--------------------------------------------------------------------------
-    */
     'default' => env('MAIL_MAILER', 'log'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Mailer Configurations
-    |--------------------------------------------------------------------------
-    */
     'mailers' => [
-
         'smtp' => [
             'transport'    => 'smtp',
-            'scheme'       => env('MAIL_SCHEME'),       // 'tls' untuk port 465, null/kosong untuk 587+STARTTLS
+            'scheme'       => env('MAIL_SCHEME', null),
             'url'          => env('MAIL_URL'),
             'host'         => env('MAIL_HOST', '127.0.0.1'),
-            'port'         => env('MAIL_PORT', 2525),
+            'port'         => env('MAIL_PORT', 587),
             'username'     => env('MAIL_USERNAME'),
             'password'     => env('MAIL_PASSWORD'),
-            'timeout'      => env('MAIL_TIMEOUT', 15), // Detik — cegah SMTP hang. Default Laravel = null (hang selamanya)
+            'timeout'      => env('MAIL_TIMEOUT', 20),
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            'stream' => [
+                'ssl' => [
+                    'allow_self_signed' => true,
+                    'verify_peer'       => false,
+                    'verify_peer_name'  => false,
+                ],
+            ],
         ],
 
         'ses' => [
@@ -71,17 +66,10 @@ return [
             ],
             'retry_after' => 60,
         ],
-
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Global "From" Address
-    |--------------------------------------------------------------------------
-    */
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name'    => env('MAIL_FROM_NAME', 'Example'),
     ],
-
 ];
