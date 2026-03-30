@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ConsultationReplyMail extends Mailable
+class ConsultationReceivedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,14 +20,14 @@ class ConsultationReplyMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Jawaban Konsultasi Anda - MI Terpadu Ibnu Sina',
+            subject: 'Pertanyaan Anda Telah Diterima - MI Terpadu Ibnu Sina',
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            view: 'mail.consultation-reply',
+            view: 'mail.consultation-received',
         );
     }
 }

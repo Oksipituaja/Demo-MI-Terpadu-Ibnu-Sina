@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\SendConsultationReplyMail;
+use App\Mail\ConsultationReplyMail;
 use App\Models\Consultation;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class ConsultationController extends Controller
@@ -15,87 +17,73 @@ class ConsultationController extends Controller
     {
         $query = Consultation::latest();
 
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('subject', 'like', "%{$search}%");
+            });
+        }
+
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('email', 'like', '%' . $request->search . '%')
-                    ->orWhere('subject', 'like', '%' . $request->search . '%');
-            });
-        }
-
         $consultations = $query->paginate(15)->withQueryString();
 
-        $totalPending = Consultation::where('status', 'pending')->count();
-        $totalReplied = Consultation::where('status', 'replied')->count();
-        $totalAll     = Consultation::count();
-
-        return view('admin.consultations.index', compact(
-            'consultations',
-            'totalPending',
-            'totalReplied',
-            'totalAll'
-        ));
+        return view('admin.consultations.index', [
+            'consultations' => $consultations,
+            'totalAll'      => Consultation::count(),
+            'totalPending'  => Consultation::where('status', 'pending')->count(),
+            'totalReplied'  => Consultation::where('status', 'replied')->count(),
+        ]);
     }
 
-    public function reply(Request $request, Consultation $consultation)
+    public function reply(Request $request, Consultation $consultation): RedirectResponse
     {
         $request->validate([
-            'reply' => 'required|string|min:10',
+            'reply' => 'required|string|min:5|max:5000',
         ], [
             'reply.required' => 'Jawaban tidak boleh kosong.',
-            'reply.min'      => 'Jawaban minimal 10 karakter.',
+            'reply.min'      => 'Jawaban minimal 5 karakter.',
         ]);
 
-        // Cegah jawab ulang yang sudah dijawab
-        if ($consultation->isReplied()) {
-            return redirect()
-                ->route('admin.consultations.index')
-                ->with('warning', 'Pertanyaan ini sudah dijawab sebelumnya.');
-        }
-
-        // 1. Simpan ke DB dulu — data aman meskipun SMTP/queue gagal
+        // Simpan jawaban ke DB dulu sebelum kirim email
         $consultation->update([
             'reply'      => $request->reply,
             'replied_at' => now(),
             'status'     => 'replied',
         ]);
 
-        // 2. Dispatch job pengiriman email ke queue
-        //    QUEUE_CONNECTION=sync     → langsung kirim (local dev)
-        //    QUEUE_CONNECTION=database → masuk antrian, diproses queue:work (Railway/production)
+        // Kirim email
         try {
-            SendConsultationReplyMail::dispatch($consultation);
+            Mail::to($consultation->email)
+                ->send(new ConsultationReplyMail($consultation));
 
-            Log::info('[ConsultationController] Mail job dispatched', [
+            Log::info('Email konsultasi berhasil dikirim', [
                 'consultation_id' => $consultation->id,
                 'to'              => $consultation->email,
-                'queue_driver'    => config('queue.default'),
-            ]);
-        } catch (\Throwable $e) {
-            Log::error('[ConsultationController] Gagal dispatch mail job', [
-                'consultation_id' => $consultation->id,
-                'error'           => $e->getMessage(),
             ]);
 
             return redirect()
                 ->route('admin.consultations.index')
-                ->with('warning', "Jawaban disimpan, tapi gagal menjadwalkan email ke {$consultation->email}. Cek log untuk detail.");
+                ->with('success', "Jawaban berhasil dikirim ke {$consultation->email}.");
+        } catch (\Exception $e) {
+            Log::error('Gagal kirim email konsultasi', [
+                'consultation_id' => $consultation->id,
+                'to'              => $consultation->email,
+                'error'           => $e->getMessage(),
+            ]);
+
+            // Jawaban sudah tersimpan di DB, tapi email gagal
+            return redirect()
+                ->route('admin.consultations.index')
+                ->with('warning', 'Jawaban tersimpan, tapi email gagal dikirim: ' . $e->getMessage());
         }
-
-        $message = config('queue.default') === 'sync'
-            ? "Jawaban berhasil disimpan dan email dikirim ke {$consultation->email}!"
-            : "Jawaban disimpan. Email ke {$consultation->email} sedang diproses di antrian.";
-
-        return redirect()
-            ->route('admin.consultations.index')
-            ->with('success', $message);
     }
 
-    public function destroy(Consultation $consultation)
+    public function destroy(Consultation $consultation): RedirectResponse
     {
         $consultation->delete();
 

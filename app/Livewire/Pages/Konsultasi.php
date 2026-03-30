@@ -3,6 +3,8 @@
 namespace App\Livewire\Pages;
 
 use App\Models\Consultation;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class Konsultasi extends Component
@@ -38,10 +40,18 @@ class Konsultasi extends Component
     {
         $validated = $this->validate();
 
-        Consultation::create($validated);
+        $consultation = Consultation::create($validated);
+
+        // Kirim email konfirmasi ke pengirim (opsional)
+        try {
+            Mail::to($consultation->email)
+                ->send(new \App\Mail\ConsultationReceivedMail($consultation));
+        } catch (\Exception $e) {
+            Log::warning('Email konfirmasi konsultasi gagal: ' . $e->getMessage());
+            // Tidak throw — form tetap sukses meski email gagal
+        }
 
         $this->reset(['name', 'email', 'subject', 'message']);
-
         session()->flash('sent', true);
     }
 
