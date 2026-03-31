@@ -44,19 +44,13 @@ return [
 
         'failover' => [
             'transport' => 'failover',
-            'mailers'   => [
-                'smtp',
-                'log',
-            ],
+            'mailers'   => ['smtp', 'log'],
             'retry_after' => 60,
         ],
 
         'roundrobin' => [
             'transport' => 'roundrobin',
-            'mailers'   => [
-                'ses',
-                'postmark',
-            ],
+            'mailers'   => ['ses', 'postmark'],
             'retry_after' => 60,
         ],
     ],
