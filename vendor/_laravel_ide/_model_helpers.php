@@ -673,6 +673,26 @@ namespace App\Models {
     /**
      * App\Models\Consultation
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $status
+     * @property \Illuminate\Support\Carbon|null $replied_at
+     * @property string|null $reply
+     * @property string $message
+     * @property string|null $subject
+     * @property string $email
+     * @property string $name
+     * @property int $id
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereName($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereEmail($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereSubject($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereMessage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereReply($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereRepliedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereStatus($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Consultation>|Consultation query()

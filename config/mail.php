@@ -12,15 +12,8 @@ return [
             'port'         => env('MAIL_PORT', 587),
             'username'     => env('MAIL_USERNAME'),
             'password'     => env('MAIL_PASSWORD'),
-            'timeout'      => env('MAIL_TIMEOUT', 20),
+            'timeout'      => env('MAIL_TIMEOUT', 30),
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
-            'stream' => [
-                'ssl' => [
-                    'allow_self_signed' => true,
-                    'verify_peer'       => false,
-                    'verify_peer_name'  => false,
-                ],
-            ],
         ],
 
         'ses' => [
